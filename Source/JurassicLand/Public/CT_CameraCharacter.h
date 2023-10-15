@@ -5,15 +5,15 @@
 #include "CoreMinimal.h"
 #include "GameFramework/Character.h"
 #include "InputActionValue.h"
-#include "CT_CameraController.generated.h"
+#include "CT_CameraCharacter.generated.h"
 
 UCLASS()
-class JURASSICLAND_API ACT_CameraController : public ACharacter
+class JURASSICLAND_API ACT_CameraCharacter : public ACharacter
 {
 	GENERATED_BODY()
 
 public:
-	ACT_CameraController();
+	ACT_CameraCharacter();
 
 protected:
 	virtual void BeginPlay() override;
@@ -44,17 +44,49 @@ public:
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Input")
 	class UInputAction* ia_CameraZoom;
 
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Input")
+	class UInputAction* ia_CameraPitch;
+
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Input")
+	class UInputAction* ia_MouseMove;
+
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Input")
+	class UInputAction* ia_MouseRightClick;
+
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Input")
-	float OrbitSpeed = 1.0f;
+	float OrbitSpeed = 0.5f;
 
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Input")
 	float ZoomSpeed = 15.0f;
+
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Input")
+	float ZoomMin = 400.0f;
+
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Input")
+	float ZoomMax = 1000.0f;
+
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Input")
+	float InitialMovementSpeed = 0.0f;
+
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Input")
+	float CameraMinClamp = -70.0f;
+
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Input")
+	float CameraMaxClamp = -20.0f;
+
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Input")
+	bool bRightButtonPressed = false;
 
 public:
 	
 	void Move(const FInputActionValue& value);
 	void CameraOrbit(const FInputActionValue& value);
 	void CameraZoom(const FInputActionValue& value);
+	void CameraPitch(const FInputActionValue& value);
+	void MouseMove(const FInputActionValue& value);
+	void StartMouseRightClick();
+	void EndMouseRightClick();
+	void UpdateMovementSpeed();
 
 	
 

@@ -13,5 +13,8 @@ UCLASS()
 class JURASSICLAND_API ACT_PlayerController : public APlayerController
 {
 	GENERATED_BODY()
+
+public:
+	ACT_PlayerController();
 	
 };
