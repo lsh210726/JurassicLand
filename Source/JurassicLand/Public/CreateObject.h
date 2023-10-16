@@ -29,4 +29,6 @@ protected:
 public:	
 	virtual void Tick(float DeltaTime) override;
 
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category="MySettings")
+	class UStaticMeshComponent* meshComp;
 };

@@ -7,6 +7,8 @@ UCT_ClickableComponent::UCT_ClickableComponent()
 {
 	PrimaryComponentTick.bCanEverTick = true;
 
+	//OnClicked.AddDynamic(this, &UCT_ClickableComponent::OnMouseClicked);
+
 }
 
 

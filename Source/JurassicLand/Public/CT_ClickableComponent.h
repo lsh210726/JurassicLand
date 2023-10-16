@@ -7,7 +7,7 @@
 #include "CT_ClickableComponent.generated.h"
 
 
-UCLASS( ClassGroup=(Custom), meta=(BlueprintSpawnableComponent) )
+UCLASS(Blueprintable, ClassGroup=(Custom), meta=(BlueprintSpawnableComponent) )
 class JURASSICLAND_API UCT_ClickableComponent : public UActorComponent
 {
 	GENERATED_BODY()
@@ -22,6 +22,8 @@ public:
 	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
 
 public:
+
+	UFUNCTION()
 	void OnMouseClicked();
 
 		
