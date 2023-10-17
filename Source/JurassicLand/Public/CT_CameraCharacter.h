@@ -33,6 +33,9 @@ public:
 	class UCameraComponent* TopDownCameraComponent;
 
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Input")
+	class APlayerController* CameraPlayercontroller;
+
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Input")
 	class UInputMappingContext* imc;
 
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Input")
@@ -52,6 +55,9 @@ public:
 
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Input")
 	class UInputAction* ia_MouseRightClick;
+
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Input")
+	class UInputAction* ia_MouseLeftClick;
 
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Input")
 	float OrbitSpeed = 0.5f;
@@ -77,6 +83,16 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Input")
 	bool bRightButtonPressed = false;
 
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Create")
+	bool bPlacementModeEnable = false;
+
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Create")
+	class AActor* PlaceableActor;
+
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Create")
+	class UCT_CreateComponent* createComp;
+
+
 public:
 	
 	void Move(const FInputActionValue& value);
@@ -87,7 +103,10 @@ public:
 	void StartMouseRightClick();
 	void EndMouseRightClick();
 	void UpdateMovementSpeed();
-
+	void SetPlacementmoveEnabled(bool bIsEnabled);
+	void UpdatePlacement();
+	void SpawnBuilding();
+	void MouseLeftClick();
 	
 
 

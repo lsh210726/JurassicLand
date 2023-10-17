@@ -22,9 +22,24 @@ public:
 	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
 
 public:
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "MySettings")
+	class UStaticMeshComponent* MeshComp;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "MySettings")
+	bool bIsClicked = false;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "MySettings")
+	class UMaterialInterface* GreenMaterial;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "MySettings")
+	class UMaterialInterface* RedMaterial;
+
+public:
 
 	UFUNCTION()
-	void OnMouseClicked();
+	void OnMouseClicked(AActor* ClickComponent, FKey ButtonPressed);
+
+	void InPlacementMode();
 
 		
 };

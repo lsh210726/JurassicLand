@@ -12,6 +12,9 @@
 #include "EnhancedInputComponent.h"
 #include "EnhancedInputSubsystems.h"
 #include "CT_PlayerController.h"
+#include "CT_ClickableComponent.h"
+#include "CT_CreateComponent.h"
+#include "CreateObject.h"
 
 
 
@@ -35,13 +38,18 @@ ACT_CameraCharacter::ACT_CameraCharacter()
 	TopDownCameraComponent = CreateDefaultSubobject<UCameraComponent>(TEXT("TopDownCameraComponent"));
 	TopDownCameraComponent->SetupAttachment(CameraBoom, USpringArmComponent::SocketName);
 	TopDownCameraComponent->bUsePawnControlRotation = false;
+	
+	createComp = CreateDefaultSubobject<UCT_CreateComponent>(TEXT("CreateComponent"));
 }
+
 
 void ACT_CameraCharacter::BeginPlay()
 {
 	Super::BeginPlay();
 
-	if (APlayerController* CameraPlayercontroller = Cast<ACT_PlayerController>(Controller))
+	CameraPlayercontroller = Cast<ACT_PlayerController>(Controller);
+
+	if (CameraPlayercontroller)
 	{
 		if (UEnhancedInputLocalPlayerSubsystem* Subsystem = ULocalPlayer::GetSubsystem<UEnhancedInputLocalPlayerSubsystem>(CameraPlayercontroller->GetLocalPlayer()))
 		{
@@ -53,15 +61,14 @@ void ACT_CameraCharacter::BeginPlay()
 
 	UpdateMovementSpeed();
 
-	UE_LOG(LogTemp, Warning, TEXT("y%.2f z%.2f x%.2f"), CameraBoom->GetRelativeRotation().Pitch, CameraBoom->GetRelativeRotation().Yaw, CameraBoom->GetRelativeRotation().Roll);
-
+	SetPlacementmoveEnabled(true);
 }
 
 void ACT_CameraCharacter::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 
-
+	if(bPlacementModeEnable) UpdatePlacement();
 
 }
 
@@ -78,6 +85,7 @@ void ACT_CameraCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInput
 		EnhancedInputComponent->BindAction(ia_MouseMove, ETriggerEvent::Triggered, this, &ACT_CameraCharacter::MouseMove);
 		EnhancedInputComponent->BindAction(ia_MouseRightClick, ETriggerEvent::Started, this, &ACT_CameraCharacter::StartMouseRightClick);
 		EnhancedInputComponent->BindAction(ia_MouseRightClick, ETriggerEvent::Completed, this, &ACT_CameraCharacter::EndMouseRightClick);
+		EnhancedInputComponent->BindAction(ia_MouseLeftClick, ETriggerEvent::Started, this, &ACT_CameraCharacter::MouseLeftClick);
 	}
 
 }
@@ -160,5 +168,89 @@ void ACT_CameraCharacter::UpdateMovementSpeed()
 	float currentWalkSpeed = InitialMovementSpeed * (CameraBoom->TargetArmLength / ZoomMin);
 
 	GetCharacterMovement()->MaxWalkSpeed = currentWalkSpeed;
+}
+
+void ACT_CameraCharacter::SetPlacementmoveEnabled(bool bIsEnabled)
+{
+	if (bIsEnabled != bPlacementModeEnable)
+	{
+		bPlacementModeEnable = bIsEnabled;
+
+		if (!bPlacementModeEnable)
+		{
+			if (IsValid(PlaceableActor))
+			{
+				PlaceableActor->Destroy();
+			}
+		}
+		else
+		{
+			PlaceableActor = GetWorld()->SpawnActor<ACreateObject>(ACreateObject::StaticClass(), FVector(0, 0, -1000000), FRotator::ZeroRotator);
+			UCT_ClickableComponent* ClickableComp = PlaceableActor->GetComponentByClass<UCT_ClickableComponent>();
+
+			if (IsValid(ClickableComp))
+			{
+				ClickableComp->InPlacementMode();
+			}
+			else
+			{
+				PlaceableActor->AddInstanceComponent(createComp);
+			}
+		}
+	}
+}
+
+void ACT_CameraCharacter::UpdatePlacement()
+{
+	FVector mouseLoc, mouseDir;
+	CameraPlayercontroller->DeprojectMousePositionToWorld(mouseLoc, mouseDir);
+	//DrawDebugLine(GetWorld(), mouseLoc, mouseLoc + mouseDir * 100.0f, FColor::Red, true);
+
+	FHitResult hitInfo;
+	FCollisionQueryParams params;
+
+	if(GetWorld()->LineTraceSingleByChannel(hitInfo, mouseLoc, mouseLoc + mouseDir * 10000.0f, ECollisionChannel::ECC_GameTraceChannel1, params))
+	{
+		if (hitInfo.bBlockingHit)
+		{
+			PlaceableActor->SetActorLocation(FVector(hitInfo.Location));
+		}
+	}
+
+	SetPlacementmoveEnabled(true);
+}
+
+void ACT_CameraCharacter::SpawnBuilding()
+{
+	UCT_CreateComponent* tmpCreateComp = PlaceableActor->GetComponentByClass<UCT_CreateComponent>();
+	if (IsValid(tmpCreateComp))
+	{
+		if (tmpCreateComp->bIsPlacementValid)
+		{
+			FTransform spawnTrans = PlaceableActor->GetActorTransform();
+			
+			FActorSpawnParameters SpawnParams;
+			SpawnParams.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AlwaysSpawn;
+			GetWorld()->SpawnActor<ACreateObject>(ACreateObject::StaticClass(), spawnTrans, SpawnParams);
+		}
+		else
+		{
+			FString ValueString = tmpCreateComp->bIsPlacementValid ? TEXT("bIsPlacementValid : True") : TEXT("bIsPlacementValid : False");
+			GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Yellow, ValueString);
+		}
+	}
+	else
+	{
+		FString ValueString = IsValid(tmpCreateComp) ? TEXT("Valid") : TEXT("bIsPlacementValid : False");
+		GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Yellow, ValueString);
+	}
+}
+
+void ACT_CameraCharacter::MouseLeftClick()
+{
+	FString ValueString = bPlacementModeEnable ? TEXT("True") : TEXT("False");
+	GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Yellow, ValueString);
+
+	if(bPlacementModeEnable) SpawnBuilding();	
 }
 

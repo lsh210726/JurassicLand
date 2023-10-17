@@ -7,7 +7,7 @@
 #include "CT_CreateComponent.generated.h"
 
 
-UCLASS( ClassGroup=(Custom), meta=(BlueprintSpawnableComponent) )
+UCLASS(Blueprintable, ClassGroup=(Custom), meta=(BlueprintSpawnableComponent) )
 class JURASSICLAND_API UCT_CreateComponent : public UActorComponent
 {
 	GENERATED_BODY()
