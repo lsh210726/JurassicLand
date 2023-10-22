@@ -25,4 +25,8 @@ public:
 	FString mySessionName;
 
 	IOnlineSessionPtr sessionInterface;
+
+	void CreateMySession();//세션만들기함수
+
+	void OncreatedMySession(FName sessionName, bool bWasSuccessful);//세션이 만들어지고 난후 실행될 델리케이트 함수
 };
