@@ -4,6 +4,7 @@
 #include "BlueTrex.h"
 #include "Camera/CameraComponent.h"
 #include "Kismet/KismetMathLibrary.h"
+#include "../Plugins/EnhancedInput/Source/EnhancedInput/Public/InputAction.h"
 #include "../Plugins/EnhancedInput/Source/EnhancedInput/Public/EnhancedInputComponent.h"
 #include "../Plugins/EnhancedInput/Source/EnhancedInput/Public/EnhancedInputSubsystems.h"
 #include "../Plugins/EnhancedInput/Source/EnhancedInput/Public/InputMappingContext.h"
@@ -37,6 +38,13 @@ ABlueTrex::ABlueTrex()
 		IMC_TRex = tempIMC_TRex.Object;
 	}
 
+	
+}
+
+// Called when the game starts or when spawned
+void ABlueTrex::BeginPlay()
+{
+	Super::BeginPlay();
 	/*-----------Enhanced Input IMC Set up---------*/
 	pc = Cast<APlayerController>(GetController());
 	if (pc != nullptr)
@@ -44,12 +52,6 @@ ABlueTrex::ABlueTrex()
 		if (UEnhancedInputLocalPlayerSubsystem* SubSystem = ULocalPlayer::GetSubsystem<UEnhancedInputLocalPlayerSubsystem>(pc->GetLocalPlayer()))
 			SubSystem->AddMappingContext(IMC_TRex, 0);
 	}
-}
-
-// Called when the game starts or when spawned
-void ABlueTrex::BeginPlay()
-{
-	Super::BeginPlay();
 	
 }
 
