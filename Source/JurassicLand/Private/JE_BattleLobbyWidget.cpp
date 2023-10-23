@@ -8,9 +8,7 @@
 
 void UJE_BattleLobbyWidget::NativeConstruct()
 {
-	btn_mapchoice->OnClicked.AddDynamic(this, &UJE_BattleLobbyWidget::OnClickedChoice);
-	btn_mapcheck->OnClicked.AddDynamic(this, &UJE_BattleLobbyWidget::OnClickedCheck);
-
+	btn_battleIn->OnClicked.AddDynamic(this, &UJE_BattleLobbyWidget::OnClickedbattleIn);
 }
 
 void UJE_BattleLobbyWidget::NativeTick(const FGeometry& MyGeometry, float InDeltaTime)
@@ -18,12 +16,7 @@ void UJE_BattleLobbyWidget::NativeTick(const FGeometry& MyGeometry, float InDelt
 
 }
 
-void UJE_BattleLobbyWidget::OnClickedCheck()
-{
-	SwitchLobbyCanvas(2);
-}
-
-void UJE_BattleLobbyWidget::OnClickedChoice()
+void UJE_BattleLobbyWidget::OnClickedbattleIn()
 {
 	SwitchLobbyCanvas(1);
 }

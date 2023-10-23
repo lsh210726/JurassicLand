@@ -21,29 +21,23 @@ protected:
 public:
 
 	UPROPERTY(VisibleAnywhere, meta=(BindWidget), Category=MySettings)
-	class UImage* img_map;
-
-	UPROPERTY(VisibleAnywhere, meta=(BindWidget), Category=MySettings)
 	class UWidgetSwitcher* ws_BattleLobbyUI;
 
 	UPROPERTY(VisibleAnywhere, meta=(BindWidget), Category=MySettings)
-	class UButton* btn_mapchoice;
+	class UButton* btn_battleIn;
 
 	UPROPERTY(VisibleAnywhere, meta=(BindWidget), Category=MySettings)
-	class UButton* btn_mapcheck;
+	class UTextBlock* txt_battleIn;
 
 	UPROPERTY(VisibleAnywhere, meta=(BindWidget), Category=MySettings)
-	class UTextBlock* txt_mapchoice;
+	class UButton* btn_ready;
 
 	UPROPERTY(VisibleAnywhere, meta=(BindWidget), Category=MySettings)
-	class UTextBlock* txt_check;
+	class UTextBlock* txt_ready;	
 
 public:
 	UFUNCTION()
-	void OnClickedCheck();
-
-	UFUNCTION()
-	void OnClickedChoice();
+	void OnClickedbattleIn();
 
 private:
 	void SwitchLobbyCanvas(int32 index);
