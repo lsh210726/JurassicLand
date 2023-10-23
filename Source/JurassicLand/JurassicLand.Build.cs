@@ -8,7 +8,7 @@ public class JurassicLand : ModuleRules
 	{
 		PCHUsage = PCHUsageMode.UseExplicitOrSharedPCHs;
 	
-		PublicDependencyModuleNames.AddRange(new string[] { "Core", "CoreUObject", "Engine", "InputCore", "EnhancedInput", "HeadMountedDisplay", "NavigationSystem", "AIModule", "Niagara", "UMG"});
+		PublicDependencyModuleNames.AddRange(new string[] { "Core", "CoreUObject", "Engine", "InputCore", "EnhancedInput", "HeadMountedDisplay", "NavigationSystem", "AIModule", "Niagara", "UMG", "OnlineSubsystemSteam", "OnlineSubsystem", "Slate", "SlateCore"});
 
 		//PrivateDependencyModuleNames.AddRange(new string[] {  });
 
