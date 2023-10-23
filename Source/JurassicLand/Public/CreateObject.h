@@ -29,4 +29,13 @@ protected:
 public:	
 	virtual void Tick(float DeltaTime) override;
 
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category="MySettings")
+	class UStaticMeshComponent* meshComp;
+
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "MySettings")
+	class UCT_CreateComponent* createComp;
+
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "MySettings")
+	class UCT_ClickableComponent* clickComp;
+
 };
