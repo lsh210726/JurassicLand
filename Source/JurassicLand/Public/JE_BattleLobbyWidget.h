@@ -35,9 +35,15 @@ public:
 	UPROPERTY(VisibleAnywhere, meta=(BindWidget), Category=MySettings)
 	class UTextBlock* txt_ready;	
 
+	class ULSH_NetGameInstance* gi;
+
+	int32 widgetIndex = 0;
+
 public:
 	UFUNCTION()
 	void OnClickedbattleIn();
+	UFUNCTION()
+	void battleFindSession();
 
 private:
 	void SwitchLobbyCanvas(int32 index);

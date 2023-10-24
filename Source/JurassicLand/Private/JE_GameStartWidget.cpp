@@ -91,7 +91,7 @@ void UJE_GameStartWidget::OnClickedBattle()
 {
 	//FString Message = FString::Printf(TEXT("SkipButtonClicked"));
 	//GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Yellow, Message);
-	FString LevelName = TEXT("LobbyMap");
+	FString LevelName = TEXT("LSH_BattleMap");
 	UGameplayStatics::OpenLevel(GetWorld(), FName(*LevelName));
 }
 
