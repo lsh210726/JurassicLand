@@ -29,12 +29,6 @@ public:
 	UPROPERTY(VisibleAnywhere, meta=(BindWidget), Category=MySettings)
 	class UTextBlock* txt_battleIn;
 
-	UPROPERTY(VisibleAnywhere, meta=(BindWidget), Category=MySettings)
-	class UButton* btn_ready;
-
-	UPROPERTY(VisibleAnywhere, meta=(BindWidget), Category=MySettings)
-	class UTextBlock* txt_ready;	
-
 	class ULSH_NetGameInstance* gi;
 
 	int32 widgetIndex = 0;

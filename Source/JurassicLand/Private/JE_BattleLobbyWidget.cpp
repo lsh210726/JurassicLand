@@ -12,7 +12,6 @@ void UJE_BattleLobbyWidget::NativeConstruct()
 {
 	btn_battleIn->OnClicked.AddDynamic(this, &UJE_BattleLobbyWidget::OnClickedbattleIn);
 
-	SwitchLobbyCanvas(widgetIndex);
 }
 
 void UJE_BattleLobbyWidget::NativeTick(const FGeometry& MyGeometry, float InDeltaTime)
@@ -53,7 +52,7 @@ void UJE_BattleLobbyWidget::OnClickedbattleIn()
 			// TimerHandle 초기화
 			GetWorld()->GetTimerManager().ClearTimer(eTimerHandle);
 			widgetIndex = 1;
-			SwitchLobbyCanvas(widgetIndex);
+			//SwitchLobbyCanvas(widgetIndex);
 
 		}), etime, false);	// 반복하려면 false를 true로 변경
 
