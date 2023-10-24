@@ -22,11 +22,16 @@ public:
 	virtual void Init() override;
 
 	UPROPERTY()
-	FString mySessionName;
+	FString myName;
+	int32 sessionNum = 99;
 
 	IOnlineSessionPtr sessionInterface;
+	TSharedPtr<FOnlineSessionSearch> sessionSearch;
 
-	void CreateMySession();//세션만들기함수
-
+	void CreateMySession(FText userName);//세션만들기함수
 	void OncreatedMySession(FName sessionName, bool bWasSuccessful);//세션이 만들어지고 난후 실행될 델리케이트 함수
+	void FindOtherSession();//다른사람이만들어놓은세션검색함수
+	void OnFindOtherSessions(bool bWasSyccessful);//세션 찾으면 바인딩 함수
+	void JoinOtherSession();
+	void OnJoinSelectedSession(FName sessionName, EOnJoinSessionCompleteResult::Type result);
 };
