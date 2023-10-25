@@ -11,6 +11,7 @@
 #include "EnhancedInputComponent.h"
 #include "EnhancedInputSubsystems.h"
 #include "Math/RotationMatrix.h"
+#include "Net/UnrealNetwork.h"//언리얼 네트워크 사용을 위한 헤더
 
 
 // Sets default values
@@ -49,6 +50,8 @@ ALSH_NetPlayer::ALSH_NetPlayer()
 
 	// Note: The skeletal mesh and anim blueprint references on the Mesh component (inherited from Character) 
 	// are set in the derived blueprint asset named ThirdPersonCharacter (to avoid direct content references in C++)
+
+	bReplicates = true;//멀티에서 복제를 할 지
 }
 
 // Called when the game starts or when spawned
@@ -91,6 +94,11 @@ void ALSH_NetPlayer::SetupPlayerInputComponent(UInputComponent* PlayerInputCompo
 		EnhancedInputComponent->BindAction(LookAction, ETriggerEvent::Triggered, this, &ALSH_NetPlayer::Look);
 
 	}
+}
+
+void ALSH_NetPlayer::PrintLog()
+{
+
 }
 
 void ALSH_NetPlayer::Move(const FInputActionValue& Value)
