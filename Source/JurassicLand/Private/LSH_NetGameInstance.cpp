@@ -33,6 +33,7 @@ void ULSH_NetGameInstance::CreateMySession(FText username)
 	//1. lan연결인지 dedicated연결인지 설정
 	sessionSettings.bIsDedicated = false;//리슨서버 설정
 	sessionSettings.bIsLANMatch = IOnlineSubsystem::Get()->GetSubsystemName() == FName("Null");//랜방식과 스팀방식의 차이 > 스팀은 원격
+	UE_LOG(LogTemp, Warning, TEXT("%s"),*IOnlineSubsystem::Get()->GetSubsystemName().ToString());
 	//2. 검색가능한 방으로 설정하기
 	sessionSettings.bShouldAdvertise = true;
 

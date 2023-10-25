@@ -6,6 +6,8 @@
 #include "Components/TextBlock.h"
 #include "Components/WidgetSwitcher.h"
 #include "LSH_NetGameInstance.h"
+#include "Net/UnrealNetwork.h"
+
 
 void UJE_MultiBattleWidget::NativeConstruct()
 {
@@ -22,10 +24,28 @@ void UJE_MultiBattleWidget::NativeTick(const FGeometry& MyGeometry, float InDelt
 
 void UJE_MultiBattleWidget::OnClickedReady()
 {
-	if(readyCount == 0)
-		readyCount++;
-	
-	FString Message = FString::Printf(TEXT("%d"), readyCount);
-	GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Yellow, Message);
+	//if (clickOnce)
+	//{
+	//	readyCount++;
+	//	clickOnce = false;
+	//}
 
+	//FString Message = FString::Printf(TEXT("%d"), readyCount);
+	//GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Yellow, Message);
+	//UE_LOG(LogTemp, Warning, TEXT("readycount %d , %d"), readyCount, clickOnce);
+	if (clickOnce)
+	{
+		clickOnce = false;
+		serverReadyCountUp();
+	}
+	UE_LOG(LogTemp, Warning, TEXT("readycount %d , %d"), readyCount, clickOnce);
+}
+
+void UJE_MultiBattleWidget::serverReadyCountUp_Implementation()
+{
+
+	readyCount++;
+
+
+	UE_LOG(LogTemp, Warning, TEXT("readycount %d , %d"), readyCount, clickOnce);
 }

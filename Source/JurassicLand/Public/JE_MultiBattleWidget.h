@@ -87,13 +87,17 @@ public:
 	class UImage* img_player_lose;
 
 public:
-	int32 readyCount = 0;
+		int32 readyCount = 0;
 
 public:
-	UFUNCTION()
+	UFUNCTION() 
 	void OnClickedReady();
 
+	UFUNCTION(Server, Reliable)
+	void serverReadyCountUp();
 
+	//ÀÌ½ÂÇü
+	bool clickOnce =true;
 
 	
 };
