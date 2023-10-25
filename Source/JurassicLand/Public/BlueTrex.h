@@ -39,13 +39,16 @@ public:
 	void SetupPlayerEnhancedInputComponent(class UEnhancedInputComponent* EnhancedInputComponent, TArray<class UInputAction*> InputActions);
 
 	void TRexMove(const FInputActionValue& Val);
+	void TRexLook(const FInputActionValue& Val);
 
 	/*-----Character Component-----*/
 public:
 	UPROPERTY(EditAnywhere, Category= CharacterSettings)
 	class USkeletalMeshComponent* TRexBody;
-	UPROPERTY(EditAnywhere, Category= CharacterSettings)
+	UPROPERTY(EditAnywhere,BlueprintReadWrite, Category= CharacterSettings)
 	class UCameraComponent* TRexEye;
+	UPROPERTY(EditAnywhere,BlueprintReadWrite, Category= CharacterSettings)
+	class USpringArmComponent* TRexEyeArm;
 
 	/*-----General Value----------*/
 public:
