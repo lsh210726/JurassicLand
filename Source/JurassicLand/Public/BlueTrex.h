@@ -40,8 +40,9 @@ public:
 
 	void TRexMove(const FInputActionValue& Val);
 	void TRexLook(const FInputActionValue& Val);
+	void TRexTailAttack(const FInputActionValue& Val);
 
-	/*-----Character Component-----*/
+	/*----- Character Component-----*/
 public:
 	UPROPERTY(EditAnywhere, Category= CharacterSettings)
 	class USkeletalMeshComponent* TRexBody;
@@ -50,9 +51,25 @@ public:
 	UPROPERTY(EditAnywhere,BlueprintReadWrite, Category= CharacterSettings)
 	class USpringArmComponent* TRexEyeArm;
 
-	/*-----General Value----------*/
+	/*----- Damage System Value --------*/
+
+	float TRexHP = 100;	
+	float TRexPower = 12;
+
+	/*----- General Value ----------*/
 public:
 	class APlayerController* pc;
+	class UCharacterMovementComponent* CharacterMovement;
 
+	/*-------- Animation Value --------*/
+
+public:
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Anim)
+	bool TailAttack = false;
+	private:
+    UPROPERTY(VisibleDefaultsOnly, BlueprintReadOnly, Category = Attack, Meta = (AllowPrivateAccess = true))
+    class UAnimationAsset* TailAttackAnim;
+
+	
 };
  

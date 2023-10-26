@@ -10,6 +10,10 @@
 #include "../Plugins/EnhancedInput/Source/EnhancedInput/Public/InputMappingContext.h"
 #include "GameFramework/SpringArmComponent.h"
 #include "Components/CapsuleComponent.h"
+#include "Animation/AnimMontage.h"
+#include "Animation/AnimationAsset.h"
+#include "GameFramework/CharacterMovementComponent.h"
+#include "Engine/TimerHandle.h"
 
 // Sets default values
 ABlueTrex::ABlueTrex()
@@ -33,6 +37,11 @@ ABlueTrex::ABlueTrex()
 	TRexEyeArm->SetRelativeLocation(FVector(0.0f,0.0f,100.0f));
 	TRexEyeArm->SetRelativeRotation(FRotator(-15.0f,0.0f,0.0f));
 
+	bUseControllerRotationYaw = true;
+	TRexEyeArm->bUsePawnControlRotation = true;
+	//TRexEye->bUsePawnControlRotation = false;
+	
+
 	/*--------- Camera Component Setting --------*/
 	TRexEye = CreateDefaultSubobject<UCameraComponent>(TEXT("TRexEye"));
 	TRexEye->SetupAttachment(TRexEyeArm);
@@ -49,6 +58,16 @@ ABlueTrex::ABlueTrex()
 	
 // 	AttachToComponent(TRexEye,FAttachmentTransformRules::KeepRelativeTransform,TRexBody->GetSocketBoneName("bn_Head_10"));
 // }
+
+	/*---- Anim Import ----*/
+	ConstructorHelpers::FObjectFinder<UAnimationAsset> tempTailAttack(TEXT("/Script/Engine.AnimSequence'/Game/7_MISC/Animation/BlueTRex/BlueTRex_attack_tail.BlueTRex_attack_tail'"));
+	if (tempTailAttack.Succeeded())
+	{
+		TailAttackAnim = tempTailAttack.Object;
+	}
+
+	CharacterMovement = GetCharacterMovement();
+	
 }
 
 // Called when the game starts or when spawned
@@ -87,6 +106,7 @@ void ABlueTrex::SetupPlayerEnhancedInputComponent(class UEnhancedInputComponent*
 {
 	EnhancedInputComponent->BindAction(InputActions[0], ETriggerEvent::Triggered, this, &ABlueTrex::TRexMove);
 	EnhancedInputComponent->BindAction(InputActions[1],ETriggerEvent::Triggered,this,&ABlueTrex::TRexLook);
+	EnhancedInputComponent->BindAction(InputActions[2], ETriggerEvent::Started, this, &ABlueTrex::TRexTailAttack);
 }
 
 void ABlueTrex::TRexMove(const FInputActionValue& Val)
@@ -107,9 +127,33 @@ void ABlueTrex::TRexLook(const FInputActionValue& Val)
 	FVector2D tempVal = Val.Get<FVector2D>();
 	float valX = tempVal.X;
 	float valY = tempVal.Y;
-
+// 
 	AddControllerYawInput(valX);
 	AddControllerPitchInput(valY);
+	/*TRexEyeArm->SetRelativeRotation(TRexEyeArm->Getrotation)*/
+	//need Debug : 가만히 있을 때, 카메라만 돌아서 시선만 이동해야하는데 캐릭터도 같이 돌아간다. 
 
 }
+
+void ABlueTrex::TRexTailAttack(const FInputActionValue& Val)
+{
+	
+	if(TailAttackAnim!=nullptr)
+	{
+		
+// 		GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, FString::Printf(TEXT("Debug %f"), CharacterMovement->MaxWalkSpeed));
+		FTimerHandle TimerHandle;
+
+		GetMesh()->PlayAnimation(TailAttackAnim,false);
+		GetCharacterMovement()->MaxWalkSpeed = 0.f;
+		GetWorldTimerManager().SetTimer(TimerHandle,[this](){
+			
+			GetCharacterMovement()->MaxWalkSpeed = 600.f;
+			GetMesh()->SetAnimationMode(EAnimationMode::AnimationBlueprint);
+			
+		},TailAttackAnim->GetPlayLength()-0.1f, false);
+		
+	}
+}
+
 
