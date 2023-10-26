@@ -13,5 +13,5 @@ UCLASS()
 class JURASSICLAND_API ALSH_NetPlayerController : public APlayerController
 {
 	GENERATED_BODY()
-	
+
 };
