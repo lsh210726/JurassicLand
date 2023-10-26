@@ -132,5 +132,6 @@ public:
 	
 
 private:	
+	
 	void SwitchCanvas(int32 index);
 };

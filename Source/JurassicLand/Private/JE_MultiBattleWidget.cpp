@@ -33,8 +33,6 @@ void UJE_MultiBattleWidget::OnClickedReady()
 		clickOnce = false;
 	}
 
-	FString Message = FString::Printf(TEXT("%d"), readyCount);
-	GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Yellow, Message);
 	UE_LOG(LogTemp, Warning, TEXT("readycount %d , %d"), readyCount, clickOnce);
 
 	APlayerController* PlayerController = GetOwningPlayer();
@@ -42,6 +40,7 @@ void UJE_MultiBattleWidget::OnClickedReady()
 
 	if (PlayerController)
 			{
+
 				if (PlayerController->GetLocalRole() == ROLE_Authority)
 				{
 					// 이 코드는 서버에서만 실행됩니다.
@@ -53,13 +52,17 @@ void UJE_MultiBattleWidget::OnClickedReady()
 						UE_LOG(LogTemp, Warning, TEXT("%d"), PlayerCount);
 						if (PlayerCount >= 2)
 						{
-							BattleSwitchCanvas(1);
+							gi->OnTravlebattleMap();
 						}
 					}
 				}
 				else
 				{
 					// 이 코드는 클라이언트에서만 실행됩니		
+				
+
+					FString Message = FString::Printf(TEXT("Client"));
+					GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Yellow, Message);
 				}
 			}
 
@@ -68,10 +71,28 @@ void UJE_MultiBattleWidget::OnClickedReady()
 
 }
 
-void UJE_MultiBattleWidget::BattleSwitchCanvas(int32 index)
+void UJE_MultiBattleWidget::MulticastBattleSwitchWidget_Implementation(int32 index)
 {
-	ws_MultiBattle->SetActiveWidgetIndex(index);
+	ws_MultiBattle->SetActiveWidgetIndex(1);
+	FString Message = FString::Printf(TEXT("Multicast, %d"));
+	GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Yellow, Message);
+
 }
+
+void UJE_MultiBattleWidget::ServerBattleSwitchWidget_Implementation(int32 index)
+{
+	MulticastBattleSwitchWidget(1);
+	FString Message = FString::Printf(TEXT("%d"), index);
+	GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Red, Message);
+}
+
+//void UJE_MultiBattleWidget::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const
+//{
+//	Super::GetLifetimeReplicatedProps(OutLifetimeProps);
+//
+//	//DOREPLIFETIME(UJE_MultiBattleWidget, widgetIndex);
+//
+//}
 
 //void UJE_MultiBattleWidget::serverReadyCountUp_Implementation(int32 allReadyCount)
 //{

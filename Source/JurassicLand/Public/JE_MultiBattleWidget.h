@@ -103,7 +103,11 @@ public:
 	//UFUNCTION(NetMulticast, Reliable)
 	//void MulticastReadyCount();
 
-private:
-	void BattleSwitchCanvas(int32 index);
+public:
+	UFUNCTION(Server, Reliable)
+	void ServerBattleSwitchWidget(int32 index);
+
+	UFUNCTION(NetMulticast, Reliable)
+	void MulticastBattleSwitchWidget(int32 index);
 	
 };
