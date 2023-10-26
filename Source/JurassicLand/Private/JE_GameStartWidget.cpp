@@ -17,6 +17,7 @@ void UJE_GameStartWidget::NativeConstruct()
 
 	je_gi = GetGameInstance<UJE_GI>();
 
+
 	currentCoin = initialCoin;
 	txt_coin->SetText(FText::AsNumber(currentCoin));
 

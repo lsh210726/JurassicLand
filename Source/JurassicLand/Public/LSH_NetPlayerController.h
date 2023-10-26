@@ -14,4 +14,10 @@ class JURASSICLAND_API ALSH_NetPlayerController : public APlayerController
 {
 	GENERATED_BODY()
 
+public:
+	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category=MySettings)
+	bool bBattleIn = false;
+
+
+
 };
