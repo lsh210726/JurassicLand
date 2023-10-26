@@ -60,7 +60,7 @@ ABlueTrex::ABlueTrex()
 // }
 
 	/*---- Anim Import ----*/
-	ConstructorHelpers::FObjectFinder<UAnimationAsset> tempTailAttack(TEXT("/Script/Engine.AnimSequence'/Game/7_MISC/Animation/BlueTRex/BlueTRex_attack_tail.BlueTRex_attack_tail'"));
+	ConstructorHelpers::FObjectFinder<UAnimationAsset> tempTailAttack(TEXT("/Script/Engine.AnimSequence'/Game/7_MISC/Animation/BlueTRex/BlueTRex_attack_tail_2.BlueTRex_attack_tail_2'"));
 	if (tempTailAttack.Succeeded())
 	{
 		TailAttackAnim = tempTailAttack.Object;
@@ -137,21 +137,22 @@ void ABlueTrex::TRexLook(const FInputActionValue& Val)
 
 void ABlueTrex::TRexTailAttack(const FInputActionValue& Val)
 {
-	
+
 	if(TailAttackAnim!=nullptr)
 	{
 		
-// 		GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, FString::Printf(TEXT("Debug %f"), CharacterMovement->MaxWalkSpeed));
-		FTimerHandle TimerHandle;
-
-		GetMesh()->PlayAnimation(TailAttackAnim,false);
-		GetCharacterMovement()->MaxWalkSpeed = 0.f;
-		GetWorldTimerManager().SetTimer(TimerHandle,[this](){
-			
+		
+			GetMesh()->PlayAnimation(TailAttackAnim,false);
+			GetCharacterMovement()->MaxWalkSpeed = 0.f;
+			FTimerHandle TimerHandle;
+			GetWorldTimerManager().SetTimer(TimerHandle,[this](){
 			GetCharacterMovement()->MaxWalkSpeed = 600.f;
 			GetMesh()->SetAnimationMode(EAnimationMode::AnimationBlueprint);
+			/*GEngine->AddOnScreenDebugMessage(-1, 3.0f, FColor::Blue, TEXT(" Screen")); // 화면출력*/
 			
 		},TailAttackAnim->GetPlayLength()-0.1f, false);
+		
+		//}
 		
 	}
 }
