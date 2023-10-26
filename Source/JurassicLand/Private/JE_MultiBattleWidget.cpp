@@ -22,7 +22,7 @@ void UJE_MultiBattleWidget::NativeConstruct()
 
 void UJE_MultiBattleWidget::NativeTick(const FGeometry& MyGeometry, float InDeltaTime)
 {
-
+	
 }
 
 void UJE_MultiBattleWidget::OnClickedReady()
@@ -51,6 +51,10 @@ void UJE_MultiBattleWidget::OnClickedReady()
 						int32 PlayerCount = GameMode->GetNumPlayers();
 						// PlayerCount 변수는 현재 세션의 플레이어 수를 가지고 있습니다.
 						UE_LOG(LogTemp, Warning, TEXT("%d"), PlayerCount);
+						if (PlayerCount >= 2)
+						{
+							BattleSwitchCanvas(1);
+						}
 					}
 				}
 				else
@@ -59,7 +63,14 @@ void UJE_MultiBattleWidget::OnClickedReady()
 				}
 			}
 
+	
 
+
+}
+
+void UJE_MultiBattleWidget::BattleSwitchCanvas(int32 index)
+{
+	ws_MultiBattle->SetActiveWidgetIndex(index);
 }
 
 //void UJE_MultiBattleWidget::serverReadyCountUp_Implementation(int32 allReadyCount)

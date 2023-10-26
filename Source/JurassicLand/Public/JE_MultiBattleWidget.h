@@ -102,5 +102,8 @@ public:
 
 	//UFUNCTION(NetMulticast, Reliable)
 	//void MulticastReadyCount();
+
+private:
+	void BattleSwitchCanvas(int32 index);
 	
 };
