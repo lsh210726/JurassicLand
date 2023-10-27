@@ -34,4 +34,5 @@ public:
 	void OnFindOtherSessions(bool bWasSyccessful);//세션 찾으면 바인딩 함수
 	void JoinOtherSession();
 	void OnJoinSelectedSession(FName sessionName, EOnJoinSessionCompleteResult::Type result);
+	void OnTravlebattleMap();//게임 시작버튼 눌렀을 때 서버트래블
 };

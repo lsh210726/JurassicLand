@@ -102,5 +102,12 @@ public:
 
 	//UFUNCTION(NetMulticast, Reliable)
 	//void MulticastReadyCount();
+
+public:
+	UFUNCTION(Server, Reliable)
+	void ServerBattleSwitchWidget(int32 index);
+
+	UFUNCTION(NetMulticast, Reliable)
+	void MulticastBattleSwitchWidget(int32 index);
 	
 };
