@@ -140,21 +140,12 @@ void ABlueTrex::TRexLook(const FInputActionValue& Val)
 void ABlueTrex::TRexTailAttack_Implementation(const FInputActionValue& Val)
 {
 
-	if(TailAttackAnim!=nullptr)
+	if(TailAttackAnim!=nullptr&&TailAttack==false)
 	{
 		
-		
-			GetMesh()->PlayAnimation(TailAttackAnim,false);
-			GetCharacterMovement()->MaxWalkSpeed = 0.f;
-			FTimerHandle TimerHandle;
-			GetWorldTimerManager().SetTimer(TimerHandle,[this](){
-			GetCharacterMovement()->MaxWalkSpeed = 600.f;
-			GetMesh()->SetAnimationMode(EAnimationMode::AnimationBlueprint);
-			/*GEngine->AddOnScreenDebugMessage(-1, 3.0f, FColor::Blue, TEXT(" Screen")); // 화면출력*/
-			
-		},TailAttackAnim->GetPlayLength()-0.1f, false);
-		
-		//}
+		TailAttack = true;
+		GetCharacterMovement()->MaxWalkSpeed = 0.f;
+		this->bUseControllerRotationYaw = false;
 		
 	}
 }
