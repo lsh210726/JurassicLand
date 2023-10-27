@@ -20,11 +20,7 @@ void UJE_BattleWidget::NativeConstruct()
 
 void UJE_BattleWidget::NativeTick(const FGeometry& MyGeometry, float InDeltaTime)
 {
-	if (player->TRexHP <= 0.0f)
-	{
-		ws_Battle->SetActiveWidgetIndex(2);
-		txt_battleresult->SetText(FText::FromString("Win"));
-	}
+	
 }
 
 void UJE_BattleWidget::LoadingUI()
