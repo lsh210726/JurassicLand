@@ -20,10 +20,18 @@ void UJE_BattleWidget::NativeTick(const FGeometry& MyGeometry, float InDeltaTime
 void UJE_BattleWidget::LoadingUI()
 {
 	ws_Battle->SetActiveWidgetIndex(1);
+	PlayAnimation(battleStartAnim);
 
 	FTimerHandle loadingHandler;
 	GetWorld()->GetTimerManager().SetTimer(loadingHandler, FTimerDelegate::CreateLambda([&]() {
+		
 		ws_Battle->SetActiveWidgetIndex(2);
-		}), 1.0f, false);
 
+		}), 2.0f, false);
+
+}
+
+void UJE_BattleWidget::StartUIAnim()
+{
+	
 }
