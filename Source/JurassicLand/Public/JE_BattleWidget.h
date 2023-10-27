@@ -20,7 +20,9 @@ protected:
 
 public:
 
-	UPROPERTY(VisibleAnywhere, meta=(BindWidget), Category=MySettings)
+	class ABlueTrex* player;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, meta = (BindWidget), Category = MySettings)
 	class UWidgetSwitcher* ws_Battle;
 
 	UPROPERTY(VisibleAnywhere, meta=(BindWidget), Category=MySettings)
@@ -59,7 +61,7 @@ public:
 	UPROPERTY(VisibleAnywhere, meta=(BindWidget), Category=MySettings)
 	class UTextBlock* txt_move;
 
-	UPROPERTY(VisibleAnywhere, meta=(BindWidget), Category=MySettings)
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, meta=(BindWidget), Category=MySettings)
 	class UTextBlock* txt_battleresult;
 
 	UPROPERTY(VisibleAnywhere, meta=(BindWidget), Category=MySettings)
@@ -77,9 +79,15 @@ public:
 	UPROPERTY(VisibleAnywhere, meta = (BindWidget), Category = MySettings)
 	class UImage* img_player_lose;
 
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, meta = (BindWidgetAnim), Category = MySettings, Transient)
+	class UWidgetAnimation* battleStartAnim;
+
 public:	
 	UFUNCTION()
 	void LoadingUI();
+
+	UFUNCTION()
+	void StartUIAnim();
 
 	
 };
