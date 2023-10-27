@@ -20,6 +20,8 @@ protected:
 
 public:
 
+	class ABlueTrex* player;
+
 	UPROPERTY(VisibleAnywhere, meta=(BindWidget), Category=MySettings)
 	class UWidgetSwitcher* ws_Battle;
 
@@ -77,7 +79,7 @@ public:
 	UPROPERTY(VisibleAnywhere, meta = (BindWidget), Category = MySettings)
 	class UImage* img_player_lose;
 
-	UPROPERTY(BlueprintReadWrite, Transient, EditAnywhere, meta = (BindWidgetAnim), Category = MySettings)
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, meta = (BindWidgetAnim), Category = MySettings, Transient)
 	class UWidgetAnimation* battleStartAnim;
 
 public:	
