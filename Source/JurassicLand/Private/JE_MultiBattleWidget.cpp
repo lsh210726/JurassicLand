@@ -53,6 +53,8 @@ void UJE_MultiBattleWidget::OnClickedReady()
 						if (PlayerCount >= 2)
 						{
 							gi->OnTravlebattleMap();
+							ALSH_NetPlayerController* lsh_pc = Cast<ALSH_NetPlayerController>(PlayerController);
+							lsh_pc->bBattleIn = true;
 						}
 					}
 				}

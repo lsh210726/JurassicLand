@@ -16,10 +16,10 @@ void ULSH_NetGameInstance::Init()
 
 	if (IOnlineSubsystem* subsys = IOnlineSubsystem::Get())
 	{
-		//Online Session Interface API Á¢±Ù¿ë ÀÎ½ºÅÏ½º °¡Á®¿À±â
+		//Online Session Interface API ï¿½ï¿½ï¿½Ù¿ï¿½ ï¿½Î½ï¿½ï¿½Ï½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 		sessionInterface = subsys->GetSessionInterface();
 
-		//¼¼¼Ç ÀÌº¥Æ®¿¡ ÇÔ¼ö ¹ÙÀÎµùÇÏ±â
+		//ï¿½ï¿½ï¿½ï¿½ ï¿½Ìºï¿½Æ®ï¿½ï¿½ ï¿½Ô¼ï¿½ ï¿½ï¿½ï¿½Îµï¿½ï¿½Ï±ï¿½
 		sessionInterface->OnCreateSessionCompleteDelegates.AddUObject(this, &ULSH_NetGameInstance::OncreatedMySession);
 		sessionInterface->OnFindSessionsCompleteDelegates.AddUObject(this, &ULSH_NetGameInstance::OnFindOtherSessions);
 		sessionInterface->OnJoinSessionCompleteDelegates.AddUObject(this, &ULSH_NetGameInstance::OnJoinSelectedSession);
@@ -29,30 +29,30 @@ void ULSH_NetGameInstance::Init()
 
 void ULSH_NetGameInstance::CreateMySession(FText username)
 {	
-	FOnlineSessionSettings sessionSettings;//¼¼¼Ç¼¼ÆÃ ¼±¾ð, ±¸Á¶Ã¼
-	//1. lan¿¬°áÀÎÁö dedicated¿¬°áÀÎÁö ¼³Á¤
-	sessionSettings.bIsDedicated = false;//¸®½¼¼­¹ö ¼³Á¤
-	sessionSettings.bIsLANMatch = IOnlineSubsystem::Get()->GetSubsystemName() == FName("Null");//·£¹æ½Ä°ú ½ºÆÀ¹æ½ÄÀÇ Â÷ÀÌ > ½ºÆÀÀº ¿ø°Ý
+	FOnlineSessionSettings sessionSettings;//ï¿½ï¿½ï¿½Ç¼ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½, ï¿½ï¿½ï¿½ï¿½Ã¼
+	//1. lanï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ dedicatedï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+	sessionSettings.bIsDedicated = false;//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+	sessionSettings.bIsLANMatch = IOnlineSubsystem::Get()->GetSubsystemName() == FName("Null");//ï¿½ï¿½ï¿½ï¿½Ä°ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ > ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 	UE_LOG(LogTemp, Warning, TEXT("%s"),*IOnlineSubsystem::Get()->GetSubsystemName().ToString());
-	//2. °Ë»ö°¡´ÉÇÑ ¹æÀ¸·Î ¼³Á¤ÇÏ±â
+	//2. ï¿½Ë»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï±ï¿½
 	sessionSettings.bShouldAdvertise = true;
 
-	//3. ÀÚ±â Á¤º¸¸¦ Àü´ÞµÉ ¼ö ÀÖ°Ô ¼³Á¤ÇÏ±â
+	//3. ï¿½Ú±ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Þµï¿½ ï¿½ï¿½ ï¿½Ö°ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï±ï¿½
 	sessionSettings.bUsesPresence = true;
 
-	//4. ´Ù¸¥À¯ÀúÀÇ Áß°£ ÀÔÀå Çã¿ëÇÏ±â
+	//4. ï¿½Ù¸ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ß°ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Ï±ï¿½
 	sessionSettings.bAllowJoinInProgress = true;
-	sessionSettings.bAllowJoinViaPresence = true;//±¤°í¸¦ ÅëÇÑ ³­ÀÔÀÌ ¾Æ´Ñ Ä£±¸ µû¶ó¼­ µé¾î¿Ã ¶§
+	sessionSettings.bAllowJoinViaPresence = true;//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Æ´ï¿½ Ä£ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½
 
-	//5. ÀÔÀå °¡´É ÀÎ¿øÀ» ¼³Á¤ÇÑ´Ù
+	//5. ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Î¿ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ñ´ï¿½
 	sessionSettings.NumPublicConnections = 2;
 
-	//6. ¼¼¼Ç¿¡ Ãß°¡ ¼³Á¤À» ³Ö´Â´Ù
+	//6. ï¿½ï¿½ï¿½Ç¿ï¿½ ï¿½ß°ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ö´Â´ï¿½
 	sessionSettings.Set(FName("Room_Name"), username.ToString(), EOnlineDataAdvertisementType::ViaOnlineServiceAndPing);
 
 	myName = username.ToString();
 
-	bool isSuccess = sessionInterface->CreateSession(0, FName(myName), sessionSettings);//¹æÀÌ¸§, ¹æ¼¼ÆÃ
+	bool isSuccess = sessionInterface->CreateSession(0, FName(myName), sessionSettings);//ï¿½ï¿½ï¿½Ì¸ï¿½, ï¿½æ¼¼ï¿½ï¿½
 	UE_LOG(LogTemp, Warning, TEXT("Session Create Result : %s"), isSuccess ? *FString("Success") : *FString("Failed"));
 
 
@@ -62,8 +62,8 @@ void ULSH_NetGameInstance::OncreatedMySession(FName sessionName, bool bWasSucces
 {
 	if (bWasSuccessful)
 	{
-		FString mapAdress = "/Game/LSH_WorkSpace/LSH_BattleMap";//ÀÌµ¿ÇÒ ¸Ê ÁÖ¼Ò
-		bool travelResult = GetWorld()->ServerTravel(mapAdress+"?Listen", true);//ÁÖ¼Ò+³»°¡ ¼­¹ö ÁÖÃ¼ ¸®½¼¼­¹ö·Î½á ÀÌµ¿, ½É¸®½º È¤Àº ¾Û¼Ö·çÆ® Ã³À½Àº ¹«Á¶°Ç ¾Û¼Ö·çÆ®//¼­¹öÆ®·¡ºíÀº È£½ºÆ®¸¸ »ç¿ë °¡´ÉÇÏ´Ù > ¼­¹öÀÎ ¾Ö°¡ Æ®·¡ºíÀº ÇÏ¸é ÀÚ½ÅÇÑÅ× ºÙ¾î ÀÖ´Â ¸ðµç Å¬¶óÀÌ¾ðÆ®µéÀ» ¸ðµÎ µ¥¸®°í ¸ÊÀÌµ¿ÇÑ´Ù. Å¬¶óÀÌ¾ðÆ®Æ®·¹ºíÀº ÀÚ±â¸¸ ÀÌµ¿ÇÑ´Ù. È£½ºÆ®¿Í ºÐ¸® ½Ã ¼¼¼ÇÀÌ ¾ø¾îÁø´Ù Á¶ÀÎÇÒ ¶§ »ç¿ë. ¼­¹öÆ®·¹ºíÀº À¯¿ùµå¿¡ ±¸Çö, Å¬¶óÀÌ¾ðÆ®Æ®·¹ºíÀº ÇÃ·¹ÀÌ¾îÄÁÆ®·Ñ·¯¿¡ ±¸ÇöµÊ
+		FString mapAdress = "/Game/LSH_WorkSpace/LSH_BattleMap";//ï¿½Ìµï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½Ö¼ï¿½
+		bool travelResult = GetWorld()->ServerTravel(mapAdress+"?Listen", true);//ï¿½Ö¼ï¿½+ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Ã¼ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Î½ï¿½ ï¿½Ìµï¿½, ï¿½É¸ï¿½ï¿½ï¿½ È¤ï¿½ï¿½ ï¿½Û¼Ö·ï¿½Æ® Ã³ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Û¼Ö·ï¿½Æ®//ï¿½ï¿½ï¿½ï¿½Æ®ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ È£ï¿½ï¿½Æ®ï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï´ï¿½ > ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ö°ï¿½ Æ®ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ï¸ï¿½ ï¿½Ú½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ù¾ï¿½ ï¿½Ö´ï¿½ ï¿½ï¿½ï¿½ Å¬ï¿½ï¿½ï¿½Ì¾ï¿½Æ®ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ìµï¿½ï¿½Ñ´ï¿½. Å¬ï¿½ï¿½ï¿½Ì¾ï¿½Æ®Æ®ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ú±â¸¸ ï¿½Ìµï¿½ï¿½Ñ´ï¿½. È£ï¿½ï¿½Æ®ï¿½ï¿½ ï¿½Ð¸ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½. ï¿½ï¿½ï¿½ï¿½Æ®ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½å¿¡ ï¿½ï¿½ï¿½ï¿½, Å¬ï¿½ï¿½ï¿½Ì¾ï¿½Æ®Æ®ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ã·ï¿½ï¿½Ì¾ï¿½ï¿½ï¿½Æ®ï¿½Ñ·ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 		UE_LOG(LogTemp, Warning, TEXT("travel Result : %s"), travelResult ? *FString("Success") : *FString("Failed"));
 
 	}
@@ -73,11 +73,11 @@ void ULSH_NetGameInstance::FindOtherSession()
 {
 	sessionSearch = MakeShareable(new FOnlineSessionSearch());
 
-	//1. ¼¼¼Ç °Ë»öÀ» lanÀ¸·Î ÇÒ °ÍÀÎÁö ¼³Á¤ÇÑ´Ù
+	//1. ï¿½ï¿½ï¿½ï¿½ ï¿½Ë»ï¿½ï¿½ï¿½ lanï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ñ´ï¿½
 	sessionSearch->bIsLanQuery = IOnlineSubsystem::Get()->GetSubsystemName() == FName("Null");
-	//2. ¼¼¼Ç Äõ¸® ¼³Á¤
+	//2. ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 	sessionSearch->QuerySettings.Set(SEARCH_PRESENCE, true, EOnlineComparisonOp::Equals);
-	//3. ¼¼¼ÇÀÇ °Ë»ö·®À» ¼³Á¤
+	//3. ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ë»ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 	sessionSearch->MaxSearchResults = 3;
 
 	sessionInterface->FindSessions(0, sessionSearch.ToSharedRef());
@@ -87,7 +87,7 @@ void ULSH_NetGameInstance::OnFindOtherSessions(bool bWasSyccessful)
 {
 	if (bWasSyccessful)
 	{
-		//°Ë»öµÈ ¼¼¼Ç ¸ñ·ÏÀ» °¡Á®¿Â´Ù
+		//ï¿½Ë»ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Â´ï¿½
 		TArray<FOnlineSessionSearchResult> searchResults = sessionSearch->SearchResults;
 		sessionNum = searchResults.Num();
 		UE_LOG(LogTemp, Warning, TEXT("Find Session %d"),sessionNum );
@@ -95,8 +95,8 @@ void ULSH_NetGameInstance::OnFindOtherSessions(bool bWasSyccessful)
 		{
 			FString username;
 			result.Session.SessionSettings.Get(FName("Room_Name"), username);
-			int32 openNumber = result.Session.NumOpenPublicConnections;//³²ÀºÀÚ¸®Á¶È¸
-			int32 maxNumber = result.Session.SessionSettings.NumPublicConnections;//ÀüÃ¼ÀÚ¸®Á¶È¸
+			int32 openNumber = result.Session.NumOpenPublicConnections;//ï¿½ï¿½ï¿½ï¿½ï¿½Ú¸ï¿½ï¿½ï¿½È¸
+			int32 maxNumber = result.Session.SessionSettings.NumPublicConnections;//ï¿½ï¿½Ã¼ï¿½Ú¸ï¿½ï¿½ï¿½È¸
 			int32 pingSpeed = result.PingInMs;
 
 			UE_LOG(LogTemp, Warning, TEXT("roomname %s, opennumber %d/%d, pingspeed %d"), *username, openNumber, maxNumber, pingSpeed);
@@ -110,7 +110,7 @@ void ULSH_NetGameInstance::OnFindOtherSessions(bool bWasSyccessful)
 
 void ULSH_NetGameInstance::JoinOtherSession()
 {
-	sessionInterface->JoinSession(0, FName(myName), sessionSearch->SearchResults[0]);//Á¦ÀÏ À§ÀÇ ¼¼¼Ç¿¡ Á¢¼Ó
+	sessionInterface->JoinSession(0, FName(myName), sessionSearch->SearchResults[0]);//ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ç¿ï¿½ ï¿½ï¿½ï¿½ï¿½
 }
 
 void ULSH_NetGameInstance::OnJoinSelectedSession(FName sessionName, EOnJoinSessionCompleteResult::Type result)
@@ -125,10 +125,10 @@ void ULSH_NetGameInstance::OnJoinSelectedSession(FName sessionName, EOnJoinSessi
 					APlayerController* playerCon = GetWorld()->GetFirstPlayerController();
 					if (playerCon != nullptr)
 					{
-						FString url;//joinµÈ ¼¼¼Ç È£½ºÆ®ÀÇ ¼­¹öÆ®·¹ºíµÈ ¸Ê ÁÖ¼Ò¸¦ ¹Þ¾Æ¿Â´Ù
+						FString url;//joinï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ È£ï¿½ï¿½Æ®ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Æ®ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½Ö¼Ò¸ï¿½ ï¿½Þ¾Æ¿Â´ï¿½
 						sessionInterface->GetResolvedConnectString(sessionName,url);
 						UE_LOG(LogTemp, Warning, TEXT("connection url %s"), *url);
-						//ÁÖ¼Ò¸¦ ¹Þ¾Ò´Ù¸é ±× ÁÖ¼Ò¿¡ µû¶ó¼­ ¸Ê ÀÌµ¿ÇÑ´Ù
+						//ï¿½Ö¼Ò¸ï¿½ ï¿½Þ¾Ò´Ù¸ï¿½ ï¿½ï¿½ ï¿½Ö¼Ò¿ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½Ìµï¿½ï¿½Ñ´ï¿½
 						if(!url.IsEmpty()) playerCon->ClientTravel(url,ETravelType::TRAVEL_Absolute);
 					}
 		}
@@ -155,10 +155,10 @@ void ULSH_NetGameInstance::OnJoinSelectedSession(FName sessionName, EOnJoinSessi
 
 void ULSH_NetGameInstance::OnTravlebattleMap()
 {
-	FString mapAdress = "/Game/1_Level/BattleOpenMap";//ÀÌµ¿ÇÒ ¸Ê ÁÖ¼Ò
-	bool travelResult = GetWorld()->ServerTravel(mapAdress + "?Listen", true);//ÁÖ¼Ò+³»°¡ ¼­¹ö ÁÖÃ¼ ¸®½¼¼­¹ö·Î½á ÀÌµ¿, ½É¸®½º È¤Àº ¾Û¼Ö·çÆ® Ã³À½Àº ¹«Á¶°Ç ¾Û¼Ö·çÆ®//¼­¹öÆ®·¡ºíÀº È£½ºÆ®¸¸ »ç¿ë °¡´ÉÇÏ´Ù > ¼­¹öÀÎ ¾Ö°¡ Æ®·¡ºíÀº ÇÏ¸é ÀÚ½ÅÇÑÅ× ºÙ¾î ÀÖ´Â ¸ðµç Å¬¶óÀÌ¾ðÆ®µéÀ» ¸ðµÎ µ¥¸®°í ¸ÊÀÌµ¿ÇÑ´Ù. Å¬¶óÀÌ¾ðÆ®Æ®·¹ºíÀº ÀÚ±â¸¸ ÀÌµ¿ÇÑ´Ù. È£½ºÆ®¿Í ºÐ¸® ½Ã ¼¼¼ÇÀÌ ¾ø¾îÁø´Ù Á¶ÀÎÇÒ ¶§ »ç¿ë. ¼­¹öÆ®·¹ºíÀº À¯¿ùµå¿¡ ±¸Çö, Å¬¶óÀÌ¾ðÆ®Æ®·¹ºíÀº ÇÃ·¹ÀÌ¾îÄÁÆ®·Ñ·¯¿¡ ±¸ÇöµÊ
-	APlayerController* playerCon = GetWorld()->GetFirstPlayerController();
-	//playerCon->ClientTravel(mapAdress, ETravelType::TRAVEL_Absolute);
+	FString mapAdress = "/Game/1_Level/BattleOpenMap";//ï¿½Ìµï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½Ö¼ï¿½
+	bool travelResult = GetWorld()->ServerTravel(mapAdress + "?Listen", true);//ï¿½Ö¼ï¿½+ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Ã¼ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Î½ï¿½ ï¿½Ìµï¿½, ï¿½É¸ï¿½ï¿½ï¿½ È¤ï¿½ï¿½ ï¿½Û¼Ö·ï¿½Æ® Ã³ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Û¼Ö·ï¿½Æ®//ï¿½ï¿½ï¿½ï¿½Æ®ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ È£ï¿½ï¿½Æ®ï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï´ï¿½ > ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ö°ï¿½ Æ®ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ï¸ï¿½ ï¿½Ú½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ù¾ï¿½ ï¿½Ö´ï¿½ ï¿½ï¿½ï¿½ Å¬ï¿½ï¿½ï¿½Ì¾ï¿½Æ®ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ìµï¿½ï¿½Ñ´ï¿½. Å¬ï¿½ï¿½ï¿½Ì¾ï¿½Æ®Æ®ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ú±â¸¸ ï¿½Ìµï¿½ï¿½Ñ´ï¿½. È£ï¿½ï¿½Æ®ï¿½ï¿½ ï¿½Ð¸ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½. ï¿½ï¿½ï¿½ï¿½Æ®ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½å¿¡ ï¿½ï¿½ï¿½ï¿½, Å¬ï¿½ï¿½ï¿½Ì¾ï¿½Æ®Æ®ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ã·ï¿½ï¿½Ì¾ï¿½ï¿½ï¿½Æ®ï¿½Ñ·ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+	/*APlayerController* playerCon = GetWorld()->GetFirstPlayerController();
+	playerCon->ClientTravel(mapAdress, ETravelType::TRAVEL_Absolute);*/
 	
 	UE_LOG(LogTemp, Warning, TEXT("travel Result : %s"), travelResult ? *FString("Success") : *FString("Failed"));
 }
