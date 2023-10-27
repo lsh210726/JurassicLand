@@ -65,7 +65,8 @@ public:
 
 public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Anim)
-	bool TailAttack = false;
+ 	bool TailAttack = false;
+// 	bool isTailAttackEnd = true;
 	private:
     UPROPERTY(VisibleDefaultsOnly, BlueprintReadOnly, Category = Attack, Meta = (AllowPrivateAccess = true))
     class UAnimationAsset* TailAttackAnim;
