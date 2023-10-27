@@ -41,9 +41,10 @@ public:
 	void TRexMove(const FInputActionValue& Val);
 	void TRexLook(const FInputActionValue& Val);
 	UFUNCTION(BlueprintNativeEvent)
+	//UFUNCTION()
 	void TRexTailAttack(const FInputActionValue& Val);
-// 	UPROPERTY(BlueprintReadWrite,BlueprintAssignable)
-// 	tailATK= false;
+	//UPROPERTY(BlueprintReadWrite,BlueprintAssignable)
+	//tailATK
 
 	/*----- Character Component-----*/
 public:
@@ -55,7 +56,7 @@ public:
 	class USpringArmComponent* TRexEyeArm;
 
 	/*----- Damage System Value --------*/
-
+	UPROPERTY(BlueprintReadWrite)
 	float TRexHP = 100;	
 	float TRexPower = 12;
 

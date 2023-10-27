@@ -15,7 +15,6 @@
 #include "GameFramework/CharacterMovementComponent.h"
 #include "Engine/TimerHandle.h"
 
-
 //DECLARE_DYNAMIC_MULTICAST_DELEGATE(TRexTailAttack);
 
 // Sets default values
