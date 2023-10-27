@@ -40,7 +40,11 @@ public:
 
 	void TRexMove(const FInputActionValue& Val);
 	void TRexLook(const FInputActionValue& Val);
+	//UFUNCTION(BlueprintNativeEvent)
+	UFUNCTION()
 	void TRexTailAttack(const FInputActionValue& Val);
+	UPROPERTY(BlueprintReadWrite,BlueprintAssignable)
+	tailATK
 
 	/*----- Character Component-----*/
 public:

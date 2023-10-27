@@ -158,7 +158,7 @@ void ULSH_NetGameInstance::OnTravlebattleMap()
 	FString mapAdress = "/Game/1_Level/BattleOpenMap";//이동할 맵 주소
 	bool travelResult = GetWorld()->ServerTravel(mapAdress + "?Listen", true);//주소+내가 서버 주체 리슨서버로써 이동, 심리스 혹은 앱솔루트 처음은 무조건 앱솔루트//서버트래블은 호스트만 사용 가능하다 > 서버인 애가 트래블은 하면 자신한테 붙어 있는 모든 클라이언트들을 모두 데리고 맵이동한다. 클라이언트트레블은 자기만 이동한다. 호스트와 분리 시 세션이 없어진다 조인할 때 사용. 서버트레블은 유월드에 구현, 클라이언트트레블은 플레이어컨트롤러에 구현됨
 	APlayerController* playerCon = GetWorld()->GetFirstPlayerController();
-	playerCon->ClientTravel(mapAdress, ETravelType::TRAVEL_Absolute);
+	//playerCon->ClientTravel(mapAdress, ETravelType::TRAVEL_Absolute);
 	
 	UE_LOG(LogTemp, Warning, TEXT("travel Result : %s"), travelResult ? *FString("Success") : *FString("Failed"));
 }
