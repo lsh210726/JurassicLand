@@ -6,8 +6,10 @@
 #include "Components/ProgressBar.h"
 #include "Components/Button.h"
 #include "Components/TextBlock.h"
+#include "Components/EditableText.h"
 #include "Components/WidgetSwitcher.h"
 #include "Kismet/GameplayStatics.h"
+#include "LSH_NetGameInstance.h"
 
 
 
@@ -16,6 +18,7 @@ void UJE_GameStartWidget::NativeConstruct()
 	Super::NativeConstruct();
 
 	je_gi = GetGameInstance<UJE_GI>();
+	gi = GetGameInstance<ULSH_NetGameInstance>();
 
 	currentCoin = initialCoin;
 	txt_coin->SetText(FText::AsNumber(currentCoin));
@@ -26,6 +29,7 @@ void UJE_GameStartWidget::NativeConstruct()
 	btn_battle->OnHovered.AddDynamic(this, &UJE_GameStartWidget::OnHoveredBattle);
 	btn_battle->OnUnhovered.AddDynamic(this, &UJE_GameStartWidget::OnUnHoveredBattle);
 	btn_battle->OnClicked.AddDynamic(this, &UJE_GameStartWidget::OnClickedBattle);
+	btn_nickCheck->OnClicked.AddDynamic(this, &UJE_GameStartWidget::OnClickedNickCheck);
 
 
 
@@ -62,6 +66,14 @@ void UJE_GameStartWidget::OnClickedSkip()
 	//GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Yellow, Message);
 	
 	SwitchCanvas(2);
+}
+
+void UJE_GameStartWidget::OnClickedNickCheck()
+{
+	gi->myName = edit_nickname->GetText().ToString();
+	
+	SwitchCanvas(3);
+
 }
 
 void UJE_GameStartWidget::OnHoveredPlay()

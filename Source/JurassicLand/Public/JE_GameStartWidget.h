@@ -49,7 +49,12 @@ public:
 	UPROPERTY()
 	class UJE_GI* je_gi;
 
+	class ULSH_NetGameInstance* gi;
+
 public:
+	UPROPERTY(VisibleAnywhere, meta=(BindWidget), Category=MySettings)
+	class UButton* btn_nickCheck;
+
 	UPROPERTY(VisibleAnywhere, meta=(BindWidget), Category=MySettings)
 	class UButton* btn_play;
 
@@ -76,6 +81,13 @@ public:
 
 	UPROPERTY(VisibleAnywhere, meta=(BindWidget), Category=MySettings)
 	class UButton* btn_battle;
+
+	UPROPERTY(VisibleAnywhere, meta=(BindWidget), Category=MySettings)
+	class UTextBlock* txt_name;
+
+	UPROPERTY(VisibleAnywhere, meta=(BindWidget), Category=MySettings)
+	class UTextBlock* txt_nickCheck;
+
 
 	UPROPERTY(VisibleAnywhere, meta=(BindWidget), Category=MySettings)
 	class UTextBlock* txt_play;
@@ -107,6 +119,9 @@ public:
 	UPROPERTY(VisibleAnywhere, meta=(BindWidget), Category=MySettings)
 	class UTextBlock* txt_coin;
 
+	UPROPERTY(VisibleAnywhere, meta=(BindWidget), Category=MySettings)
+	class UEditableText* edit_nickname;
+
 	UPROPERTY(EditDefaultsOnly, meta=(BindWidget), Category=MySettings)
 	float initialCoin = 500.0f;
 
@@ -116,6 +131,9 @@ public:
 public:
 	UFUNCTION()
 	void OnClickedSkip();
+
+	UFUNCTION()
+	void OnClickedNickCheck();
 
 	UFUNCTION()
 	void OnHoveredPlay();

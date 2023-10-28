@@ -10,6 +10,12 @@
 
 void UJE_BattleLobbyWidget::NativeConstruct()
 {
+	Super::NativeConstruct();
+	
+	gi = GetGameInstance<ULSH_NetGameInstance>();
+
+	GEngine->AddOnScreenDebugMessage(-1, 30.0f, FColor::Green, gi->myName);
+
 	btn_battleIn->OnClicked.AddDynamic(this, &UJE_BattleLobbyWidget::OnClickedbattleIn);
 
 }
@@ -40,7 +46,8 @@ void UJE_BattleLobbyWidget::OnClickedbattleIn()
 				//FTimerHandle createHandler2;
 
 				//GetWorld()->GetTimerManager().SetTimer(createHandler2, this, &ULSH_TestLoginWidget::CreateSession, 3, false);//1초 뒤에 실행되게
-				gi->CreateMySession(FText::FromString("Player"));
+				//gi->CreateMySession(FText::FromString("Player"));
+				gi->CreateMySession(FText::FromString(gi->myName));
 
 			}
 			else
