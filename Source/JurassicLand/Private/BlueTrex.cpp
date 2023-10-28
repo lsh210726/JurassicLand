@@ -14,6 +14,7 @@
 #include "Animation/AnimationAsset.h"
 #include "GameFramework/CharacterMovementComponent.h"
 #include "Engine/TimerHandle.h"
+#include "Net/UnrealNetwork.h"
 
 //DECLARE_DYNAMIC_MULTICAST_DELEGATE(TRexTailAttack);
 
@@ -150,4 +151,9 @@ void ABlueTrex::TRexTailAttack_Implementation(const FInputActionValue& Val)
 	}
 }
 
+void ABlueTrex::GetLifetimeReplicatedProps(TArray< FLifetimeProperty >& OutLifetimeProps) const
+{
+	Super::GetLifetimeReplicatedProps(OutLifetimeProps);
+	DOREPLIFETIME(ABlueTrex, TRexHP);
+}
 

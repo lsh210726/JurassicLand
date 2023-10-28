@@ -56,8 +56,12 @@ public:
 	class USpringArmComponent* TRexEyeArm;
 
 	/*----- Damage System Value --------*/
-	UPROPERTY(BlueprintReadWrite)
+	UPROPERTY(Replicated, EditAnywhere, BlueprintReadWrite, Category = "Health")//HP동기화
 	float TRexHP = 100;	
+
+	virtual void GetLifetimeReplicatedProps(TArray< FLifetimeProperty >& OutLifetimeProps) const override;//변수 동기화 위한 함수
+
+
 	float TRexPower = 12;
 
 	/*----- General Value ----------*/
