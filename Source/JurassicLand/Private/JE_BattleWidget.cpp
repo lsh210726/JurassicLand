@@ -41,6 +41,8 @@ void UJE_BattleWidget::StartUIAnim()
 {
 	ws_Battle->SetActiveWidgetIndex(1);
 
+	PlayAnimationForward(battleStartAnim);
+
 	FTimerHandle AnimHandler;
 	GetWorld()->GetTimerManager().SetTimer(AnimHandler, FTimerDelegate::CreateLambda([&]() {
 
