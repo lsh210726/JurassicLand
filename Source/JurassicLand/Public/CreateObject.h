@@ -19,7 +19,6 @@ UCLASS()
 class JURASSICLAND_API ACreateObject : public AActor
 {
 	GENERATED_BODY()
-	
 public:	
 	ACreateObject();
 

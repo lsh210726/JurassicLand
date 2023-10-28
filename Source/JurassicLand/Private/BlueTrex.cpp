@@ -14,6 +14,9 @@
 #include "Animation/AnimationAsset.h"
 #include "GameFramework/CharacterMovementComponent.h"
 #include "Engine/TimerHandle.h"
+#include "JE_NicknameComponent.h"
+#include "LSH_NetGameInstance.h"
+#include "Components/TextRenderComponent.h"
 
 //DECLARE_DYNAMIC_MULTICAST_DELEGATE(TRexTailAttack);
 
@@ -69,6 +72,16 @@ ABlueTrex::ABlueTrex()
 	}
 
 	CharacterMovement = GetCharacterMovement();
+
+	// 닉네임
+	//nickComp = CreateDefaultSubobject<UJE_NicknameComponent>(TEXT("nickComp"));
+	nicknameText = CreateDefaultSubobject<UTextRenderComponent>(TEXT("nicknameTEXT"));
+	nicknameText->AttachToComponent(GetMesh(), FAttachmentTransformRules(EAttachmentRule::KeepRelative, true), "NeckSocket");
+	nicknameText->SetRelativeLocation(FVector(0, -350, 0));
+	nicknameText->SetRelativeRotation(FRotator(0, 0, 90));
+	nicknameText->SetHorizontalAlignment(EHTA_Center);
+	nicknameText->SetWorldSize(100);
+	nicknameText->SetTextRenderColor(FColor::White);
 	
 }
 
@@ -83,6 +96,13 @@ void ABlueTrex::BeginPlay()
 		if (UEnhancedInputLocalPlayerSubsystem* SubSystem = ULocalPlayer::GetSubsystem<UEnhancedInputLocalPlayerSubsystem>(pc->GetLocalPlayer()))
 			SubSystem->AddMappingContext(IMC_TRex, 0);
 	}
+
+	// 닉네임
+	ULSH_NetGameInstance* gi = GetGameInstance<ULSH_NetGameInstance>();
+	nicknameText->SetText(FText::FromString(gi->myName));
+
+	
+
 	
 }
 
