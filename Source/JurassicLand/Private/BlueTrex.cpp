@@ -101,11 +101,7 @@ void ABlueTrex::BeginPlay()
 
 	// ´Ð³×ÀÓ
 	ULSH_NetGameInstance* gi = GetGameInstance<ULSH_NetGameInstance>();
-	nicknameText->SetText(FText::FromString(gi->myName));
-
-	
-
-	
+	nicknameText->SetText(FText::FromString(gi->myName));	
 }
 
 // Called every frame

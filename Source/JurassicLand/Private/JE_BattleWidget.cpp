@@ -17,35 +17,33 @@ void UJE_BattleWidget::NativeConstruct()
 
 	player = GetOwningPlayerPawn<ABlueTrex>();
 
-	GetWorld()->GetTimerManager().SetTimer(initHandler, this, &UJE_BattleWidget::StartUIAnim, 1.0f, false);
+	GetWorld()->GetTimerManager().SetTimer(initHandler, this, &UJE_BattleWidget::StartUIAnim, 5.0f, false);
 }
 
 void UJE_BattleWidget::NativeTick(const FGeometry& MyGeometry, float InDeltaTime)
 {
 	Super::NativeTick(MyGeometry, InDeltaTime);
 
-	//FString Message = FString::Printf(TEXT("%d"), ws_Battle->GetActiveWidgetIndex());
-	//GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Yellow, Message);
-	//
+	FString Message = FString::Printf(TEXT("%d"), player->TRexHP);
+	GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Yellow, Message);
+
+	if (player->TRexHP <= 0.f)
+	{
+		ws_Battle->SetActiveWidgetIndex(3);
+		txt_battleresult->SetText(FText::FromString("Lose"));
+
+	}
+
+
 }
 
 void UJE_BattleWidget::LoadingUI()
 {
-	StartUIAnim();
-
-	FTimerHandle loadingHandler;
-	GetWorld()->GetTimerManager().SetTimer(loadingHandler, FTimerDelegate::CreateLambda([&]() {
-		
-		ws_Battle->SetActiveWidgetIndex(2);
-		//player->GetController<APlayerController>()->SetInputMode(FInputModeGameOnly());
-
-		}), 2.0f, false);
-
+	ws_Battle->SetActiveWidgetIndex(2);
 }
 
 void UJE_BattleWidget::StartUIAnim()
 {
-	//GetWorld()->GetTimerManager().ClearTimer(initHandler);
 	ws_Battle->SetActiveWidgetIndex(1);
 	PlayAnimationForward(startText);
 
@@ -55,7 +53,7 @@ void UJE_BattleWidget::StartUIAnim()
 		
 		FString Message = FString::Printf(TEXT("startUIANim"));
 		GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Yellow, Message);
+		LoadingUI();
 
-
-		}), 0.1f, false);
+		}), 3.0f, false);
 }
