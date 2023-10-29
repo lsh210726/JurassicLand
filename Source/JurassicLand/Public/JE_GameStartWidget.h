@@ -51,6 +51,8 @@ public:
 
 	class ULSH_NetGameInstance* gi;
 
+	class ABlueTrex* player;
+
 public:
 	UPROPERTY(VisibleAnywhere, meta=(BindWidget), Category=MySettings)
 	class UButton* btn_nickCheck;
@@ -122,11 +124,7 @@ public:
 	UPROPERTY(VisibleAnywhere, meta=(BindWidget), Category=MySettings)
 	class UEditableText* edit_nickname;
 
-	UPROPERTY(EditDefaultsOnly, meta=(BindWidget), Category=MySettings)
-	float initialCoin = 500.0f;
-
-	UPROPERTY(VisibleAnywhere, meta=(BindWidget), Category=MySettings)
-	float currentCoin = 0.0f;
+	
 
 public:
 	UFUNCTION()

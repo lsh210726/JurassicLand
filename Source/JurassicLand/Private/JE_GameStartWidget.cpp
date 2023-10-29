@@ -10,6 +10,7 @@
 #include "Components/WidgetSwitcher.h"
 #include "Kismet/GameplayStatics.h"
 #include "LSH_NetGameInstance.h"
+#include "BlueTrex.h"
 
 
 
@@ -19,9 +20,9 @@ void UJE_GameStartWidget::NativeConstruct()
 
 	je_gi = GetGameInstance<UJE_GI>();
 	gi = GetGameInstance<ULSH_NetGameInstance>();
+	player = GetOwningPlayerPawn<ABlueTrex>();
 
-	currentCoin = initialCoin;
-	txt_coin->SetText(FText::AsNumber(currentCoin));
+	txt_coin->SetText(FText::AsNumber(player->currentCoin));
 
 	btn_skip->OnClicked.AddDynamic(this, &UJE_GameStartWidget::OnClickedSkip);
 	btn_play->OnHovered.AddDynamic(this, &UJE_GameStartWidget::OnHoveredPlay);

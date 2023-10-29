@@ -57,12 +57,18 @@ public:
 
 	/*----- Damage System Value --------*/
 	UPROPERTY(Replicated, EditAnywhere, BlueprintReadWrite, Category = "Health")//HP동기화
-	float TRexHP = 50;	
+	float TRexHP = 50;
 
 	virtual void GetLifetimeReplicatedProps(TArray< FLifetimeProperty >& OutLifetimeProps) const override;//변수 동기화 위한 함수
 
-
 	float TRexPower = 12;
+
+	// hp - 지은
+	UPROPERTY(Replicated, EditAnywhere, BlueprintReadWrite, Category = "Health")//HP동기화
+	bool bIsHpZero = false;	
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Health")
+	bool bIsHPShow = false;
 
 	/*----- General Value ----------*/
 public:
@@ -87,6 +93,16 @@ public:
 	// 닉네임 textrender
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category="Nickname")
 	class UTextRenderComponent* nicknameText;
+
+	class ULSH_NetGameInstance* gi;
+
+public:
+	//코인
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category=coin)
+	float initialCoin = 500.0f;
+
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category=coin)
+	float currentCoin = 0.0f;
 
 	
 };

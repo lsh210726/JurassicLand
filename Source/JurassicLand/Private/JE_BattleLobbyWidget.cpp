@@ -6,6 +6,7 @@
 #include "Components/TextBlock.h"
 #include "Components/WidgetSwitcher.h"
 #include "LSH_NetGameInstance.h"
+#include "BlueTrex.h"
 
 
 void UJE_BattleLobbyWidget::NativeConstruct()
@@ -13,16 +14,18 @@ void UJE_BattleLobbyWidget::NativeConstruct()
 	Super::NativeConstruct();
 	
 	gi = GetGameInstance<ULSH_NetGameInstance>();
+	player = GetOwningPlayerPawn<ABlueTrex>();
 
 	GEngine->AddOnScreenDebugMessage(-1, 30.0f, FColor::Green, gi->myName);
 
 	btn_battleIn->OnClicked.AddDynamic(this, &UJE_BattleLobbyWidget::OnClickedbattleIn);
+	//txt_coin_battle->SetText(FText::AsNumber(player->currentCoin));
 
 }
 
 void UJE_BattleLobbyWidget::NativeTick(const FGeometry& MyGeometry, float InDeltaTime)
 {
-
+	txt_coin_battle->SetText(FText::AsNumber(player->currentCoin));
 }
 
 void UJE_BattleLobbyWidget::OnClickedbattleIn()
