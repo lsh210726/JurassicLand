@@ -57,7 +57,7 @@ public:
 
 	/*----- Damage System Value --------*/
 	UPROPERTY(Replicated, EditAnywhere, BlueprintReadWrite, Category = "Health")//HP동기화
-	float TRexHP = 100;	
+	float TRexHP = 50;	
 
 	virtual void GetLifetimeReplicatedProps(TArray< FLifetimeProperty >& OutLifetimeProps) const override;//변수 동기화 위한 함수
 
