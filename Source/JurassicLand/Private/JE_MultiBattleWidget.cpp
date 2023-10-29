@@ -18,7 +18,7 @@ void UJE_MultiBattleWidget::NativeConstruct()
 
 	gi = GetGameInstance<ULSH_NetGameInstance>();
 
-	GEngine->AddOnScreenDebugMessage(-1, 30.0f, FColor::Green, gi->myName);
+	//GEngine->AddOnScreenDebugMessage(-1, 30.0f, FColor::Green, gi->myName);
 
 	btn_ready->OnClicked.AddDynamic(this, &UJE_MultiBattleWidget::OnClickedReady);
 
@@ -68,7 +68,7 @@ void UJE_MultiBattleWidget::OnClickedReady()
 				
 
 					FString Message = FString::Printf(TEXT("Client"));
-					GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Yellow, Message);
+					//GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Yellow, Message);
 				}
 			}
 
@@ -81,7 +81,7 @@ void UJE_MultiBattleWidget::MulticastBattleSwitchWidget_Implementation(int32 ind
 {
 	ws_MultiBattle->SetActiveWidgetIndex(1);
 	FString Message = FString::Printf(TEXT("Multicast, %d"));
-	GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Yellow, Message);
+	//GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Yellow, Message);
 
 }
 
@@ -89,7 +89,7 @@ void UJE_MultiBattleWidget::ServerBattleSwitchWidget_Implementation(int32 index)
 {
 	MulticastBattleSwitchWidget(1);
 	FString Message = FString::Printf(TEXT("%d"), index);
-	GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Red, Message);
+	//GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Red, Message);
 }
 
 //void UJE_MultiBattleWidget::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const
