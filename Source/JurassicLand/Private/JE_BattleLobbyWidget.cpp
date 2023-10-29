@@ -16,7 +16,7 @@ void UJE_BattleLobbyWidget::NativeConstruct()
 	gi = GetGameInstance<ULSH_NetGameInstance>();
 	player = GetOwningPlayerPawn<ABlueTrex>();
 
-	GEngine->AddOnScreenDebugMessage(-1, 30.0f, FColor::Green, gi->myName);
+	//GEngine->AddOnScreenDebugMessage(-1, 30.0f, FColor::Green, gi->myName);
 
 	btn_battleIn->OnClicked.AddDynamic(this, &UJE_BattleLobbyWidget::OnClickedbattleIn);
 	//txt_coin_battle->SetText(FText::AsNumber(player->currentCoin));
@@ -31,7 +31,7 @@ void UJE_BattleLobbyWidget::NativeTick(const FGeometry& MyGeometry, float InDelt
 void UJE_BattleLobbyWidget::OnClickedbattleIn()
 {
 	//FString Message = FString::Printf(TEXT("SkipButtonClicked"));
-	GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Yellow, TEXT("Click"));
+	//GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Yellow, TEXT("Click"));
 	gi = GetGameInstance<ULSH_NetGameInstance>();
 
 	FTimerHandle findHandler;
