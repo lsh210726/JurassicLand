@@ -48,7 +48,7 @@ public:
 
 	/*----- Character Component-----*/
 public:
-	UPROPERTY(EditAnywhere, Category= CharacterSettings)
+	UPROPERTY(EditAnywhere, Category= CharacterSettings, BlueprintReadWrite)
 	class USkeletalMeshComponent* TRexBody;
 	UPROPERTY(EditAnywhere,BlueprintReadWrite, Category= CharacterSettings)
 	class UCameraComponent* TRexEye;
