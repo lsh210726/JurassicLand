@@ -31,6 +31,6 @@ public:
 	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category=MySettings)
 	bool bBattleIn = false;
 
-
+	class ABlueTrex* bluePlayer;
 
 };

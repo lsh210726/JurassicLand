@@ -4,6 +4,8 @@
 #include "LSH_NetPlayerController.h"
 #include "Components/WidgetComponent.h"
 #include "JE_NicknameWidget.h"
+#include "BlueTrex.h"
+#include "Components/TextRenderComponent.h"
 
 ALSH_NetPlayerController::ALSH_NetPlayerController()
 {
@@ -28,6 +30,12 @@ void ALSH_NetPlayerController::BeginPlay()
 {
     Super::BeginPlay();
 
+	bluePlayer = Cast<ABlueTrex>(GetPawn());
+
+	if (bluePlayer != nullptr)
+	{
+		bluePlayer->nicknameText->SetVisibility(true);
+	}
 
 	/*if (nickNameComp != nullptr)
 	{

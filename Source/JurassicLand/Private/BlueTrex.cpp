@@ -17,6 +17,7 @@
 #include "JE_NicknameComponent.h"
 #include "LSH_NetGameInstance.h"
 #include "Components/TextRenderComponent.h"
+#include "Net/UnrealNetwork.h"
 
 //DECLARE_DYNAMIC_MULTICAST_DELEGATE(TRexTailAttack);
 
@@ -77,11 +78,12 @@ ABlueTrex::ABlueTrex()
 	//nickComp = CreateDefaultSubobject<UJE_NicknameComponent>(TEXT("nickComp"));
 	nicknameText = CreateDefaultSubobject<UTextRenderComponent>(TEXT("nicknameTEXT"));
 	nicknameText->AttachToComponent(GetMesh(), FAttachmentTransformRules(EAttachmentRule::KeepRelative, true), "NeckSocket");
-	nicknameText->SetRelativeLocation(FVector(0, -350, 0));
-	nicknameText->SetRelativeRotation(FRotator(0, 0, 90));
+	nicknameText->SetRelativeLocation(FVector(-350, 0, 0));
+	nicknameText->SetRelativeRotation(FRotator(-180, 90, 90));
 	nicknameText->SetHorizontalAlignment(EHTA_Center);
 	nicknameText->SetWorldSize(100);
 	nicknameText->SetTextRenderColor(FColor::White);
+	nicknameText->SetVisibility(false);
 	
 }
 
@@ -171,3 +173,8 @@ void ABlueTrex::TRexTailAttack_Implementation(const FInputActionValue& Val)
 }
 
 
+void ABlueTrex::GetLifetimeReplicatedProps(TArray< FLifetimeProperty >& OutLifetimeProps) const
+{
+	Super::GetLifetimeReplicatedProps(OutLifetimeProps);
+	DOREPLIFETIME(ABlueTrex, TRexHP);
+}
