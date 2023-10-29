@@ -79,8 +79,10 @@ public:
 	UPROPERTY(VisibleAnywhere, meta = (BindWidget), Category = MySettings)
 	class UImage* img_player_lose;
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, meta = (BindWidgetAnim), Category = MySettings, Transient)
-	class UWidgetAnimation* battleStartAnim;
+	UPROPERTY(VisibleAnywhere, Transient, meta = (BindWidgetAnim), Category = MySettings)
+	class UWidgetAnimation* startText;
+
+	FTimerHandle initHandler;
 
 public:	
 	UFUNCTION()

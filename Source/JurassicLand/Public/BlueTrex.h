@@ -79,6 +79,15 @@ private:
     UPROPERTY(VisibleDefaultsOnly, BlueprintReadOnly, Category = Attack, Meta = (AllowPrivateAccess = true))
     class UAnimationAsset* TailAttackAnim;
 
+public:
+	// 닉네임 ui component
+	/*UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
+	class UJE_NicknameComponent* nickComp;*/
+
+	// 닉네임 textrender
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category="Nickname")
+	class UTextRenderComponent* nicknameText;
+
 	
 };
  

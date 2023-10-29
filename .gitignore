@@ -79,3 +79,6 @@ Content/4_SK/BlackTRex/*
 #backup file
 *.zip
 *.7z
+
+#MS_Blood
+Content/MS_Blood/*
