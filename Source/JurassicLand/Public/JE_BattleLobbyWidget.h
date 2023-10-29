@@ -29,7 +29,11 @@ public:
 	UPROPERTY(VisibleAnywhere, meta=(BindWidget), Category=MySettings)
 	class UTextBlock* txt_battleIn;
 
+	UPROPERTY(VisibleAnywhere, meta=(BindWidget), Category=MySettings)
+	class UTextBlock* txt_coin_battle;
+
 	class ULSH_NetGameInstance* gi;
+	class ABlueTrex* player;
 
 	int32 widgetIndex = 0;
 

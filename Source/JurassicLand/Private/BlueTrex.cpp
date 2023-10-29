@@ -84,6 +84,11 @@ ABlueTrex::ABlueTrex()
 	nicknameText->SetWorldSize(100);
 	nicknameText->SetTextRenderColor(FColor::White);
 	nicknameText->SetVisibility(false);
+
+
+	//코인
+
+	currentCoin = initialCoin;
 	
 }
 
@@ -100,7 +105,7 @@ void ABlueTrex::BeginPlay()
 	}
 
 	// 닉네임
-	ULSH_NetGameInstance* gi = GetGameInstance<ULSH_NetGameInstance>();
+	gi = GetGameInstance<ULSH_NetGameInstance>();
 	nicknameText->SetText(FText::FromString(gi->myName));	
 }
 
@@ -108,6 +113,12 @@ void ABlueTrex::BeginPlay()
 void ABlueTrex::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
+
+	if(TRexHP <= 0.f)
+	{
+		bIsHpZero = true;
+		gi->isEnd = true;
+	}
 
 }
 
@@ -172,5 +183,8 @@ void ABlueTrex::TRexTailAttack_Implementation(const FInputActionValue& Val)
 void ABlueTrex::GetLifetimeReplicatedProps(TArray< FLifetimeProperty >& OutLifetimeProps) const
 {
 	Super::GetLifetimeReplicatedProps(OutLifetimeProps);
+
 	DOREPLIFETIME(ABlueTrex, TRexHP);
+	DOREPLIFETIME(ABlueTrex, bIsHpZero);
+
 }

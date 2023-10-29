@@ -14,6 +14,9 @@ class JURASSICLAND_API UJE_BattleWidget : public UUserWidget
 {
 	GENERATED_BODY()
 
+public:
+	class ULSH_NetGameInstance* gi;
+
 protected:
 	virtual void NativeConstruct() override;
 	virtual void NativeTick(const FGeometry& MyGeometry, float InDeltaTime);
@@ -21,6 +24,7 @@ protected:
 public:
 
 	class ABlueTrex* player;
+	class AJE_BattleInController* pc;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, meta = (BindWidget), Category = MySettings)
 	class UWidgetSwitcher* ws_Battle;
@@ -83,6 +87,13 @@ public:
 	class UWidgetAnimation* startText;
 
 	FTimerHandle initHandler;
+	FTimerHandle CoinHandler;
+	
+	UPROPERTY(BlueprintReadOnly)
+	bool ischange = false;
+
+	UPROPERTY(BlueprintReadOnly)
+	bool bisMouse = false;
 
 public:	
 	UFUNCTION()
@@ -90,6 +101,12 @@ public:
 
 	UFUNCTION()
 	void StartUIAnim();
+
+	UFUNCTION()
+	void CoinUI();
+
+	UFUNCTION() 
+	void OnClickedToMain();
 
 	
 };

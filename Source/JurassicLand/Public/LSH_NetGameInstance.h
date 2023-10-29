@@ -35,4 +35,8 @@ public:
 	void JoinOtherSession();
 	void OnJoinSelectedSession(FName sessionName, EOnJoinSessionCompleteResult::Type result);
 	void OnTravlebattleMap();//게임 시작버튼 눌렀을 때 서버트래블
+
+public:
+	UPROPERTY()
+	bool isEnd = false;
 };
