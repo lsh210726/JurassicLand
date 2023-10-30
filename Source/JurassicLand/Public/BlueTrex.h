@@ -70,6 +70,8 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Health")
 	bool bIsHPShow = false;
 
+	bool btickStop = false;
+
 	/*----- General Value ----------*/
 public:
 	class APlayerController* pc;
@@ -101,7 +103,7 @@ public:
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category=coin)
 	float initialCoin = 500.0f;
 
-	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category=coin)
+	UPROPERTY(Replicated, EditDefaultsOnly, BlueprintReadOnly, Category=coin)
 	float currentCoin = 0.0f;
 
 	

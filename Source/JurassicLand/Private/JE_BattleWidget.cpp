@@ -10,6 +10,8 @@
 #include "LSH_NetGameInstance.h"
 #include "Kismet/GameplayStatics.h"
 #include "JE_BattleInController.h"
+#include "JE_InBattleController.h"
+
 
 void UJE_BattleWidget::NativeConstruct()
 {
@@ -98,6 +100,20 @@ void UJE_BattleWidget::CoinUI()
 
 void UJE_BattleWidget::OnClickedToMain()
 {
-	FString LevelName = TEXT("MainMap");
-	UGameplayStatics::OpenLevel(GetWorld(), FName(*LevelName));
+	/*FString LevelName = TEXT("MainMap");
+	UGameplayStatics::OpenLevel(GetWorld(), FName(*LevelName));*/
+
+	if (player->GetController()->IsLocalController())
+	{
+		player->GetController<AJE_InBattleController>()->ClientTravel("/Game/1_Level/MainMap", ETravelType::TRAVEL_Absolute);
+		UE_LOG(LogTemp, Warning, TEXT("Client travel"));
+	}
+	else
+	{
+		FString mapAdress = "/Game/1_Level/MainMap";
+		bool travelResult = GetWorld()->ServerTravel(mapAdress + "?Listen", true);
+
+		UE_LOG(LogTemp, Warning, TEXT("Server travel Result : %s"), travelResult ? *FString("Success") : *FString("Failed"));
+	}
+	
 }
