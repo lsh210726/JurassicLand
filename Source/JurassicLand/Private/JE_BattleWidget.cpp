@@ -103,17 +103,19 @@ void UJE_BattleWidget::OnClickedToMain()
 	/*FString LevelName = TEXT("MainMap");
 	UGameplayStatics::OpenLevel(GetWorld(), FName(*LevelName));*/
 
-	if (player->GetController()->IsLocalController())
-	{
-		player->GetController<AJE_InBattleController>()->ClientTravel("/Game/1_Level/MainMap", ETravelType::TRAVEL_Absolute);
-		UE_LOG(LogTemp, Warning, TEXT("Client travel"));
-	}
-	else
+	if (player->HasAuthority())
 	{
 		FString mapAdress = "/Game/1_Level/MainMap";
 		bool travelResult = GetWorld()->ServerTravel(mapAdress + "?Listen", true);
 
 		UE_LOG(LogTemp, Warning, TEXT("Server travel Result : %s"), travelResult ? *FString("Success") : *FString("Failed"));
+		
+	}
+	else
+	{
+		player->GetController<APlayerController>()->ClientTravel("/Game/1_Level/MainMap", ETravelType::TRAVEL_Absolute);
+		UE_LOG(LogTemp, Warning, TEXT("Client travel"));
+		
 	}
 	
 }
