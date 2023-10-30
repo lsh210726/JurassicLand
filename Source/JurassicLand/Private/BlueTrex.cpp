@@ -114,11 +114,16 @@ void ABlueTrex::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 
-	if(TRexHP <= 0.f)
+	if (!btickStop)
 	{
-		bIsHpZero = true;
-		gi->isEnd = true;
+		if (TRexHP <= 0.f)
+		{
+			bIsHpZero = true;
+			gi->isEnd = true;
+			btickStop = true;
+		}
 	}
+	
 
 }
 
@@ -186,5 +191,6 @@ void ABlueTrex::GetLifetimeReplicatedProps(TArray< FLifetimeProperty >& OutLifet
 
 	DOREPLIFETIME(ABlueTrex, TRexHP);
 	DOREPLIFETIME(ABlueTrex, bIsHpZero);
+	DOREPLIFETIME(ABlueTrex, currentCoin);
 
 }
