@@ -100,13 +100,13 @@ void UJE_BattleWidget::CoinUI()
 
 void UJE_BattleWidget::OnClickedToMain()
 {
-	/*FString LevelName = TEXT("MainMap");
-	UGameplayStatics::OpenLevel(GetWorld(), FName(*LevelName));*/
+	FString LevelName = TEXT("MainMap");
+	UGameplayStatics::OpenLevel(GetWorld(), FName(*LevelName));
 
-	FString mapAdress = "/Game/1_Level/MainMap";
+	/*FString mapAdress = "/Game/1_Level/MainMap";
 	bool travelResult = GetWorld()->ServerTravel(mapAdress + "?Listen", true);
 
-	UE_LOG(LogTemp, Warning, TEXT("Server travel Result : %s"), travelResult ? *FString("Success") : *FString("Failed"));
+	UE_LOG(LogTemp, Warning, TEXT("Server travel Result : %s"), travelResult ? *FString("Success") : *FString("Failed"));*/
 
 
 	
