@@ -40,15 +40,28 @@ struct FItemAssetData
 	UStaticMesh* Mesh;
 };
 
-UCLASS()
-class JURASSICLAND_API UJE_CustomItem : public UDataTable
+
+USTRUCT(BlueprintType)
+struct JURASSICLAND_API FJE_CustomItem : public FTableRowBase
 {
 	GENERATED_BODY()
 
+public:
+	UPROPERTY(EditAnywhere, Category = "Custom Data")
 	EItemType ItemType;
 
+	UPROPERTY(EditAnywhere, Category = "Custom Data")
 	FItemTextData ItemTextData;
 
+	UPROPERTY(EditAnywhere, Category = "Custom Data")
 	FItemAssetData ItemAssetsData;
-	
+
 };
+
+
+//UCLASS()
+//class JURASSICLAND_API UJE_CustomItem : public UDataTable
+//{
+//	GENERATED_BODY()	
+//
+//};
