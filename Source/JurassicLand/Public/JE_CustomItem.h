@@ -15,28 +15,28 @@ enum class EItemType : uint8
 
 };
 
-USTRUCT()
+USTRUCT(BlueprintType)
 struct FItemTextData
 {
 	GENERATED_BODY()
 
-	UPROPERTY(EditAnywhere)
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	FText Name;
-	UPROPERTY(EditAnywhere)
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	FText Description;
-	UPROPERTY(EditAnywhere)
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	FText UsageText;
 };
 
 
-USTRUCT()
+USTRUCT(BlueprintType)
 struct FItemAssetData
 {
 	GENERATED_BODY()
 
-	UPROPERTY(EditAnywhere)
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	UTexture2D* Icon;
-	UPROPERTY(EditAnywhere)
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	UStaticMesh* Mesh;
 };
 
@@ -47,21 +47,13 @@ struct JURASSICLAND_API FJE_CustomItem : public FTableRowBase
 	GENERATED_BODY()
 
 public:
-	UPROPERTY(EditAnywhere, Category = "Custom Data")
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Custom Data")
 	EItemType ItemType;
 
-	UPROPERTY(EditAnywhere, Category = "Custom Data")
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Custom Data")
 	FItemTextData ItemTextData;
 
-	UPROPERTY(EditAnywhere, Category = "Custom Data")
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Custom Data")
 	FItemAssetData ItemAssetsData;
 
 };
-
-
-//UCLASS()
-//class JURASSICLAND_API UJE_CustomItem : public UDataTable
-//{
-//	GENERATED_BODY()	
-//
-//};

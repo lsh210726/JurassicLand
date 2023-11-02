@@ -18,7 +18,7 @@ void UJE_GameStartWidget::NativeConstruct()
 {
 	Super::NativeConstruct();
 
-	je_gi = GetGameInstance<UJE_GI>();
+	//je_gi = GetGameInstance<UJE_GI>();
 	gi = GetGameInstance<ULSH_NetGameInstance>();
 	player = GetOwningPlayerPawn<ABlueTrex>();
 
