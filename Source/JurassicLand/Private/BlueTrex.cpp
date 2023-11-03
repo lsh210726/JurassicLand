@@ -38,21 +38,21 @@ ABlueTrex::ABlueTrex()
 		TRexBody->SetRelativeRotation(FRotator(0, -90.0f, 0));
 	}
 	/*--------- Spring Arm Component Setting -----------*/
-	TRexEyeArm = CreateDefaultSubobject<USpringArmComponent>(TEXT("TRexEyeArm"));
-	TRexEyeArm->SetupAttachment(GetCapsuleComponent());
-	TRexEyeArm->SetRelativeLocation(FVector(0.0f,0.0f,100.0f));
-	TRexEyeArm->SetRelativeRotation(FRotator(-15.0f,0.0f,0.0f));
-
+//	TRexEyeArm = CreateDefaultSubobject<USpringArmComponent>(TEXT("TRexEyeArm"));
+//	TRexEyeArm->SetupAttachment(GetCapsuleComponent());
+//	TRexEyeArm->SetRelativeLocation(FVector(0.0f,0.0f,100.0f));
+//	TRexEyeArm->SetRelativeRotation(FRotator(-15.0f,0.0f,0.0f));
+//
 	bUseControllerRotationYaw = true;
-	TRexEyeArm->bUsePawnControlRotation = true;
-	//TRexEye->bUsePawnControlRotation = false;
-	
-
-	/*--------- Camera Component Setting --------*/
-	TRexEye = CreateDefaultSubobject<UCameraComponent>(TEXT("TRexEye"));
-	TRexEye->SetupAttachment(TRexEyeArm);
-// 	TRexEye->SetWorldLocation(FVector(0.0f,0.0f,0.0f));
-// 	TRexEye->SetWorldRotation(FRotator(0.0f,0.0f,0.0f));
+//	TRexEyeArm->bUsePawnControlRotation = true;
+//	//TRexEye->bUsePawnControlRotation = false;
+//	
+//
+//	/*--------- Camera Component Setting --------*/
+//	TRexEye = CreateDefaultSubobject<UCameraComponent>(TEXT("TRexEye"));
+//	TRexEye->SetupAttachment(TRexEyeArm);
+//// 	TRexEye->SetWorldLocation(FVector(0.0f,0.0f,0.0f));
+//// 	TRexEye->SetWorldRotation(FRotator(0.0f,0.0f,0.0f));
 
 	/*--------- Enhanced Input Setting ----------*/
 	static ConstructorHelpers::FObjectFinder<UInputMappingContext>tempIMC_TRex(TEXT("/Game/7_MISC/Input/IMC_TRex.IMC_TRex"));
