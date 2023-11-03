@@ -38,6 +38,10 @@ struct FItemAssetData
 	UTexture2D* Icon;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	UStaticMesh* Mesh;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	TSubclassOf<AActor> ActorMesh;
+
+
 };
 
 

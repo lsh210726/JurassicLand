@@ -22,12 +22,12 @@ public:
 	
 	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, meta=(BindWidget), Category=MySettings)
 	class UButton* btn_item1;
-
-	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, meta=(BindWidget), Category=MySettings)
-	class UButton* btn_item2;
-
-	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, meta=(BindWidget), Category=MySettings)
-	class UButton* btn_item3;
+// 
+// 	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, meta=(BindWidget), Category=MySettings)
+// 	class UButton* btn_item2;
+// 
+// 	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, meta=(BindWidget), Category=MySettings)
+// 	class UButton* btn_item3;
 	
 
 	
