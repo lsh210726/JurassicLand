@@ -63,6 +63,7 @@ public:
 
 	float TRexPower = 12;
 
+public:
 	// hp - 지은
 	UPROPERTY(Replicated, EditAnywhere, BlueprintReadWrite, Category = "Health")//HP동기화
 	bool bIsHpZero = false;	
@@ -87,10 +88,15 @@ private:
     UPROPERTY(VisibleDefaultsOnly, BlueprintReadOnly, Category = Attack, Meta = (AllowPrivateAccess = true))
     class UAnimationAsset* TailAttackAnim;
 
+	// 지은
 public:
 	// 닉네임 ui component
 	/*UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
 	class UJE_NicknameComponent* nickComp;*/
+
+	// 닉네임 변수
+	UPROPERTY(Replicated)
+	FString playerName = "Dinosaur";
 
 	// 닉네임 textrender
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category="Nickname")
@@ -98,14 +104,27 @@ public:
 
 	class ULSH_NetGameInstance* gi;
 
+// 지은
+public:
+	UPROPERTY(Replicated, EditAnywhere, BlueprintReadWrite, Category = Custom)
+	FLinearColor playerColor = FLinearColor::White;
+
+	UPROPERTY(Replicated, EditAnywhere, BlueprintReadWrite, Category = Custom)
+	int32 playerMeshNumber = 0;
+
+public:
+	void InitializePlayer();
+
+	UFUNCTION(Server, Unreliable)
+	void ServerSetInitInfo(const FString& name, int32 num, FLinearColor color);
+	
 public:
 	//코인
-	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category=coin)
+	UPROPERTY(Replicated, EditDefaultsOnly, BlueprintReadOnly, Category=coin)
 	float initialCoin = 500.0f;
 
 	UPROPERTY(Replicated, EditDefaultsOnly, BlueprintReadOnly, Category=coin)
 	float currentCoin = 0.0f;
-
 	
 };
  

@@ -12,23 +12,10 @@ void UJE_CustomItemWidget::NativeConstruct()
 {
 	Super::NativeConstruct();
 
-	//static ConstructorHelpers::FObjectFinder<UDataTable> tmpDataTable(TEXT("/Game/7_MISC/ItemData/CustomItems.CustomItems"));
-// 	if (tmpDataTable.Succeeded())
-// 	{
-// 		UE_LOG(LogTemp, Warning, TEXT("DataTable Succeed!"));
-// 		CustomItemTable = tmpDataTable.Object;
-// 
-// 	}
-
-	/*for (int i = 0; i < 3; i++)
-	{
-		UButton* buttonHat =CreateDefaultSubobject<UButton>(TEXT("buttonHat"));
-	}*/
-
 	btn_Tab_Hat->OnClicked.AddDynamic(this, &UJE_CustomItemWidget::OnClickedTabHat);
 	btn_Tab_Glasses->OnClicked.AddDynamic(this, &UJE_CustomItemWidget::OnClickedTabGlasses);
 	btn_Tab_Shoes->OnClicked.AddDynamic(this, &UJE_CustomItemWidget::OnClickedTabShoes);
-}
+} 
 
 void UJE_CustomItemWidget::NativeTick(const FGeometry& MyGeometry, float InDeltaTime)
 {

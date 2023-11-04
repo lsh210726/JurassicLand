@@ -10,6 +10,26 @@
 /**
  * 
  */
+USTRUCT(BlueprintType)
+struct FPlayerCustomInfo
+{
+	GENERATED_USTRUCT_BODY()
+
+public:
+	FString dinoName = TEXT("");
+	int32 dinoMeshNum = 0;
+	FLinearColor dinoColor = FLinearColor::White;
+
+	FORCEINLINE void Set(FString name, int32 num, FLinearColor color)
+	{
+		dinoName = name;
+		dinoMeshNum = num;
+		dinoColor = color;
+	}
+
+};
+
+
 UCLASS()
 class JURASSICLAND_API ULSH_NetGameInstance : public UGameInstance
 {
@@ -27,6 +47,8 @@ public:
 
 	IOnlineSessionPtr sessionInterface;
 	TSharedPtr<FOnlineSessionSearch> sessionSearch;
+	FPlayerCustomInfo playerCustomInfo;
+
 
 	void CreateMySession(FText userName);//세션만들기함수
 	void OncreatedMySession(FName sessionName, bool bWasSuccessful);//세션이 만들어지고 난후 실행될 델리케이트 함수

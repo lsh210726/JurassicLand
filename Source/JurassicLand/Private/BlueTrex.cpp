@@ -18,6 +18,7 @@
 #include "LSH_NetGameInstance.h"
 #include "Components/TextRenderComponent.h"
 #include "Net/UnrealNetwork.h"
+#include "EngineUtils.h"
 
 //DECLARE_DYNAMIC_MULTICAST_DELEGATE(TRexTailAttack);
 
@@ -87,9 +88,8 @@ ABlueTrex::ABlueTrex()
 
 
 	//코인
-
 	currentCoin = initialCoin;
-	
+
 }
 
 // Called when the game starts or when spawned
@@ -104,9 +104,22 @@ void ABlueTrex::BeginPlay()
 			SubSystem->AddMappingContext(IMC_TRex, 0);
 	}
 
-	// 닉네임
-	gi = GetGameInstance<ULSH_NetGameInstance>();
-	nicknameText->SetText(FText::FromString(gi->myName));	
+	
+	// 닉네임	
+
+	// 지은 - 초기 설정
+	if (GetController() != nullptr && GetController()->IsLocalController())
+	{
+		gi = GetGameInstance<ULSH_NetGameInstance>();
+		ServerSetInitInfo(gi->playerCustomInfo.dinoName, gi->playerCustomInfo.dinoMeshNum, gi->playerCustomInfo.dinoColor);
+	}
+
+	//nicknameText->SetText(FText::FromString(playerName));
+
+	// 캐릭터 초기화 지연 실행
+	FTimerHandle initHandler;
+	GetWorldTimerManager().SetTimer(initHandler, this, &ABlueTrex::InitializePlayer, 1.0f, false);
+
 }
 
 // Called every frame
@@ -191,6 +204,37 @@ void ABlueTrex::GetLifetimeReplicatedProps(TArray< FLifetimeProperty >& OutLifet
 
 	DOREPLIFETIME(ABlueTrex, TRexHP);
 	DOREPLIFETIME(ABlueTrex, bIsHpZero);
+	DOREPLIFETIME(ABlueTrex, initialCoin);
 	DOREPLIFETIME(ABlueTrex, currentCoin);
+	DOREPLIFETIME(ABlueTrex, playerName);
+	DOREPLIFETIME(ABlueTrex, playerColor);
+	DOREPLIFETIME(ABlueTrex, playerMeshNumber);
+
+
+}
+
+void ABlueTrex::InitializePlayer()
+{
+	// 닉네임 설정
+	if (nicknameText)
+	{
+		nicknameText->SetText(FText::FromString(playerName));
+	}
+
+	// 컬러 설정
+	UMaterialInterface* mat1 = GetMesh()->GetMaterial(0);
+
+	UMaterialInstanceDynamic* dynamicMat1 = UMaterialInstanceDynamic::Create(mat1, this);
+
+	GetMesh()->SetMaterial(0, dynamicMat1);
+
+	dynamicMat1->SetVectorParameterValue(FName("MyColor"), playerColor);
+}
+
+void ABlueTrex::ServerSetInitInfo_Implementation(const FString& name, int32 num, FLinearColor color)
+{
+	playerName = name;
+	playerMeshNumber = num;
+	playerColor = color;
 
 }

@@ -71,7 +71,11 @@ void UJE_GameStartWidget::OnClickedSkip()
 
 void UJE_GameStartWidget::OnClickedNickCheck()
 {
-	gi->myName = edit_nickname->GetText().ToString();
+	if (!edit_nickname->GetText().IsEmpty())
+	{
+		gi->myName = edit_nickname->GetText().ToString();
+		gi->playerCustomInfo.dinoName = edit_nickname->GetText().ToString();
+	}
 	
 	SwitchCanvas(3);
 
