@@ -159,6 +159,15 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "CustomData")
 	class UMaterialInstanceDynamic* currentDynamicMat;
 
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "CustomData")
+	FName HatTag;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "CustomData")
+	FName GlassesTag;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "CustomData")
+	FName ShoesTag;
+
 public:
 	UFUNCTION()
 	void GetCustomItemData();

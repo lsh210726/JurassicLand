@@ -2,6 +2,7 @@
 
 
 #include "JE_CustomItemActor.h"
+#include "GameFramework/Actor.h" 
 
 // Sets default values
 AJE_CustomItemActor::AJE_CustomItemActor()

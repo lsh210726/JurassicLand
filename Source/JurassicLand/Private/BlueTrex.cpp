@@ -22,6 +22,8 @@
 #include "JE_CustomItemActor.h"
 #include "JE_SaveGame.h"
 #include "Kismet/GameplayStatics.h"
+#include "Engine/World.h"
+#include "GameFramework/Actor.h" 
 
 //DECLARE_DYNAMIC_MULTICAST_DELEGATE(TRexTailAttack);
 
@@ -266,20 +268,58 @@ void ABlueTrex::GetCustomItemData()
 		if (currActor->ActorHasTag("Hat"))
 		{
 			currentHat = currActor;
+
+			const TArray<FName>& myTags = currActor->Tags;
+			if (myTags.IsValidIndex(1))
+			{
+				HatTag = myTags[1];
+			}
 		}
 		else if (currActor->ActorHasTag("Glasses"))
 		{
 			currentGlasses = currActor;
+			const TArray<FName>& myTags = currActor->Tags;
+			if (myTags.IsValidIndex(1))
+			{
+				GlassesTag = myTags[1];
+			}
 		}
 		else if (currActor->ActorHasTag("Shoes"))
 		{
 			currentShoes = currActor;
+			const TArray<FName>& myTags = currActor->Tags;
+			if (myTags.IsValidIndex(1))
+			{
+				ShoesTag = myTags[1];
+			}
 		}
 		else
 		{
 			continue;
 		}
 	}
+
+	//for (TActorIterator<AJE_CustomItemActor> Itr(GetWorld()); Itr; ++Itr)
+	//{
+	//	AJE_CustomItemActor* currActor = *Itr;
+
+	//	if (currActor->ActorHasTag("Hat"))
+	//	{
+	//		currentHat = currActor;
+	//	}
+	//	else if (currActor->ActorHasTag("Glasses"))
+	//	{
+	//		currentGlasses = currActor;
+	//	}
+	//	else if (currActor->ActorHasTag("Shoes"))
+	//	{
+	//		currentShoes = currActor;
+	//	}
+	//	else
+	//	{
+	//		continue;
+	//	}
+	//}
 }
 
 void ABlueTrex::SaveCustomItemData()
@@ -288,9 +328,13 @@ void ABlueTrex::SaveCustomItemData()
 
 	MySaveGame = Cast<UJE_SaveGame>(UGameplayStatics::CreateSaveGameObject(UJE_SaveGame::StaticClass()));
 
-	MySaveGame->myHat = currentHat;
-	MySaveGame->myGlasses = currentGlasses;
-	MySaveGame->myShoes = currentShoes;
+	//MySaveGame->myHat = currentHat;
+	//MySaveGame->myGlasses = currentGlasses;
+	//MySaveGame->myShoes = currentShoes;
+
+	MySaveGame->myHatTag = HatTag;
+	MySaveGame->myGlassesTag = GlassesTag;
+	MySaveGame->myShoesTag = ShoesTag;
 
 	UGameplayStatics::SaveGameToSlot(MySaveGame, "MyCustomSaveSlot", 0);
 
@@ -300,13 +344,57 @@ void ABlueTrex::SaveCustomItemData()
 
 void ABlueTrex::LoadCustomItemData()
 {
-	MySaveGame = Cast<UJE_SaveGame>(UGameplayStatics::CreateSaveGameObject(UJE_SaveGame::StaticClass()));
+	//MySaveGame = Cast<UJE_SaveGame>(UGameplayStatics::CreateSaveGameObject(UJE_SaveGame::StaticClass()));
 
 	MySaveGame = Cast<UJE_SaveGame>(UGameplayStatics::LoadGameFromSlot("MyCustomSaveSlot", 0));
 
+
 	if (MySaveGame == nullptr)
 	{
-		
+		GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Yellow, TEXT("Nothing"));
+		return;
+	}
+	else
+	{	
+
+		if (MySaveGame->myHatTag.IsValid())
+		{
+			//FString Message = FString::Printf(TEXT("%s"), *MySaveGame->myHat->GetName());
+			//GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Yellow, Message);
+
+			FString Message1 =  MySaveGame->myHatTag.ToString();
+			GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Yellow, Message1);
+
+			FActorSpawnParameters SpawnParams;
+			//AJE_CustomItemActor* myHatItem = GetWorld()->SpawnActor<AJE_CustomItemActor>(MySaveGame->myHat->StaticClass(), GetMesh()->GetSocketLocation("HeadSocket"), GetMesh()->GetSocketRotation("HeadSocket"), SpawnParams);
+			//MySaveGame->myHat->AttachToComponent(GetMesh(), FAttachmentTransformRules(EAttachmentRule::KeepWorld, true), "HeadSocket");
+			//myHatItem->AttachToComponent(GetMesh(), FAttachmentTransformRules(EAttachmentRule::KeepWorld, true), "HeadSocket");
+			GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Yellow, TEXT("myHat"));
+
+		}
+
+		if (MySaveGame->myGlasses)
+		{
+			MySaveGame->myGlasses->AttachToComponent(GetMesh(), FAttachmentTransformRules(EAttachmentRule::KeepWorld, true), "RightEyeSocket");
+			GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Yellow, TEXT("myGlasses"));
+
+		}
+
+		if (MySaveGame->myShoes)
+		{
+			if(MySaveGame->myShoes->ActorHasTag("Right"))
+			{
+				MySaveGame->myShoes->AttachToComponent(GetMesh(), FAttachmentTransformRules(EAttachmentRule::KeepWorld, true), "RightBallSocket");
+				GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Yellow, TEXT("Right"));
+
+			}
+			else
+			{
+				MySaveGame->myShoes->AttachToComponent(GetMesh(), FAttachmentTransformRules(EAttachmentRule::KeepWorld, true), "LeftBallSocket");
+				GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Yellow, TEXT("left"));
+
+			}
+		}
 	}
 
 	GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Yellow, TEXT("Load"));

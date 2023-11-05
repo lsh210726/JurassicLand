@@ -29,4 +29,13 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = MySettings)
 	class UMaterialInstanceDynamic* myCustomDynamicMat;
 
+public:
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = MySettings)
+	FName myHatTag;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = MySettings)
+	FName myGlassesTag;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = MySettings)
+	FName myShoesTag;
 };
