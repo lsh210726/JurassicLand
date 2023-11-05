@@ -24,30 +24,78 @@ void UJE_CustomColorWidget::NativeTick(const FGeometry& MyGeometry, float InDelt
 
 void UJE_CustomColorWidget::OnYellowClicked()
 {
-	currentColor = FLinearColor::Yellow;
+	if (currentColor != FLinearColor::Yellow)
+	{
+		currentColor = FLinearColor::Yellow;
+	}
+	else
+	{
+		currentColor = FLinearColor::White;
+	}
+	
 	gi->playerCustomInfo.dinoColor = currentColor;
-	player->InitializePlayer();
+	player->SetColor();
+
+	//// 컬러 설정
+	//UMaterialInterface* mat1 = player->GetMesh()->GetMaterial(0);
+	//FString Message = FString::Printf(TEXT("%s"), *mat1->GetName());
+	//GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Yellow, Message);
+
+	//UMaterialInstanceDynamic* dynamicMat1 = UMaterialInstanceDynamic::Create(mat1, this);
+
+	//player->GetMesh()->SetMaterial(0, dynamicMat1);
+
+	//dynamicMat1->SetVectorParameterValue(FName("MyColor"), currentColor);
+
+	
+
 
 }
 
 void UJE_CustomColorWidget::OnBlueClicked()
-{
-	currentColor = FLinearColor::Blue;
+{	
+	if (currentColor != FLinearColor::Blue)
+	{
+		currentColor = FLinearColor::Blue;
+	}
+	else
+	{
+		currentColor = FLinearColor::White;
+	}
 	gi->playerCustomInfo.dinoColor = currentColor;
+	player->SetColor();
 
 }
 
 void UJE_CustomColorWidget::OnGreenClicked()
 {
-	currentColor = FLinearColor::Green;
+	if (currentColor != FLinearColor::Green)
+	{
+		currentColor = FLinearColor::Green;
+	}
+	else
+	{
+		currentColor = FLinearColor::White;
+	}
+	
 	gi->playerCustomInfo.dinoColor = currentColor;
+	player->SetColor();
 
 }
 
 void UJE_CustomColorWidget::OnRedClicked()
 {
-	currentColor = FLinearColor::Red;
+	if (currentColor != FLinearColor::Red)
+	{
+		currentColor = FLinearColor::Red;
+	}
+	else
+	{
+		currentColor = FLinearColor::White;
+	}
+	
 	gi->playerCustomInfo.dinoColor = currentColor;
+	player->SetColor();
 
 }
 

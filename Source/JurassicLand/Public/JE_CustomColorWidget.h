@@ -36,7 +36,7 @@ public:
 	UPROPERTY(EditDefaultsOnly, meta = (BindWidget), Category = MySettings)
 	class UButton* btn_green;
 
-	FLinearColor currentColor;
+	FLinearColor currentColor = FLinearColor::White;
 
 public:
 	UFUNCTION()

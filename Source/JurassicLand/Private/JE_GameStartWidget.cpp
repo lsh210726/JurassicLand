@@ -32,6 +32,8 @@ void UJE_GameStartWidget::NativeConstruct()
 	btn_battle->OnClicked.AddDynamic(this, &UJE_GameStartWidget::OnClickedBattle);
 	btn_nickCheck->OnClicked.AddDynamic(this, &UJE_GameStartWidget::OnClickedNickCheck);
 
+	btn_custom->OnClicked.AddDynamic(this, &UJE_GameStartWidget::OnClickedCustom);
+
 
 
 }
@@ -109,6 +111,14 @@ void UJE_GameStartWidget::OnClickedBattle()
 	//FString Message = FString::Printf(TEXT("SkipButtonClicked"));
 	//GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Yellow, Message);
 	FString LevelName = TEXT("MainMap");
+	UGameplayStatics::OpenLevel(GetWorld(), FName(*LevelName));
+}
+
+void UJE_GameStartWidget::OnClickedCustom()
+{
+	FString Message = FString::Printf(TEXT("custom"));
+	GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Yellow, Message);
+	FString LevelName = TEXT("CustomMap");
 	UGameplayStatics::OpenLevel(GetWorld(), FName(*LevelName));
 }
 

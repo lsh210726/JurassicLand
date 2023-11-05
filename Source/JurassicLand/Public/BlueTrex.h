@@ -5,6 +5,7 @@
 #include "CoreMinimal.h"
 #include "GameFramework/Character.h"
 #include "../Plugins/EnhancedInput/Source/EnhancedInput/Public/InputActionValue.h"
+#include "JE_CustomItemData.h"
 #include "BlueTrex.generated.h"
 
 UCLASS()
@@ -63,16 +64,6 @@ public:
 
 	float TRexPower = 12;
 
-public:
-	// hp - 지은
-	UPROPERTY(Replicated, EditAnywhere, BlueprintReadWrite, Category = "Health")//HP동기화
-	bool bIsHpZero = false;	
-
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Health")
-	bool bIsHPShow = false;
-
-	bool btickStop = false;
-
 	/*----- General Value ----------*/
 public:
 	class APlayerController* pc;
@@ -87,6 +78,17 @@ public:
 private:
     UPROPERTY(VisibleDefaultsOnly, BlueprintReadOnly, Category = Attack, Meta = (AllowPrivateAccess = true))
     class UAnimationAsset* TailAttackAnim;
+
+
+public:
+	// hp - 지은
+	UPROPERTY(Replicated, EditAnywhere, BlueprintReadWrite, Category = "Health")//HP동기화
+	bool bIsHpZero = false;	
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Health")
+	bool bIsHPShow = false;
+
+	bool btickStop = false;
 
 	// 지은
 public:
@@ -104,27 +106,68 @@ public:
 
 	class ULSH_NetGameInstance* gi;
 
-// 지은
+/*---------------------------- 지은 ----------------------------*/
+//코인
 public:
-	UPROPERTY(Replicated, EditAnywhere, BlueprintReadWrite, Category = Custom)
-	FLinearColor playerColor = FLinearColor::White;
-
-	UPROPERTY(Replicated, EditAnywhere, BlueprintReadWrite, Category = Custom)
-	int32 playerMeshNumber = 0;
-
-public:
-	void InitializePlayer();
-
-	UFUNCTION(Server, Unreliable)
-	void ServerSetInitInfo(const FString& name, int32 num, FLinearColor color);
 	
-public:
-	//코인
 	UPROPERTY(Replicated, EditDefaultsOnly, BlueprintReadOnly, Category=coin)
 	float initialCoin = 500.0f;
 
 	UPROPERTY(Replicated, EditDefaultsOnly, BlueprintReadOnly, Category=coin)
 	float currentCoin = 0.0f;
+
+//커스텀
+public:
+	class UMaterialInstanceDynamic* dynamicMat1;
+	// 색 변수
+	UPROPERTY(Replicated, EditAnywhere, BlueprintReadWrite, Category = Custom)
+	FLinearColor playerColor = FLinearColor::White;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Custom)
+	bool IsColor = false;
+
+	// 메쉬 변수
+	UPROPERTY(Replicated, EditAnywhere, BlueprintReadWrite, Category = Custom)
+	int32 playerMeshNumber = 0;
+
+public:
+	void InitializePlayer();
+	void SetColor();
+
+	UFUNCTION(Server, Unreliable)
+	void ServerSetInitInfo(const FString& name, int32 num, FLinearColor color);
+
+// 저장
+public:
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "CustomData")
+	class UJE_SaveGame* MySaveGame;
+
+	FJE_CustomItemData* playerCustomData;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="CustomData")
+	UDataTable* PlayerCustomTable;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "CustomData")
+	class AJE_CustomItemActor* currentHat;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "CustomData")
+	class AJE_CustomItemActor* currentGlasses;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "CustomData")
+	class AJE_CustomItemActor* currentShoes;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "CustomData")
+	class UMaterialInstanceDynamic* currentDynamicMat;
+
+public:
+	UFUNCTION()
+	void GetCustomItemData();
+
+	UFUNCTION()
+	void SaveCustomItemData();
+
+	UFUNCTION()
+	void LoadCustomItemData();
 	
 };
  

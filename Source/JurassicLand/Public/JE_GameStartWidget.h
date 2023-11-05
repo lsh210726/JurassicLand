@@ -145,6 +145,9 @@ public:
 	UFUNCTION()
 	void OnClickedBattle();
 
+	UFUNCTION()
+	void OnClickedCustom();
+
 	
 
 private:	

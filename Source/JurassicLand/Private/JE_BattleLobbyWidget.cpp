@@ -7,6 +7,8 @@
 #include "Components/WidgetSwitcher.h"
 #include "LSH_NetGameInstance.h"
 #include "BlueTrex.h"
+#include "Kismet/GameplayStatics.h"
+
 
 
 void UJE_BattleLobbyWidget::NativeConstruct()
@@ -20,6 +22,9 @@ void UJE_BattleLobbyWidget::NativeConstruct()
 
 	btn_battleIn->OnClicked.AddDynamic(this, &UJE_BattleLobbyWidget::OnClickedbattleIn);
 	//txt_coin_battle->SetText(FText::AsNumber(player->currentCoin));
+
+	btn_battle_custom->OnClicked.AddDynamic(this, &UJE_BattleLobbyWidget::OnClickedBattleCustom);
+
 
 }
 
@@ -77,6 +82,14 @@ void UJE_BattleLobbyWidget::battleFindSession()
 	{
 		gi->FindOtherSession();
 	}
+}
+
+void UJE_BattleLobbyWidget::OnClickedBattleCustom()
+{
+	FString Message = FString::Printf(TEXT("custom"));
+	GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Yellow, Message);
+	FString LevelName = TEXT("CustomMap");
+	UGameplayStatics::OpenLevel(GetWorld(), FName(*LevelName));
 }
 
 void UJE_BattleLobbyWidget::SwitchLobbyCanvas(int32 index)

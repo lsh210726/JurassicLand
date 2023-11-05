@@ -30,7 +30,7 @@ void ULSH_NetGameInstance::Init()
 void ULSH_NetGameInstance::CreateMySession(FText username)
 {	
 	FOnlineSessionSettings sessionSettings;//���Ǽ��� ����, ����ü
-	//1. lan�������� dedicated�������� ����
+	//////1. lan�������� dedicated�������� ����
 	sessionSettings.bIsDedicated = false;//�������� ����
 	sessionSettings.bIsLANMatch = IOnlineSubsystem::Get()->GetSubsystemName() == FName("Null");//����İ� ��������� ���� > ������ ����
 	UE_LOG(LogTemp, Warning, TEXT("%s"),*IOnlineSubsystem::Get()->GetSubsystemName().ToString());

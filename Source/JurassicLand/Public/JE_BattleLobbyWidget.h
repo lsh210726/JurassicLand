@@ -32,6 +32,9 @@ public:
 	UPROPERTY(VisibleAnywhere, meta=(BindWidget), Category=MySettings)
 	class UTextBlock* txt_coin_battle;
 
+	UPROPERTY(VisibleAnywhere, meta=(BindWidget), Category=MySettings)
+	class UButton* btn_battle_custom;
+
 	class ULSH_NetGameInstance* gi;
 	class ABlueTrex* player;
 
@@ -42,6 +45,9 @@ public:
 	void OnClickedbattleIn();
 	UFUNCTION()
 	void battleFindSession();
+
+	UFUNCTION()
+	void OnClickedBattleCustom();
 
 private:
 	void SwitchLobbyCanvas(int32 index);

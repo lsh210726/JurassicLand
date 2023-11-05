@@ -19,6 +19,9 @@
 #include "Components/TextRenderComponent.h"
 #include "Net/UnrealNetwork.h"
 #include "EngineUtils.h"
+#include "JE_CustomItemActor.h"
+#include "JE_SaveGame.h"
+#include "Kismet/GameplayStatics.h"
 
 //DECLARE_DYNAMIC_MULTICAST_DELEGATE(TRexTailAttack);
 
@@ -220,13 +223,26 @@ void ABlueTrex::InitializePlayer()
 	{
 		nicknameText->SetText(FText::FromString(playerName));
 	}
+	
+}
+
+void ABlueTrex::SetColor()
+{
+	ServerSetInitInfo(gi->playerCustomInfo.dinoName, gi->playerCustomInfo.dinoMeshNum, gi->playerCustomInfo.dinoColor);
 
 	// 컬러 설정
-	UMaterialInterface* mat1 = GetMesh()->GetMaterial(0);
+	if (!IsColor)
+	{
+		UMaterialInterface* mat1 = GetMesh()->GetMaterial(0);
+		//FString Message = FString::Printf(TEXT("%s"), *mat1->GetName());
+		//GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Yellow, Message);
 
-	UMaterialInstanceDynamic* dynamicMat1 = UMaterialInstanceDynamic::Create(mat1, this);
+		dynamicMat1 = UMaterialInstanceDynamic::Create(mat1, this);
 
-	GetMesh()->SetMaterial(0, dynamicMat1);
+		GetMesh()->SetMaterial(0, dynamicMat1);
+
+		IsColor = true;
+	}	
 
 	dynamicMat1->SetVectorParameterValue(FName("MyColor"), playerColor);
 }
@@ -238,3 +254,62 @@ void ABlueTrex::ServerSetInitInfo_Implementation(const FString& name, int32 num,
 	playerColor = color;
 
 }
+
+void ABlueTrex::GetCustomItemData()
+{
+	TArray<AJE_CustomItemActor*> allItem;
+
+	for (TActorIterator<AJE_CustomItemActor> Itr(GetWorld()); Itr; ++Itr)
+	{
+		AJE_CustomItemActor* currActor = *Itr;
+
+		if (currActor->ActorHasTag("Hat"))
+		{
+			currentHat = currActor;
+		}
+		else if (currActor->ActorHasTag("Glasses"))
+		{
+			currentGlasses = currActor;
+		}
+		else if (currActor->ActorHasTag("Shoes"))
+		{
+			currentShoes = currActor;
+		}
+		else
+		{
+			continue;
+		}
+	}
+}
+
+void ABlueTrex::SaveCustomItemData()
+{
+	GetCustomItemData();
+
+	MySaveGame = Cast<UJE_SaveGame>(UGameplayStatics::CreateSaveGameObject(UJE_SaveGame::StaticClass()));
+
+	MySaveGame->myHat = currentHat;
+	MySaveGame->myGlasses = currentGlasses;
+	MySaveGame->myShoes = currentShoes;
+
+	UGameplayStatics::SaveGameToSlot(MySaveGame, "MyCustomSaveSlot", 0);
+
+	GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Yellow, TEXT("Save"));
+
+}
+
+void ABlueTrex::LoadCustomItemData()
+{
+	MySaveGame = Cast<UJE_SaveGame>(UGameplayStatics::CreateSaveGameObject(UJE_SaveGame::StaticClass()));
+
+	MySaveGame = Cast<UJE_SaveGame>(UGameplayStatics::LoadGameFromSlot("MyCustomSaveSlot", 0));
+
+	if (MySaveGame == nullptr)
+	{
+		
+	}
+
+	GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Yellow, TEXT("Load"));
+
+}
+
