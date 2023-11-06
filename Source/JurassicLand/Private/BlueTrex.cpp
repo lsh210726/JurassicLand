@@ -163,7 +163,7 @@ void ABlueTrex::TRexMove(const FInputActionValue& Val)
 void ABlueTrex::TRexLook(const FInputActionValue& Val)
 {
 	FVector2D tempVal = Val.Get<FVector2D>();
-	float valX = tempVal.X;
+	float valX = tempVal.X*0.5;
 	float valY = tempVal.Y;
 // 
 	AddControllerYawInput(valX);
