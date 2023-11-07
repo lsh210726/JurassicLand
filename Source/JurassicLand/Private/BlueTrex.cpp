@@ -84,7 +84,7 @@ ABlueTrex::ABlueTrex()
 	// ´Ð³×ÀÓ
 	//nickComp = CreateDefaultSubobject<UJE_NicknameComponent>(TEXT("nickComp"));
 	/*nicknameText = CreateDefaultSubobject<UTextRenderComponent>(TEXT("nicknameTEXT"));
-	nicknameText->AttachToComponent(GetMesh(), FAttachmentTransformRules(EAttachmentRule::KeepRelative, true), "NeckSocket");
+	nicknameText->SetupAttachment(GetMesh(), "NeckSocket");
 	nicknameText->SetRelativeLocation(FVector(-350, 0, 0));
 	nicknameText->SetRelativeRotation(FRotator(-180, 90, 90));
 	nicknameText->SetHorizontalAlignment(EHTA_Center);
