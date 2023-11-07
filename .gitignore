@@ -76,6 +76,9 @@ DerivedDataCache/*
 #Black_Trex
 Content/4_SK/BlackTRex/*
 
+#Raptor
+Content/4_SK/Raptor/*
+
 #backup file
 *.zip
 *.7z
