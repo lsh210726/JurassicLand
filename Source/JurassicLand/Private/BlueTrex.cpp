@@ -83,14 +83,14 @@ ABlueTrex::ABlueTrex()
 
 	// 닉네임
 	//nickComp = CreateDefaultSubobject<UJE_NicknameComponent>(TEXT("nickComp"));
-	nicknameText = CreateDefaultSubobject<UTextRenderComponent>(TEXT("nicknameTEXT"));
+	/*nicknameText = CreateDefaultSubobject<UTextRenderComponent>(TEXT("nicknameTEXT"));
 	nicknameText->AttachToComponent(GetMesh(), FAttachmentTransformRules(EAttachmentRule::KeepRelative, true), "NeckSocket");
 	nicknameText->SetRelativeLocation(FVector(-350, 0, 0));
 	nicknameText->SetRelativeRotation(FRotator(-180, 90, 90));
 	nicknameText->SetHorizontalAlignment(EHTA_Center);
 	nicknameText->SetWorldSize(100);
 	nicknameText->SetTextRenderColor(FColor::White);
-	nicknameText->SetVisibility(false);
+	nicknameText->SetVisibility(false);*/
 
 	//코인
 	currentCoin = initialCoin;
