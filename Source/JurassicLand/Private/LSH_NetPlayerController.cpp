@@ -32,10 +32,10 @@ void ALSH_NetPlayerController::BeginPlay()
 
 	bluePlayer = Cast<ABlueTrex>(GetPawn());
 
-	if (bluePlayer != nullptr)
+	/*if (bluePlayer != nullptr)
 	{
 		bluePlayer->nicknameText->SetVisibility(true);
-	}
+	}*/
 
 	/*if (nickNameComp != nullptr)
 	{
