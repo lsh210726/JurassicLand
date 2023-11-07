@@ -90,23 +90,47 @@ public:
 
 	bool btickStop = false;
 
-	// 지은
+/*---------------------------- 지은 ----------------------------*/
+// 플레이어 정보 : 닉네임, 메쉬, 컬러
+public:
+
+	class ULSH_NetGameInstance* gi;
+	
+	// 닉네임 변수
+	UPROPERTY(Replicated, EditAnywhere, BlueprintReadWrite, Category = Custom)
+	FString playerName = "BlueTrex";
+
+	// 색 변수
+	UPROPERTY(Replicated, EditAnywhere, BlueprintReadWrite, Category = Custom)
+	FLinearColor playerColor = FLinearColor::White;
+
+	// 메쉬 변수
+	UPROPERTY(Replicated, EditAnywhere, BlueprintReadWrite, Category = Custom)
+	int32 playerMeshNumber = 0;
+
+// 플레이어 정보 : 모자, 안경, 신발
+public:
+	// 모자 변수
+	UPROPERTY(Replicated, EditAnywhere, BlueprintReadWrite, Category = Custom)
+	FName playerHat = FName(TEXT("nothing"));
+
+	// 안경 변수
+	UPROPERTY(Replicated, EditAnywhere, BlueprintReadWrite, Category = Custom)
+	FName playerGlasses = FName(TEXT("nothing"));
+
+	// 신발 변수
+	UPROPERTY(Replicated, EditAnywhere, BlueprintReadWrite, Category = Custom)
+	FName playerShoes = FName(TEXT("nothing"));
+
 public:
 	// 닉네임 ui component
 	/*UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
 	class UJE_NicknameComponent* nickComp;*/
 
-	// 닉네임 변수
-	UPROPERTY(Replicated)
-	FString playerName = "Dinosaur";
-
-	// 닉네임 textrender
+	// 닉네임 textrendercomponent
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category="Nickname")
 	class UTextRenderComponent* nicknameText;
 
-	class ULSH_NetGameInstance* gi;
-
-/*---------------------------- 지은 ----------------------------*/
 //코인
 public:
 	
@@ -116,36 +140,61 @@ public:
 	UPROPERTY(Replicated, EditDefaultsOnly, BlueprintReadOnly, Category=coin)
 	float currentCoin = 0.0f;
 
-//커스텀
+//컬러 커스텀
 public:
+	class UMaterialInterface* CustomMat;
+	class UMaterialInterface* InitialMat;
+	class UMaterialInterface* currMat;
 	class UMaterialInstanceDynamic* dynamicMat1;
-	// 색 변수
-	UPROPERTY(Replicated, EditAnywhere, BlueprintReadWrite, Category = Custom)
-	FLinearColor playerColor = FLinearColor::White;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Custom)
 	bool IsColor = false;
 
-	// 메쉬 변수
-	UPROPERTY(Replicated, EditAnywhere, BlueprintReadWrite, Category = Custom)
-	int32 playerMeshNumber = 0;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Custom)
+	bool IsColorCustom = false;
+
+	//UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Custom)
+	//bool IsColorChanged = false;
 
 public:
+	//커스텀 아이템, 커스텀 컬러 및 플레이어 정보 실행 함수
+	//UFUNCTION(Server, Unreliable)
+	//void ServerInitializePlayer();
+
+	//UFUNCTION(NetMulticast, Unreliable)
+	//void MultiInitializePlayer();
+
+	UFUNCTION()
 	void InitializePlayer();
+
+	// 커스텀 컬러 플레이어 정보 설정 함수
 	void SetColor();
 
-	UFUNCTION(Server, Unreliable)
-	void ServerSetInitInfo(const FString& name, int32 num, FLinearColor color);
+	// 커스텀 아이템 설정 함수, 블루프린트에 정의
+	UFUNCTION(BlueprintCallable, BlueprintNativeEvent)
+	void InitialCustomMulti();
+
+	// 플레이어 정보 설정 함수
+	UFUNCTION(Server, Reliable)
+	//void ServerSetInitInfo(const FString& name, int32 num, FLinearColor color);
+	void ServerSetInitInfo(FPlayerCustomInfo initInfo);
+
+	// 플레이어 커스텀 아이템 설정 함수
+	UFUNCTION(Server, Reliable)
+	void ServerSetCustomItemInfo(FPlayerCustomItemInfo customItemInfo);
 
 // 저장
 public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "CustomData")
 	class UJE_SaveGame* MySaveGame;
 
+	// 커스텀 아이템 데이터 테이블 정보
 	FJE_CustomItemData* playerCustomData;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="CustomData")
 	UDataTable* PlayerCustomTable;
+
+	// 커스텀 아이템 저장 변수들
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "CustomData")
 	class AJE_CustomItemActor* currentHat;
@@ -159,13 +208,13 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "CustomData")
 	class UMaterialInstanceDynamic* currentDynamicMat;
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "CustomData")
+	UPROPERTY(Replicated, EditAnywhere, BlueprintReadWrite, Category = "CustomData")
 	FName HatTag;
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "CustomData")
+	UPROPERTY(Replicated, EditAnywhere, BlueprintReadWrite, Category = "CustomData")
 	FName GlassesTag;
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "CustomData")
+	UPROPERTY(Replicated, EditAnywhere, BlueprintReadWrite, Category = "CustomData")
 	FName ShoesTag;
 
 public:

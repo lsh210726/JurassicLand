@@ -10,6 +10,7 @@ void UJE_CustomColorWidget::NativeConstruct()
 {
 	gi = GetGameInstance<ULSH_NetGameInstance>();
 	player = GetOwningPlayerPawn<ABlueTrex>();
+	
 
 	btn_red->OnClicked.AddDynamic(this, &UJE_CustomColorWidget::OnRedClicked);
 	btn_yellow->OnClicked.AddDynamic(this, &UJE_CustomColorWidget::OnYellowClicked);
@@ -24,43 +25,46 @@ void UJE_CustomColorWidget::NativeTick(const FGeometry& MyGeometry, float InDelt
 
 void UJE_CustomColorWidget::OnYellowClicked()
 {
-	if (currentColor != FLinearColor::Yellow)
+
+	FLinearColor nowColor = FLinearColor(1.0f, 0.17f, 0.65f);
+	if (currentColor != nowColor)
 	{
-		currentColor = FLinearColor::Yellow;
+		gi->IsColorChanged = true;
+
+		currentColor = nowColor;
+		player->IsColorCustom = true;
 	}
 	else
 	{
+		gi->IsColorChanged = false;
+
 		currentColor = FLinearColor::White;
+		player->IsColorCustom = false;
+
 	}
 	
 	gi->playerCustomInfo.dinoColor = currentColor;
 	player->SetColor();
-
-	//// 컬러 설정
-	//UMaterialInterface* mat1 = player->GetMesh()->GetMaterial(0);
-	//FString Message = FString::Printf(TEXT("%s"), *mat1->GetName());
-	//GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Yellow, Message);
-
-	//UMaterialInstanceDynamic* dynamicMat1 = UMaterialInstanceDynamic::Create(mat1, this);
-
-	//player->GetMesh()->SetMaterial(0, dynamicMat1);
-
-	//dynamicMat1->SetVectorParameterValue(FName("MyColor"), currentColor);
-
-	
-
-
 }
 
 void UJE_CustomColorWidget::OnBlueClicked()
 {	
+
 	if (currentColor != FLinearColor::Blue)
 	{
+		gi->IsColorChanged = true;
+
 		currentColor = FLinearColor::Blue;
+		player->IsColorCustom = true;
+
 	}
 	else
 	{
+		gi->IsColorChanged = false;
+
 		currentColor = FLinearColor::White;
+		player->IsColorCustom = false;
+
 	}
 	gi->playerCustomInfo.dinoColor = currentColor;
 	player->SetColor();
@@ -69,13 +73,22 @@ void UJE_CustomColorWidget::OnBlueClicked()
 
 void UJE_CustomColorWidget::OnGreenClicked()
 {
+
 	if (currentColor != FLinearColor::Green)
 	{
+		gi->IsColorChanged = true;
+
 		currentColor = FLinearColor::Green;
+		player->IsColorCustom = true;
+
 	}
 	else
 	{
+		gi->IsColorChanged = false;
+
 		currentColor = FLinearColor::White;
+		player->IsColorCustom = false;
+
 	}
 	
 	gi->playerCustomInfo.dinoColor = currentColor;
@@ -85,13 +98,22 @@ void UJE_CustomColorWidget::OnGreenClicked()
 
 void UJE_CustomColorWidget::OnRedClicked()
 {
+
 	if (currentColor != FLinearColor::Red)
 	{
+		gi->IsColorChanged = true;
+
 		currentColor = FLinearColor::Red;
+		player->IsColorCustom = true;
+
 	}
 	else
 	{
+		gi->IsColorChanged = false;
+
 		currentColor = FLinearColor::White;
+		player->IsColorCustom = false;
+
 	}
 	
 	gi->playerCustomInfo.dinoColor = currentColor;

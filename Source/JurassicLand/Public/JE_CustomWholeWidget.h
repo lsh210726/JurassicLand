@@ -39,4 +39,7 @@ public:
 
 	UFUNCTION()
 	void OnClickedSave();
+
+	UFUNCTION()
+	void OnClickedBacktomain();
 };

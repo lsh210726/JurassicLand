@@ -16,8 +16,11 @@ struct FPlayerCustomInfo
 	GENERATED_USTRUCT_BODY()
 
 public:
-	FString dinoName = TEXT("");
+	UPROPERTY()
+	FString dinoName = TEXT("GameInstance");
+	UPROPERTY()
 	int32 dinoMeshNum = 0;
+	UPROPERTY()
 	FLinearColor dinoColor = FLinearColor::White;
 
 	FORCEINLINE void Set(FString name, int32 num, FLinearColor color)
@@ -25,8 +28,31 @@ public:
 		dinoName = name;
 		dinoMeshNum = num;
 		dinoColor = color;
+		
 	}
 
+};
+
+USTRUCT(BlueprintType)
+struct FPlayerCustomItemInfo
+{
+	GENERATED_USTRUCT_BODY()
+
+public:
+
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="CustomData")
+	FName HatTagInstance = FName(TEXT("nothing"));
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="CustomData")
+	FName GlassesTagInstance = FName(TEXT("nothing"));
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="CustomData")
+	FName ShoesTagInstance = FName(TEXT("nothing"));
+
+	FORCEINLINE void CustomItemSet(FName Hat, FName Glasses, FName Shoes)
+	{
+		HatTagInstance = Hat;
+		GlassesTagInstance = Glasses;
+		ShoesTagInstance = Shoes;
+	}
 };
 
 
@@ -47,7 +73,20 @@ public:
 
 	IOnlineSessionPtr sessionInterface;
 	TSharedPtr<FOnlineSessionSearch> sessionSearch;
+
+public:
+	// 지은
 	FPlayerCustomInfo playerCustomInfo;
+	UPROPERTY(BlueprintReadOnly)
+	FPlayerCustomItemInfo playerCustomItemInfo;
+	bool IsColorChanged = false;
+
+	/*UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="CustomData")
+	FName HatTagInstance;
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="CustomData")
+	FName GlassesTagInstance;
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="CustomData")
+	FName ShoesTagInstance;*/
 
 
 	void CreateMySession(FText userName);//세션만들기함수

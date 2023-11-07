@@ -24,6 +24,7 @@
 #include "Kismet/GameplayStatics.h"
 #include "Engine/World.h"
 #include "GameFramework/Actor.h" 
+#include "UObject/ConstructorHelpers.h"
 
 //DECLARE_DYNAMIC_MULTICAST_DELEGATE(TRexTailAttack);
 
@@ -91,9 +92,25 @@ ABlueTrex::ABlueTrex()
 	nicknameText->SetTextRenderColor(FColor::White);
 	nicknameText->SetVisibility(false);
 
-
 	//코인
 	currentCoin = initialCoin;
+
+	//Color Material
+	ConstructorHelpers::FObjectFinder<UMaterial> bodyMat(TEXT("/Game/4_SK/BlueTRex/MAT_TREX_ColorChange.MAT_TREX_ColorChange"));
+	if (bodyMat.Succeeded())
+	{
+		CustomMat = bodyMat.Object;
+		/*UMaterialInterface* mat1 = bodyMat.Object;
+		dynamicMat1 = UMaterialInstanceDynamic::Create(mat1, this);*/
+	}
+
+	ConstructorHelpers::FObjectFinder<UMaterial> inibodyMat(TEXT("/Game/4_SK/BlueTRex/MAT_TRex.MAT_TRex"));
+	if (bodyMat.Succeeded())
+	{
+		InitialMat = inibodyMat.Object;
+		/*UMaterialInterface* mat1 = bodyMat.Object;
+		dynamicMat1 = UMaterialInstanceDynamic::Create(mat1, this);*/
+	}
 
 }
 
@@ -111,19 +128,22 @@ void ABlueTrex::BeginPlay()
 
 	
 	// 닉네임	
+	gi = GetGameInstance<ULSH_NetGameInstance>();
 
-	// 지은 - 초기 설정
+	// 지은 - 초기 설정 // 
 	if (GetController() != nullptr && GetController()->IsLocalController())
 	{
-		gi = GetGameInstance<ULSH_NetGameInstance>();
-		ServerSetInitInfo(gi->playerCustomInfo.dinoName, gi->playerCustomInfo.dinoMeshNum, gi->playerCustomInfo.dinoColor);
+		//ServerSetInitInfo(gi->playerCustomInfo.dinoName, gi->playerCustomInfo.dinoMeshNum, gi->playerCustomInfo.dinoColor);
+		ServerSetInitInfo(gi->playerCustomInfo);
+		ServerSetCustomItemInfo(gi->playerCustomItemInfo);
 	}
 
 	//nicknameText->SetText(FText::FromString(playerName));
 
 	// 캐릭터 초기화 지연 실행
 	FTimerHandle initHandler;
-	GetWorldTimerManager().SetTimer(initHandler, this, &ABlueTrex::InitializePlayer, 1.0f, false);
+	//GetWorldTimerManager().SetTimer(initHandler, this, &ABlueTrex::ServerInitializePlayer, 0.1f, false);
+	GetWorldTimerManager().SetTimer(initHandler, this, &ABlueTrex::InitializePlayer, 0.1f, false);
 
 }
 
@@ -214,9 +234,39 @@ void ABlueTrex::GetLifetimeReplicatedProps(TArray< FLifetimeProperty >& OutLifet
 	DOREPLIFETIME(ABlueTrex, playerName);
 	DOREPLIFETIME(ABlueTrex, playerColor);
 	DOREPLIFETIME(ABlueTrex, playerMeshNumber);
+	DOREPLIFETIME(ABlueTrex, playerHat);
+	DOREPLIFETIME(ABlueTrex, playerGlasses);
+	DOREPLIFETIME(ABlueTrex, playerShoes);
+	DOREPLIFETIME(ABlueTrex, HatTag);
+	DOREPLIFETIME(ABlueTrex, GlassesTag);
+	DOREPLIFETIME(ABlueTrex, ShoesTag);
 
 
 }
+
+
+//void ABlueTrex::ServerInitializePlayer_Implementation()
+//{
+//	
+//	ServerSetInitInfo(gi->playerCustomInfo);
+//	ServerSetCustomItemInfo(gi->playerCustomItemInfo);
+//
+//	MultiInitializePlayer();
+//	
+//}
+//
+//void ABlueTrex::MultiInitializePlayer_Implementation()
+//{
+//	if (nicknameText)
+//	{
+//		nicknameText->SetText(FText::FromString(playerName));
+//	}
+//
+//
+//	InitialCustomMulti();
+//
+//	SetColor();
+//}
 
 void ABlueTrex::InitializePlayer()
 {
@@ -225,36 +275,65 @@ void ABlueTrex::InitializePlayer()
 	{
 		nicknameText->SetText(FText::FromString(playerName));
 	}
-	
+
+	InitialCustomMulti();
+
+	SetColor();
+
 }
 
 void ABlueTrex::SetColor()
 {
-	ServerSetInitInfo(gi->playerCustomInfo.dinoName, gi->playerCustomInfo.dinoMeshNum, gi->playerCustomInfo.dinoColor);
+	ServerSetInitInfo(gi->playerCustomInfo);
 
 	// 컬러 설정
-	if (!IsColor)
+	if (IsColorCustom)
 	{
-		UMaterialInterface* mat1 = GetMesh()->GetMaterial(0);
-		//FString Message = FString::Printf(TEXT("%s"), *mat1->GetName());
-		//GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Yellow, Message);
+		if (!IsColor)
+		{	
+			dynamicMat1 = UMaterialInstanceDynamic::Create(CustomMat, this);
+			GetMesh()->SetMaterial(0, dynamicMat1);
+		}
+	}
+	else
+	{
+		if (gi->IsColorChanged) currMat = CustomMat;
+		else currMat = InitialMat;
 
-		dynamicMat1 = UMaterialInstanceDynamic::Create(mat1, this);
+		dynamicMat1 = UMaterialInstanceDynamic::Create(currMat, this);
 
 		GetMesh()->SetMaterial(0, dynamicMat1);
 
-		IsColor = true;
-	}	
+	}
+		
 
 	dynamicMat1->SetVectorParameterValue(FName("MyColor"), playerColor);
 }
 
-void ABlueTrex::ServerSetInitInfo_Implementation(const FString& name, int32 num, FLinearColor color)
-{
-	playerName = name;
-	playerMeshNumber = num;
-	playerColor = color;
 
+void ABlueTrex::InitialCustomMulti_Implementation()
+{
+	ServerSetCustomItemInfo(gi->playerCustomItemInfo);
+}
+
+//void ABlueTrex::ServerSetInitInfo_Implementation(const FString& name, int32 num, FLinearColor color)
+void ABlueTrex::ServerSetInitInfo_Implementation(FPlayerCustomInfo initInfo)
+{
+	//playerName = name;
+	//playerMeshNumber = num;
+	//playerColor = color;
+	playerName = initInfo.dinoName;
+	playerMeshNumber = initInfo.dinoMeshNum;
+	playerColor = initInfo.dinoColor;
+
+
+}
+
+void ABlueTrex::ServerSetCustomItemInfo_Implementation(FPlayerCustomItemInfo customItemInfo)
+{
+	playerHat = customItemInfo.HatTagInstance;
+	playerGlasses = customItemInfo.GlassesTagInstance;
+	playerShoes = customItemInfo.ShoesTagInstance;
 }
 
 void ABlueTrex::GetCustomItemData()
@@ -299,27 +378,27 @@ void ABlueTrex::GetCustomItemData()
 		}
 	}
 
-	//for (TActorIterator<AJE_CustomItemActor> Itr(GetWorld()); Itr; ++Itr)
-	//{
-	//	AJE_CustomItemActor* currActor = *Itr;
+	for (TActorIterator<AJE_CustomItemActor> Itr(GetWorld()); Itr; ++Itr)
+	{
+		AJE_CustomItemActor* currActor = *Itr;
 
-	//	if (currActor->ActorHasTag("Hat"))
-	//	{
-	//		currentHat = currActor;
-	//	}
-	//	else if (currActor->ActorHasTag("Glasses"))
-	//	{
-	//		currentGlasses = currActor;
-	//	}
-	//	else if (currActor->ActorHasTag("Shoes"))
-	//	{
-	//		currentShoes = currActor;
-	//	}
-	//	else
-	//	{
-	//		continue;
-	//	}
-	//}
+		if (currActor->ActorHasTag("Hat"))
+		{
+			currentHat = currActor;
+		}
+		else if (currActor->ActorHasTag("Glasses"))
+		{
+			currentGlasses = currActor;
+		}
+		else if (currActor->ActorHasTag("Shoes"))
+		{
+			currentShoes = currActor;
+		}
+		else
+		{
+			continue;
+		}
+	}
 }
 
 void ABlueTrex::SaveCustomItemData()
@@ -328,17 +407,26 @@ void ABlueTrex::SaveCustomItemData()
 
 	MySaveGame = Cast<UJE_SaveGame>(UGameplayStatics::CreateSaveGameObject(UJE_SaveGame::StaticClass()));
 
-	//MySaveGame->myHat = currentHat;
-	//MySaveGame->myGlasses = currentGlasses;
-	//MySaveGame->myShoes = currentShoes;
+	// 장신구 블루프린트 액터 savegame에 저장
+	MySaveGame->myHat = currentHat;
+	MySaveGame->myGlasses = currentGlasses;
+	MySaveGame->myShoes = currentShoes;
 
+	// 장신구 블루프린트 액터 태그 savegame에 저장
 	MySaveGame->myHatTag = HatTag;
 	MySaveGame->myGlassesTag = GlassesTag;
 	MySaveGame->myShoesTag = ShoesTag;
 
+	// 태그 게임인스턴스에 저장
+	gi->playerCustomItemInfo.HatTagInstance = HatTag;
+	gi->playerCustomItemInfo.GlassesTagInstance = GlassesTag;
+	gi->playerCustomItemInfo.ShoesTagInstance = ShoesTag;	
+
 	UGameplayStatics::SaveGameToSlot(MySaveGame, "MyCustomSaveSlot", 0);
 
-	GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Yellow, TEXT("Save"));
+
+
+	GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Green, TEXT("Save"));
 
 }
 
@@ -355,49 +443,32 @@ void ABlueTrex::LoadCustomItemData()
 		return;
 	}
 	else
-	{	
-
+	{
 		if (MySaveGame->myHatTag.IsValid())
 		{
 			//FString Message = FString::Printf(TEXT("%s"), *MySaveGame->myHat->GetName());
 			//GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Yellow, Message);
 
-			FString Message1 =  MySaveGame->myHatTag.ToString();
+			FString Message1 = FString("Hat : ") + gi->playerCustomItemInfo.HatTagInstance.ToString();
 			GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Yellow, Message1);
 
-			FActorSpawnParameters SpawnParams;
-			//AJE_CustomItemActor* myHatItem = GetWorld()->SpawnActor<AJE_CustomItemActor>(MySaveGame->myHat->StaticClass(), GetMesh()->GetSocketLocation("HeadSocket"), GetMesh()->GetSocketRotation("HeadSocket"), SpawnParams);
-			//MySaveGame->myHat->AttachToComponent(GetMesh(), FAttachmentTransformRules(EAttachmentRule::KeepWorld, true), "HeadSocket");
-			//myHatItem->AttachToComponent(GetMesh(), FAttachmentTransformRules(EAttachmentRule::KeepWorld, true), "HeadSocket");
-			GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Yellow, TEXT("myHat"));
-
 		}
 
-		if (MySaveGame->myGlasses)
+		if (MySaveGame->myGlassesTag.IsValid())
 		{
-			MySaveGame->myGlasses->AttachToComponent(GetMesh(), FAttachmentTransformRules(EAttachmentRule::KeepWorld, true), "RightEyeSocket");
-			GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Yellow, TEXT("myGlasses"));
+			FString Message1 = FString("Glasses : ") + gi->playerCustomItemInfo.GlassesTagInstance.ToString();
+			GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Yellow, Message1);
 
 		}
 
-		if (MySaveGame->myShoes)
+		if (MySaveGame->myShoesTag.IsValid())
 		{
-			if(MySaveGame->myShoes->ActorHasTag("Right"))
-			{
-				MySaveGame->myShoes->AttachToComponent(GetMesh(), FAttachmentTransformRules(EAttachmentRule::KeepWorld, true), "RightBallSocket");
-				GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Yellow, TEXT("Right"));
-
-			}
-			else
-			{
-				MySaveGame->myShoes->AttachToComponent(GetMesh(), FAttachmentTransformRules(EAttachmentRule::KeepWorld, true), "LeftBallSocket");
-				GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Yellow, TEXT("left"));
-
-			}
+			FString Message1 = FString("Shoes : ") + gi->playerCustomItemInfo.ShoesTagInstance.ToString();
+			GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Yellow, Message1);
+			
 		}
+
+		GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Yellow, TEXT("Load"));
 	}
-
-	GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Yellow, TEXT("Load"));
-
 }
 
