@@ -102,16 +102,13 @@ ABlueTrex::ABlueTrex()
 	if (bodyMat.Succeeded())
 	{
 		CustomMat = bodyMat.Object;
-		/*UMaterialInterface* mat1 = bodyMat.Object;
-		dynamicMat1 = UMaterialInstanceDynamic::Create(mat1, this);*/
 	}
 
 	ConstructorHelpers::FObjectFinder<UMaterial> inibodyMat(TEXT("/Game/4_SK/BlueTRex/MAT_TRex.MAT_TRex"));
 	if (bodyMat.Succeeded())
 	{
 		InitialMat = inibodyMat.Object;
-		/*UMaterialInterface* mat1 = bodyMat.Object;
-		dynamicMat1 = UMaterialInstanceDynamic::Create(mat1, this);*/
+
 	}
 
 }
@@ -138,32 +135,8 @@ void ABlueTrex::BeginPlay()
 		ServerSetCustomItemInfo(gi->playerCustomItemInfo);
 	}
 
-	// 지은 - 초기 설정 // && GetController()->IsLocalController()
-	/*AJE_CustomPlayerController* custompc = Cast<AJE_CustomPlayerController>(GetController());
-
-	if (custompc != nullptr && custompc->IsLocalPlayerController())
-	{
-		//ServerSetInitInfo(gi->playerCustomInfo.dinoName, gi->playerCustomInfo.dinoMeshNum, gi->playerCustomInfo.dinoColor);
-
-		if (HasAuthority())
-		{
-			GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Red, TEXT("Server"));
-
-		}
-		else
-		{
-			GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Red, TEXT("Client"));
-
-		}
-		ServerSetInitInfo(gi->playerCustomInfo);
-		ServerSetCustomItemInfo(gi->playerCustomItemInfo);
-	}*/
-
-	//nicknameText->SetText(FText::FromString(playerName));
-
 	// 캐릭터 초기화 지연 실행
 	FTimerHandle initHandler;
-	//GetWorldTimerManager().SetTimer(initHandler, this, &ABlueTrex::ServerInitializePlayer, 0.1f, false);
 	GetWorldTimerManager().SetTimer(initHandler, this, &ABlueTrex::InitializePlayer, 1.0f, false);
 
 }
@@ -225,8 +198,6 @@ void ABlueTrex::TRexLook(const FInputActionValue& Val)
 // 
 	AddControllerYawInput(valX);
 	AddControllerPitchInput(valY);
-	/*TRexEyeArm->SetRelativeRotation(TRexEyeArm->Getrotation)*/
-	//need Debug : 가만히 있을 때, 카메라만 돌아서 시선만 이동해야하는데 캐릭터도 같이 돌아간다. 
 
 }
 
@@ -264,30 +235,6 @@ void ABlueTrex::GetLifetimeReplicatedProps(TArray< FLifetimeProperty >& OutLifet
 
 
 }
-
-
-//void ABlueTrex::ServerInitializePlayer_Implementation()
-//{
-//	
-//	ServerSetInitInfo(gi->playerCustomInfo);
-//	ServerSetCustomItemInfo(gi->playerCustomItemInfo);
-//
-//	MultiInitializePlayer();
-//	
-//}
-//
-//void ABlueTrex::MultiInitializePlayer_Implementation()
-//{
-//	if (nicknameText)
-//	{
-//		nicknameText->SetText(FText::FromString(playerName));
-//	}
-//
-//
-//	InitialCustomMulti();
-//
-//	SetColor();
-//}
 
 void ABlueTrex::InitializePlayer()
 {
@@ -367,9 +314,7 @@ void ABlueTrex::InitialCustomMulti_Implementation()
 //void ABlueTrex::ServerSetInitInfo_Implementation(const FString& name, int32 num, FLinearColor color)
 void ABlueTrex::ServerSetInitInfo_Implementation(FPlayerCustomInfo initInfo)
 {
-	//playerName = name;
-	//playerMeshNumber = num;
-	//playerColor = color;
+
 	playerName = initInfo.dinoName;
 	playerMeshNumber = initInfo.dinoMeshNum;
 	playerColor = initInfo.dinoColor;
@@ -382,58 +327,7 @@ void ABlueTrex::ServerSetCustomItemInfo_Implementation(FPlayerCustomItemInfo cus
 	playerHat = customItemInfo.HatTagInstance;
 	playerGlasses = customItemInfo.GlassesTagInstance;
 	playerShoes = customItemInfo.ShoesTagInstance;
-	
-	//if (HasAuthority())
-	//{
-	//	int i=0;
-	//	playerHat = customItemInfo.HatTagInstance[i];
-	//	playerGlasses = customItemInfo.GlassesTagInstance[i];
-	//	playerShoes = customItemInfo.ShoesTagInstance[i];
 
-	//	GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Green, TEXT("Server"));
-
-	//	FString Message1 = FString("Hat : ") + gi->playerCustomItemInfo.HatTagInstance[i].ToString();
-	//	GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Green, Message1);
-
-	//	FString Message2 = FString("Glasses : ") + gi->playerCustomItemInfo.GlassesTagInstance[i].ToString();
-	//	GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Green, Message2);
-
-
-	//	FString Message3 = FString("Shoes : ") + gi->playerCustomItemInfo.ShoesTagInstance[i].ToString();
-	//	GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Green, Message3);
-
-
-
-
-	//}
-	//else
-	//{
-	//	int i = 1;
-	//	playerHat = customItemInfo.HatTagInstance[i];
-	//	playerGlasses = customItemInfo.GlassesTagInstance[i];
-	//	playerShoes = customItemInfo.ShoesTagInstance[i];
-
-	//	GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Green, TEXT("Client"));
-
-
-	//	FString Message1 = FString("Hat : ") + gi->playerCustomItemInfo.HatTagInstance[i].ToString();
-	//	GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Green, Message1);
-
-	//	FString Message2 = FString("Glasses : ") + gi->playerCustomItemInfo.GlassesTagInstance[i].ToString();
-	//	GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Green, Message2);
-
-
-	//	FString Message3 = FString("Shoes : ") + gi->playerCustomItemInfo.ShoesTagInstance[i].ToString();
-	//	GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Green, Message3);
-	//
-	//}
-	 
-	
-	/*playerHat.Add(customItemInfo.HatTagInstance);
-	playerGlasses.Add(customItemInfo.GlassesTagInstance);
-	playerShoes.Add(customItemInfo.ShoesTagInstance);*/
-
-	//MultiSetCustomItemInfo(gi->playerCustomItemInfo);
 }
 
 void ABlueTrex::GetCustomItemData()
@@ -503,23 +397,6 @@ void ABlueTrex::GetCustomItemData()
 	gi->playerCustomItemInfo.HatTagInstance = HatTag;
 	gi->playerCustomItemInfo.GlassesTagInstance = GlassesTag;
 	gi->playerCustomItemInfo.ShoesTagInstance = ShoesTag;
-
-	// 태그 게임인스턴스에 저장
-
-	/*if (HasAuthority())
-	{
-		int i = 0;
-		gi->playerCustomItemInfo.HatTagInstance[i] = HatTag;
-		gi->playerCustomItemInfo.GlassesTagInstance[i] = GlassesTag;
-		gi->playerCustomItemInfo.ShoesTagInstance[i] = ShoesTag;
-	}
-	else
-	{
-		int i = 1;
-		gi->playerCustomItemInfo.HatTagInstance[i] = HatTag;
-		gi->playerCustomItemInfo.GlassesTagInstance[i] = GlassesTag;
-		gi->playerCustomItemInfo.ShoesTagInstance[i] = ShoesTag;
-	}*/
 	
 }
 
@@ -546,8 +423,6 @@ void ABlueTrex::SaveCustomItemData()
 
 void ABlueTrex::LoadCustomItemData()
 {
-	//MySaveGame = Cast<UJE_SaveGame>(UGameplayStatics::CreateSaveGameObject(UJE_SaveGame::StaticClass()));
-
 	MySaveGame = Cast<UJE_SaveGame>(UGameplayStatics::LoadGameFromSlot("MyCustomSaveSlot", 0));
 
 
@@ -558,51 +433,6 @@ void ABlueTrex::LoadCustomItemData()
 	}
 	else
 	{
-		/*if (HasAuthority())
-		{
-			int i = 0;
-
-			if (MySaveGame->myHatTag.IsValid())
-			{
-				FString Message1 = FString("Hat : ") + gi->playerCustomItemInfo.HatTagInstance[i].ToString();
-				GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Yellow, Message1);
-			}
-
-			if (MySaveGame->myGlassesTag.IsValid())
-			{
-				FString Message1 = FString("Glasses : ") + gi->playerCustomItemInfo.GlassesTagInstance[i].ToString();
-				GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Yellow, Message1);
-			}
-
-			if (MySaveGame->myShoesTag.IsValid())
-			{
-				FString Message1 = FString("Shoes : ") + gi->playerCustomItemInfo.ShoesTagInstance[i].ToString();
-				GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Yellow, Message1);
-			}
-		}
-		else
-		{
-			int i = 1;
-
-			if (MySaveGame->myHatTag.IsValid())
-			{
-				FString Message1 = FString("Hat : ") + gi->playerCustomItemInfo.HatTagInstance[i].ToString();
-				GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Yellow, Message1);
-			}
-
-			if (MySaveGame->myGlassesTag.IsValid())
-			{
-				FString Message1 = FString("Glasses : ") + gi->playerCustomItemInfo.GlassesTagInstance[i].ToString();
-				GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Yellow, Message1);
-			}
-
-			if (MySaveGame->myShoesTag.IsValid())
-			{
-				FString Message1 = FString("Shoes : ") + gi->playerCustomItemInfo.ShoesTagInstance[i].ToString();
-				GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Yellow, Message1);
-			}
-		}*/
-
 		if (MySaveGame->myHatTag.IsValid())
 		{
 			/*FString Message = FString::Printf(TEXT("%s"), *MySaveGame->myHat->GetName());

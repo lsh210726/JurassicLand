@@ -156,17 +156,17 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Custom)
 	bool IsColorCustom = false;
 
-	//UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Custom)
-	//bool IsColorChanged = false;
+// 메쉬 커스텀
+public:
+
+	TArray<FString> meshPathList = { TEXT("/Script/Engine.SkeletalMesh'/Game/4_SK/BlueTRex/SK_TRex.SK_TRex'"),
+									TEXT("/Game/Characters/Mannequins/Meshes/SKM_Quinn"),
+									TEXT("/Game/Characters/Mannequin_UE4/Meshes/SK_Mannequin"),
+									TEXT("/Game/Characters/Mannequin_UE4/Meshes/SK_Mannequin"), };
+	
 
 public:
 	//커스텀 아이템, 커스텀 컬러 및 플레이어 정보 실행 함수
-	//UFUNCTION(Server, Unreliable)
-	//void ServerInitializePlayer();
-
-	//UFUNCTION(NetMulticast, Unreliable)
-	//void MultiInitializePlayer();
-
 	UFUNCTION()
 	void InitializePlayer();
 
@@ -184,15 +184,11 @@ public:
 
 	// 플레이어 정보 설정 함수
 	UFUNCTION(Server, Reliable)
-	//void ServerSetInitInfo(const FString& name, int32 num, FLinearColor color);
 	void ServerSetInitInfo(FPlayerCustomInfo initInfo);
 
 	// 플레이어 커스텀 아이템 설정 함수
 	UFUNCTION(Server, Reliable)
 	void ServerSetCustomItemInfo(FPlayerCustomItemInfo customItemInfo);
-
-	//UFUNCTION(NetMulticast, Reliable)
-	//void MultiSetCustomItemInfo(FPlayerCustomItemInfo customItemInfo);
 
 // 저장
 public:
@@ -206,7 +202,6 @@ public:
 	UDataTable* PlayerCustomTable;
 
 	// 커스텀 아이템 저장 변수들
-
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "CustomData")
 	class AJE_CustomItemActor* currentHat;
 
@@ -219,6 +214,7 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "CustomData")
 	class UMaterialInstanceDynamic* currentDynamicMat;
 
+	// 커스텀 액터의 태그 저장 변수
 	UPROPERTY(Replicated, EditAnywhere, BlueprintReadWrite, Category = "CustomData")
 	FName HatTag;
 
