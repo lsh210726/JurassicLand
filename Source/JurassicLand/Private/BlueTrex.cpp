@@ -223,7 +223,7 @@ void ABlueTrex::TRexLook(const FInputActionValue& Val)
 	float valX = tempVal.X;
 	float valY = tempVal.Y;
 // 
-	AddControllerYawInput(valX);
+	AddControllerYawInput(valX*0.4);
 	AddControllerPitchInput(valY);
 	/*TRexEyeArm->SetRelativeRotation(TRexEyeArm->Getrotation)*/
 	//need Debug : 가만히 있을 때, 카메라만 돌아서 시선만 이동해야하는데 캐릭터도 같이 돌아간다. 
