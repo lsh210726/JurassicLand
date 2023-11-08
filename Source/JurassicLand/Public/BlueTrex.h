@@ -112,15 +112,18 @@ public:
 public:
 	// 모자 변수
 	UPROPERTY(Replicated, EditAnywhere, BlueprintReadWrite, Category = Custom)
-	FName playerHat = FName(TEXT("nothing"));
+	FName playerHat;
+	//TArray<FName> playerHat;
 
 	// 안경 변수
 	UPROPERTY(Replicated, EditAnywhere, BlueprintReadWrite, Category = Custom)
-	FName playerGlasses = FName(TEXT("nothing"));
+	FName playerGlasses;
+	//TArray<FName> playerGlasses;
 
-	// 신발 변수
+	// 신발 변수  
 	UPROPERTY(Replicated, EditAnywhere, BlueprintReadWrite, Category = Custom)
-	FName playerShoes = FName(TEXT("nothing"));
+	FName playerShoes;
+	//TArray<FName> playerShoes;
 
 public:
 	// 닉네임 ui component
@@ -167,8 +170,13 @@ public:
 	UFUNCTION()
 	void InitializePlayer();
 
-	// 커스텀 컬러 플레이어 정보 설정 함수
+	// 커스텀 컬러 플레이어 정보 설정 함수(멀티캐스트)
+	UFUNCTION(BlueprintCallable)
 	void SetColor();
+
+	// 커스텀 컬러 초기 설정
+	UFUNCTION()
+	void CustomColor();
 
 	// 커스텀 아이템 설정 함수, 블루프린트에 정의
 	UFUNCTION(BlueprintCallable, BlueprintNativeEvent)
@@ -182,6 +190,9 @@ public:
 	// 플레이어 커스텀 아이템 설정 함수
 	UFUNCTION(Server, Reliable)
 	void ServerSetCustomItemInfo(FPlayerCustomItemInfo customItemInfo);
+
+	//UFUNCTION(NetMulticast, Reliable)
+	//void MultiSetCustomItemInfo(FPlayerCustomItemInfo customItemInfo);
 
 // 저장
 public:

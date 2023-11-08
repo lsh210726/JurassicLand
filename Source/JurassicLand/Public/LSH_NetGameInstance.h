@@ -46,13 +46,6 @@ public:
 	FName GlassesTagInstance = FName(TEXT("nothing"));
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="CustomData")
 	FName ShoesTagInstance = FName(TEXT("nothing"));
-
-	FORCEINLINE void CustomItemSet(FName Hat, FName Glasses, FName Shoes)
-	{
-		HatTagInstance = Hat;
-		GlassesTagInstance = Glasses;
-		ShoesTagInstance = Shoes;
-	}
 };
 
 
