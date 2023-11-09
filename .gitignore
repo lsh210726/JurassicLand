@@ -85,11 +85,14 @@ Content/4_SK/Raptor/*
 
 #MS_Blood
 Content/MS_Blood/*
+
+# SpinoSaurus 100MB Files
 Content/Spinosaurus/Textures/T_Body01_N.uasset
 Content/Spinosaurus/Textures/T_Body03_D.uasset
 Content/Spinosaurus/Textures/T_Body07_D.uasset
 Content/Spinosaurus/Textures/T_Body08_D.uasset
 Content/Spinosaurus/Textures/T_Body09_D.uasset
+
 Content/4_SK/Spinosaurus/Textures/T_Body01_N.uasset
 Content/4_SK/Spinosaurus/Textures/T_Body03_D.uasset
 Content/4_SK/Spinosaurus/Textures/T_Body07_D.uasset

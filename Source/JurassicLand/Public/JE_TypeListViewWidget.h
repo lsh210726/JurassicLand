@@ -26,7 +26,25 @@ public:
 	UPROPERTY(EditDefaultsOnly, meta = (BindWidget), Category = MySettings)
 	class UButton* btn_type;
 
+	UPROPERTY(EditDefaultsOnly, meta = (BindWidget), Category = MySettings)
+	class UButton* btn_type_1;
+
+	UPROPERTY(EditDefaultsOnly, meta = (BindWidget), Category = MySettings)
+	class UButton* btn_type_2;
+
+	UPROPERTY(EditDefaultsOnly, meta = (BindWidget), Category = MySettings)
+	class UButton* btn_type_3;
+
 public:
 	UFUNCTION()
 	void OnClickedType();
+
+	UFUNCTION()
+	void OnClickedType2();
+
+	UFUNCTION()
+	void OnClickedType3();
+
+	UFUNCTION()
+	void OnClickedType4();
 };

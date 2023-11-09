@@ -113,17 +113,14 @@ public:
 	// 모자 변수
 	UPROPERTY(Replicated, EditAnywhere, BlueprintReadWrite, Category = Custom)
 	FName playerHat;
-	//TArray<FName> playerHat;
 
 	// 안경 변수
 	UPROPERTY(Replicated, EditAnywhere, BlueprintReadWrite, Category = Custom)
 	FName playerGlasses;
-	//TArray<FName> playerGlasses;
 
 	// 신발 변수  
 	UPROPERTY(Replicated, EditAnywhere, BlueprintReadWrite, Category = Custom)
 	FName playerShoes;
-	//TArray<FName> playerShoes;
 
 public:
 	// 닉네임 ui component
@@ -156,17 +153,8 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Custom)
 	bool IsColorCustom = false;
 
-	//UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Custom)
-	//bool IsColorChanged = false;
-
 public:
 	//커스텀 아이템, 커스텀 컬러 및 플레이어 정보 실행 함수
-	//UFUNCTION(Server, Unreliable)
-	//void ServerInitializePlayer();
-
-	//UFUNCTION(NetMulticast, Unreliable)
-	//void MultiInitializePlayer();
-
 	UFUNCTION()
 	void InitializePlayer();
 
@@ -184,15 +172,11 @@ public:
 
 	// 플레이어 정보 설정 함수
 	UFUNCTION(Server, Reliable)
-	//void ServerSetInitInfo(const FString& name, int32 num, FLinearColor color);
 	void ServerSetInitInfo(FPlayerCustomInfo initInfo);
 
 	// 플레이어 커스텀 아이템 설정 함수
 	UFUNCTION(Server, Reliable)
 	void ServerSetCustomItemInfo(FPlayerCustomItemInfo customItemInfo);
-
-	//UFUNCTION(NetMulticast, Reliable)
-	//void MultiSetCustomItemInfo(FPlayerCustomItemInfo customItemInfo);
 
 // 저장
 public:
@@ -206,7 +190,6 @@ public:
 	UDataTable* PlayerCustomTable;
 
 	// 커스텀 아이템 저장 변수들
-
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "CustomData")
 	class AJE_CustomItemActor* currentHat;
 
@@ -219,6 +202,7 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "CustomData")
 	class UMaterialInstanceDynamic* currentDynamicMat;
 
+	// 커스텀 액터의 태그 저장 변수
 	UPROPERTY(Replicated, EditAnywhere, BlueprintReadWrite, Category = "CustomData")
 	FName HatTag;
 
@@ -237,6 +221,30 @@ public:
 
 	UFUNCTION()
 	void LoadCustomItemData();
+
+// 메쉬 커스텀
+public:
+
+	// 메쉬 경로 저장한 배열
+	TArray<FString> meshPathList = { TEXT("/Script/Engine.SkeletalMesh'/Game/4_SK/BlueTRex/SK_TRex.SK_TRex'"),
+									TEXT("/Script/Engine.SkeletalMesh'/Game/4_SK/RaptorDinosaur/Model/Raptor_Cutscenes.Raptor_Cutscenes'"),
+									TEXT("/Script/Engine.SkeletalMesh'/Game/4_SK/Dinosaurus_Stegosaurus/Models/SK_Stegosaurus.SK_Stegosaurus'"),
+									TEXT("/Script/Engine.SkeletalMesh'/Game/4_SK/Triceratops/Meshes/SK_Triceratops.SK_Triceratops'"), };
+	
+	// 메쉬에 맞는 material
+	TArray<FString> matPathList = { TEXT("/Script/Engine.Material'/Game/4_SK/BlueTRex/MAT_TRex.MAT_TRex'"),
+									TEXT("/Script/Engine.Material'/Game/4_SK/RaptorDinosaur/Model/DromaMESH_DromaBodyM.DromaMESH_DromaBodyM'"),
+									TEXT("/Script/Engine.Material'/Game/4_SK/Dinosaurus_Stegosaurus/Models/Materials/M_Stegosaurus_Green.M_Stegosaurus_Green'"),
+									TEXT("/Script/Engine.SkeletalMesh'/Game/4_SK/Triceratops/Meshes/SK_Triceratops.SK_Triceratops'"), };
+
+	// 메쉬 변경 함수
+	UFUNCTION()
+	void SetMesh();
+
+	// 메쉬 초기 설정
+	UFUNCTION()
+	void CustomMesh();
+
 	
 };
  
