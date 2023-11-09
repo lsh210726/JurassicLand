@@ -196,7 +196,7 @@ void ABlueTrex::TRexLook(const FInputActionValue& Val)
 	float valX = tempVal.X;
 	float valY = tempVal.Y;
 // 
-	AddControllerYawInput(valX);
+	AddControllerYawInput(valX*0.4);
 	AddControllerPitchInput(valY);
 
 }
