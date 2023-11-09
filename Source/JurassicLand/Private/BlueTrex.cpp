@@ -254,30 +254,38 @@ void ABlueTrex::SetColor()
 {
 	ServerSetInitInfo(gi->playerCustomInfo);
 
-	// 컬러 설정
-	if (IsColorCustom)
-	{
-		if (!IsColor)
-		{	
-			dynamicMat1 = UMaterialInstanceDynamic::Create(CustomMat, this);
-			GetMesh()->SetMaterial(0, dynamicMat1);
-		}
-	}
-	else
-	{
-		if (gi->IsColorChanged) currMat = CustomMat;
-		else currMat = InitialMat;
+	CustomColor();
 
-		dynamicMat1 = UMaterialInstanceDynamic::Create(currMat, this);
+	//// 컬러 설정
+	//if (IsColorCustom)
+	//{
+	//	if (!IsColor)
+	//	{	
+	//		dynamicMat1 = UMaterialInstanceDynamic::Create(CustomMat, this);
+	//		GetMesh()->SetMaterial(0, dynamicMat1);
+	//	}
+	//}
+	//else
+	//{
+	//	if (gi->IsColorChanged) currMat = CustomMat;
+	//	else currMat = InitialMat;
 
-		GetMesh()->SetMaterial(0, dynamicMat1);
+	//	dynamicMat1 = UMaterialInstanceDynamic::Create(currMat, this);
 
-	}
-		
+	//	GetMesh()->SetMaterial(0, dynamicMat1);
 
-	dynamicMat1->SetVectorParameterValue(FName("MyColor"), playerColor);
+	//}
+	//	
+
+	//dynamicMat1->SetVectorParameterValue(FName("MyColor"), playerColor);
 }
 
+void ABlueTrex::SetMesh()
+{
+	ServerSetInitInfo(gi->playerCustomInfo);
+
+	CustomMesh();
+}
 
 void ABlueTrex::CustomColor()
 {
@@ -305,13 +313,40 @@ void ABlueTrex::CustomColor()
 	dynamicMat1->SetVectorParameterValue(FName("MyColor"), playerColor);
 }
 
+void ABlueTrex::CustomMesh()
+{
+	// Mesh
+	USkeletalMesh* selectedMesh = LoadObject<USkeletalMesh>(NULL, *meshPathList[playerMeshNumber], NULL, LOAD_None, NULL);
+	if (selectedMesh != nullptr)
+	{
+		GetMesh()->SetSkeletalMesh(selectedMesh);
+		if (playerMeshNumber == 1)
+		{
+			GetMesh()->SetRelativeScale3D(FVector(3.0f));
+		}
+		else
+		{
+			GetMesh()->SetRelativeScale3D(FVector(0.5f));
+		}
+	}
+
+	//Material
+	UMaterial* selectedMat = LoadObject<UMaterial>(NULL, *matPathList[playerMeshNumber], NULL, LOAD_None, NULL);
+	if (selectedMat != nullptr)
+	{
+		UMaterialInstanceDynamic* selectedDynamicMat = UMaterialInstanceDynamic::Create(selectedMat, this);
+
+		GetMesh()->SetMaterial(0, selectedDynamicMat);
+
+	}
+}
+
 void ABlueTrex::InitialCustomMulti_Implementation()
 {
 	ServerSetCustomItemInfo(gi->playerCustomItemInfo);
 	GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Red, TEXT("Initialize"));
 }
 
-//void ABlueTrex::ServerSetInitInfo_Implementation(const FString& name, int32 num, FLinearColor color)
 void ABlueTrex::ServerSetInitInfo_Implementation(FPlayerCustomInfo initInfo)
 {
 
@@ -416,7 +451,7 @@ void ABlueTrex::SaveCustomItemData()
 	MySaveGame->myGlassesTag = GlassesTag;
 	MySaveGame->myShoesTag = ShoesTag;
 
-	UGameplayStatics::SaveGameToSlot(MySaveGame, "Myg;ustomSaveSlot", 0);
+	UGameplayStatics::SaveGameToSlot(MySaveGame, "MyCustomSaveSlot", 0);
 
 	GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Green, TEXT("Save"));
 }
@@ -460,4 +495,3 @@ void ABlueTrex::LoadCustomItemData()
 		GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Yellow, TEXT("Load"));
 	}
 }
-
