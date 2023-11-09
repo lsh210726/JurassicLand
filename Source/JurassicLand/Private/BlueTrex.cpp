@@ -111,6 +111,14 @@ ABlueTrex::ABlueTrex()
 
 	}
 
+	//Trex AnimBlueprint
+	ConstructorHelpers::FObjectFinder<UAnimBlueprint> trexAnim(*animPathList[playerMeshNumber]);
+
+	if (trexAnim.Succeeded())
+	{
+		trexAnimClass = trexAnim.Object;
+	}
+
 }
 
 // Called when the game starts or when spawned
@@ -137,7 +145,7 @@ void ABlueTrex::BeginPlay()
 
 	// 캐릭터 초기화 지연 실행
 	FTimerHandle initHandler;
-	GetWorldTimerManager().SetTimer(initHandler, this, &ABlueTrex::InitializePlayer, 1.0f, false);
+	GetWorldTimerManager().SetTimer(initHandler, this, &ABlueTrex::InitializePlayer, 0.5f, false);
 
 }
 
@@ -322,7 +330,7 @@ void ABlueTrex::CustomMesh()
 		GetMesh()->SetSkeletalMesh(selectedMesh);
 		if (playerMeshNumber == 1)
 		{
-			GetMesh()->SetRelativeScale3D(FVector(3.0f));
+			GetMesh()->SetRelativeScale3D(FVector(2.0f));
 		}
 		else
 		{
@@ -339,6 +347,26 @@ void ABlueTrex::CustomMesh()
 		GetMesh()->SetMaterial(0, selectedDynamicMat);
 
 	}
+
+	UAnimationAsset* selectedAnim = LoadObject<UAnimationAsset>(NULL, *animPathList[playerMeshNumber], NULL, LOAD_None, NULL);
+	if (playerMeshNumber > 0)
+	{
+		if (selectedAnim != nullptr)
+		{
+			GetMesh()->SetAnimationMode(EAnimationMode::AnimationSingleNode);
+			GetMesh()->PlayAnimation(selectedAnim, true);
+		}
+	}
+	else
+	{
+		if (trexAnimClass != nullptr)
+		{
+			GetMesh()->SetAnimationMode(EAnimationMode::AnimationBlueprint);
+			GetMesh()->SetAnimInstanceClass(trexAnimClass->GeneratedClass);
+		}
+		
+	}
+	
 }
 
 void ABlueTrex::InitialCustomMulti_Implementation()

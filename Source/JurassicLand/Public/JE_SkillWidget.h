@@ -32,13 +32,22 @@ public:
 	class UButton* btn_ice;
 
 	UPROPERTY(EditDefaultsOnly, meta = (BindWidget), Category = MySettings)
-	class UButton* btn_foot;
+	class UButton* btn_bite;
+
+	UPROPERTY(EditDefaultsOnly, meta = (BindWidget), Category = MySettings)
+	class UButton* btn_tail;
 
 	UPROPERTY(EditDefaultsOnly, meta = (BindWidget), Category = MySettings)
 	class UButton* btn_speedup;
 
 	UPROPERTY(EditDefaultsOnly, meta = (BindWidget), Category = MySettings)
 	class UButton* btn_defenceup;
+
+	UPROPERTY(EditDefaultsOnly, meta = (BindWidget), Category = MySettings)
+	class UButton* btn_attackup;
+
+	UPROPERTY(EditDefaultsOnly, meta = (BindWidget), Category = MySettings)
+	class UImage* img_roar;
 
 	UPROPERTY(EditDefaultsOnly, meta = (BindWidget), Category = MySettings)
 	class UImage* img_preset1;
@@ -49,11 +58,14 @@ public:
 	UPROPERTY(EditDefaultsOnly, meta = (BindWidget), Category = MySettings)
 	class UImage* img_preset3;
 
-	UPROPERTY(EditDefaultsOnly, meta = (BindWidget), Category = MySettings)
+	UPROPERTY(EditDefaultsOnly, Category = MySettings)
 	TArray<UImage*> presetArray;
 
-	UPROPERTY(EditDefaultsOnly, meta = (BindWidget), Category = MySettings)
+	UPROPERTY(EditDefaultsOnly, Category = MySettings)
 	TArray<UTexture2D*> presetImgArray;
+
+	UPROPERTY(EditDefaultsOnly, Category = MySettings)
+	TArray<FString> presetImgStr;
 
 	//const FSlateBrush* FireBrush;
 
@@ -70,9 +82,11 @@ public:
 	bool isFire = false;
 	bool isLaser = false;
 	bool isIce = false;
-	bool isFoot = false;
+	bool isbite = false;
+	bool istail = false;
 	bool isSpeedUP = false;
 	bool isDefenceUP = false;
+	bool isAttackUP = false;
 
 
 public:
@@ -86,18 +100,38 @@ public:
 	void OnClickedIce();
 
 	UFUNCTION()
-	void OnClickedFoot();
+	void OnClickedBite();
+
+	UFUNCTION()
+	void OnClickedTail();
 
 	UFUNCTION()
 	void OnClickedSpeedUP();
 
 	UFUNCTION()
 	void OnClickedDefenceUP();
+	
+	UFUNCTION()
+	void OnClickedAttackUP();
 
 	UFUNCTION()
 	void SetPreset();
 
 	UFUNCTION()
 	void FindPreset();
+
+public:
+	UPROPERTY(EditDefaultsOnly, meta = (BindWidget), Category = MySettings)
+	class UButton* btn_skill_backtomain;
+
+	UPROPERTY(EditDefaultsOnly, meta = (BindWidget), Category = MySettings)
+	class UButton* btn_skill_save;
+
+	UPROPERTY(EditDefaultsOnly, meta = (BindWidget), Category = MySettings)
+	class UButton* btn_skill_load;
+
+public:
+	UFUNCTION()
+	void OnClickedSkillTOMain();
 	
 };

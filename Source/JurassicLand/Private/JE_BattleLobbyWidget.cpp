@@ -21,7 +21,8 @@ void UJE_BattleLobbyWidget::NativeConstruct()
 	//GEngine->AddOnScreenDebugMessage(-1, 30.0f, FColor::Green, gi->myName);
 
 	btn_battleIn->OnClicked.AddDynamic(this, &UJE_BattleLobbyWidget::OnClickedbattleIn);
-	//txt_coin_battle->SetText(FText::AsNumber(player->currentCoin));
+	
+	btn_battle_character->OnClicked.AddDynamic(this, &UJE_BattleLobbyWidget::OnClickedBattleCharacter);
 
 	btn_battle_custom->OnClicked.AddDynamic(this, &UJE_BattleLobbyWidget::OnClickedBattleCustom);
 
@@ -30,7 +31,7 @@ void UJE_BattleLobbyWidget::NativeConstruct()
 
 void UJE_BattleLobbyWidget::NativeTick(const FGeometry& MyGeometry, float InDeltaTime)
 {
-	txt_coin_battle->SetText(FText::AsNumber(player->currentCoin));
+
 }
 
 void UJE_BattleLobbyWidget::OnClickedbattleIn()
@@ -84,10 +85,16 @@ void UJE_BattleLobbyWidget::battleFindSession()
 	}
 }
 
+void UJE_BattleLobbyWidget::OnClickedBattleCharacter()
+{
+	FString CharacterMap = TEXT("CharacterMap");
+	UGameplayStatics::OpenLevel(GetWorld(), FName(*CharacterMap));
+}
+
 void UJE_BattleLobbyWidget::OnClickedBattleCustom()
 {
-	FString Message = FString::Printf(TEXT("custom"));
-	GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Yellow, Message);
+	//FString Message = FString::Printf(TEXT("custom"));
+	//GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Yellow, Message);
 	FString LevelName = TEXT("CustomMap");
 	UGameplayStatics::OpenLevel(GetWorld(), FName(*LevelName));
 }

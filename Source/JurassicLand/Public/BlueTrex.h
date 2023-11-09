@@ -237,6 +237,13 @@ public:
 									TEXT("/Script/Engine.Material'/Game/4_SK/Dinosaurus_Stegosaurus/Models/Materials/M_Stegosaurus_Green.M_Stegosaurus_Green'"),
 									TEXT("/Script/Engine.SkeletalMesh'/Game/4_SK/Triceratops/Meshes/SK_Triceratops.SK_Triceratops'"), };
 
+	// 메쉬에 맞는 애니메이션
+	TArray<FString> animPathList = { TEXT("/Script/Engine.AnimBlueprint'/Game/4_SK/BlueTRex/BluePrints/ABP_BlueTRex.ABP_BlueTRex_C'"),
+									TEXT("/Script/Engine.AnimSequence'/Game/4_SK/RaptorDinosaur/Animations/RootMotion/Idle.Idle'"),
+									TEXT("/Script/Engine.AnimSequence'/Game/4_SK/Dinosaurus_Stegosaurus/Animations/RootMotion/Stegosaurus_RM_Idle.Stegosaurus_RM_Idle'"),
+									TEXT("/Script/Engine.AnimSequence'/Game/4_SK/Triceratops/Animations/Triceratops_Idle_Roar.Triceratops_Idle_Roar'")};
+	class UAnimBlueprint* trexAnimClass;
+
 	// 메쉬 변경 함수
 	UFUNCTION()
 	void SetMesh();
@@ -244,6 +251,8 @@ public:
 	// 메쉬 초기 설정
 	UFUNCTION()
 	void CustomMesh();
+
+	//메타버스 클럽
 
 	
 };
