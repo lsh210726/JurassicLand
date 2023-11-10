@@ -85,8 +85,8 @@ public:
 	UPROPERTY(Replicated, EditAnywhere, BlueprintReadWrite, Category = "Health")//HP동기화
 	bool bIsHpZero = false;	
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Health")
-	bool bIsHPShow = false;
+	//UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Health")
+	//bool bIsHPShow = false;
 
 	bool btickStop = false;
 
@@ -252,7 +252,15 @@ public:
 	UFUNCTION()
 	void CustomMesh();
 
-	//메타버스 클럽
+// 스킬 프리셋
+public:
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Skill")
+	int32 BuffskillNum;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Skill")
+	int32 SpecialskillNum;
+	
+	
 
 	
 };

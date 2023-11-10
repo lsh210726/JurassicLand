@@ -20,23 +20,24 @@ void UJE_SkillWidget::NativeConstruct()
 
 	presetArray.Add(img_preset1);
 	presetArray.Add(img_preset2);
-	presetArray.Add(img_preset3);
+	//presetArray.Add(img_preset3);
 
 	presetImgArray.Add(presetImg1);
 	presetImgArray.Add(presetImg2);
-	presetImgArray.Add(presetImg3);
+	//presetImgArray.Add(presetImg3);
 
 	btn_fire->OnClicked.AddDynamic(this, &UJE_SkillWidget::OnClickedFire);
 	btn_laser->OnClicked.AddDynamic(this, &UJE_SkillWidget::OnClickedLaser);
 	btn_ice->OnClicked.AddDynamic(this, &UJE_SkillWidget::OnClickedIce);
-	btn_bite->OnClicked.AddDynamic(this, &UJE_SkillWidget::OnClickedBite);
-	btn_tail->OnClicked.AddDynamic(this, &UJE_SkillWidget::OnClickedTail);
+	//btn_bite->OnClicked.AddDynamic(this, &UJE_SkillWidget::OnClickedBite);
+	//btn_tail->OnClicked.AddDynamic(this, &UJE_SkillWidget::OnClickedTail);
 	btn_speedup->OnClicked.AddDynamic(this, &UJE_SkillWidget::OnClickedSpeedUP);
 	btn_defenceup->OnClicked.AddDynamic(this, &UJE_SkillWidget::OnClickedDefenceUP);
 	btn_attackup->OnClicked.AddDynamic(this, &UJE_SkillWidget::OnClickedAttackUP);
 
 
 	btn_skill_backtomain->OnClicked.AddDynamic(this, &UJE_SkillWidget::OnClickedSkillTOMain);
+	btn_skill_save->OnClicked.AddDynamic(this, &UJE_SkillWidget::OnClickedSavePreset);
 }
 
 void UJE_SkillWidget::NativeTick(const FGeometry& MyGeometry, float InDeltaTime)
@@ -105,50 +106,50 @@ void UJE_SkillWidget::OnClickedIce()
 	}
 }
 
-void UJE_SkillWidget::OnClickedBite()
-{
-	const FSlateBrush* BiteBrush = &btn_bite->WidgetStyle.Normal;
-	skillImg = Cast<UTexture2D>(BiteBrush->GetResourceObject());
+//void UJE_SkillWidget::OnClickedBite()
+//{
+//	const FSlateBrush* BiteBrush = &btn_bite->WidgetStyle.Normal;
+//	skillImg = Cast<UTexture2D>(BiteBrush->GetResourceObject());
+//
+//	if (!isbite)
+//	{
+//		//FString Message = FString::Printf(TEXT("%s"), *skillImg->GetName());
+//		//GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Red, Message);
+//
+//		SetPreset();
+//
+//		isbite = true;
+//	}
+//	else
+//	{
+//		FindPreset();
+//		isbite = false;
+//
+//	}
+//	
+//}
 
-	if (!isbite)
-	{
-		//FString Message = FString::Printf(TEXT("%s"), *skillImg->GetName());
-		//GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Red, Message);
-
-		SetPreset();
-
-		isbite = true;
-	}
-	else
-	{
-		FindPreset();
-		isbite = false;
-
-	}
-	
-}
-
-void UJE_SkillWidget::OnClickedTail()
-{
-	const FSlateBrush* TailBrush = &btn_tail->WidgetStyle.Normal;
-	skillImg = Cast<UTexture2D>(TailBrush->GetResourceObject());
-
-	if (!istail)
-	{
-		//FString Message = FString::Printf(TEXT("%s"), *skillImg->GetName());
-		//GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Red, Message);
-
-		SetPreset();
-
-		istail = true;
-	}
-	else
-	{
-		FindPreset();
-		istail = false;
-
-	}
-}
+//void UJE_SkillWidget::OnClickedTail()
+//{
+//	const FSlateBrush* TailBrush = &btn_tail->WidgetStyle.Normal;
+//	skillImg = Cast<UTexture2D>(TailBrush->GetResourceObject());
+//
+//	if (!istail)
+//	{
+//		//FString Message = FString::Printf(TEXT("%s"), *skillImg->GetName());
+//		//GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Red, Message);
+//
+//		SetPreset();
+//
+//		istail = true;
+//	}
+//	else
+//	{
+//		FindPreset();
+//		istail = false;
+//
+//	}
+//}
 
 void UJE_SkillWidget::OnClickedSpeedUP()
 {
@@ -224,7 +225,7 @@ void UJE_SkillWidget::SetPreset()
 	{
 		if(skillName == *skillImg->GetName()) return;
 	}
-	for (int i = 0; i < 3; i++)
+	for (int i = 0; i < 2; i++)
 	{
 		presetImgArray[i] = Cast<UTexture2D>(presetArray[i]->GetBrush().GetResourceObject());
 
@@ -285,7 +286,7 @@ void UJE_SkillWidget::SetPreset()
 
 void UJE_SkillWidget::FindPreset()
 {
-	for (int i = 0; i < 3; i++)
+	for (int i = 0; i < 2; i++)
 	{		
 		GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Yellow, FString::Printf(TEXT("%d"),i));
 
@@ -322,4 +323,26 @@ void UJE_SkillWidget::OnClickedSkillTOMain()
 {
 	FString LevelName = TEXT("MainMap");
 	UGameplayStatics::OpenLevel(GetWorld(), FName(*LevelName));
+}
+
+void UJE_SkillWidget::OnClickedSavePreset()
+{
+	int32 ArrayNum = 3;
+	for (int i=0; i< ArrayNum; i++)
+	{
+		if (BuffArray[i] == presetImgStr[0])
+		{
+			player->BuffskillNum = i; 
+			GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Yellow, FString::Printf(TEXT("%s"), *BuffArray[i]));
+			GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Yellow, FString::Printf(TEXT("%d"), player->BuffskillNum));
+		}
+
+		if (SpecialArray[i] == presetImgStr[1])
+		{
+			player->SpecialskillNum = i;
+			GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Magenta, FString::Printf(TEXT("%s"), *SpecialArray[i]));
+			GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Magenta, FString::Printf(TEXT("%d"), player->SpecialskillNum));
+		}
+
+	}
 }

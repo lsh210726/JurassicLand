@@ -143,9 +143,9 @@ void ABlueTrex::BeginPlay()
 		ServerSetCustomItemInfo(gi->playerCustomItemInfo);
 	}
 
-	// 캐릭터 초기화 지연 실행
+	// 캐릭터 초기화 지연 실행 // 1초는 너무 빠름
 	FTimerHandle initHandler;
-	GetWorldTimerManager().SetTimer(initHandler, this, &ABlueTrex::InitializePlayer, 0.5f, false);
+	GetWorldTimerManager().SetTimer(initHandler, this, &ABlueTrex::InitializePlayer, 3.0f, false);
 
 }
 

@@ -24,9 +24,9 @@ void UJE_BattleWidget::NativeConstruct()
 	player = GetOwningPlayerPawn<ABlueTrex>();
 	//pc = GetOwningPlayer<AJE_BattleInController>();
 
-	player->bIsHPShow = true;
+	//player->bIsHPShow = true;
 
-	GetWorld()->GetTimerManager().SetTimer(initHandler, this, &UJE_BattleWidget::StartUIAnim, 5.0f, false);
+	GetWorld()->GetTimerManager().SetTimer(initHandler, this, &UJE_BattleWidget::StartUIAnim, 0.1f, false);
 
 	btn_toMain->OnClicked.AddDynamic(this, &UJE_BattleWidget::OnClickedToMain);
 }
