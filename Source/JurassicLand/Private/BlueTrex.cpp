@@ -64,7 +64,7 @@ ABlueTrex::ABlueTrex()
 //// 	TRexEye->SetWorldRotation(FRotator(0.0f,0.0f,0.0f));
 
 	/*--------- Enhanced Input Setting ----------*/
-	static ConstructorHelpers::FObjectFinder<UInputMappingContext>tempIMC_TRex(TEXT("/Game/7_MISC/Input/IMC_TRex.IMC_TRex"));
+	static ConstructorHelpers::FObjectFinder<UInputMappingContext>tempIMC_TRex(TEXT("/Script/EnhancedInput.InputMappingContext'/Game/7_MISC/Input/IMC_Player.IMC_Player'"));
 	if (tempIMC_TRex.Succeeded())
 	{
 		IMC_TRex = tempIMC_TRex.Object;
