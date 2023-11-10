@@ -37,7 +37,7 @@ ABasePlayer::ABasePlayer()
 	PrimaryActorTick.bCanEverTick = true;
 	//Skeletal Mesh Component
 	PlayerBody = GetMesh();
-	ConstructorHelpers::FObjectFinder<USkeletalMesh> tempBody(TEXT(""));
+	ConstructorHelpers::FObjectFinder<USkeletalMesh> tempBody(TEXT("/Script/Engine.SkeletalMesh'/Game/4_SK/Raptor/Model/Raptor_HumanIK.Raptor_HumanIK'"));
 
 	PlayerBody->SetupAttachment(RootComponent);
 

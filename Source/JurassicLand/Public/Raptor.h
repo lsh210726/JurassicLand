@@ -13,5 +13,7 @@ UCLASS()
 class JURASSICLAND_API ARaptor : public ABasePlayer
 {
 	GENERATED_BODY()
-	
+public:
+	// Sets default values for this character's properties
+	ARaptor();
 };
