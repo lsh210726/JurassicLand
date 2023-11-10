@@ -75,11 +75,11 @@ ABlueTrex::ABlueTrex()
 // }
 
 	/*---- Anim Import ----*/
-	ConstructorHelpers::FObjectFinder<UAnimationAsset> tempTailAttack(TEXT("/Script/Engine.AnimSequence'/Game/7_MISC/Animation/BlueTRex/BlueTRex_attack_tail_2.BlueTRex_attack_tail_2'"));
+	/*ConstructorHelpers::FObjectFinder<UAnimationAsset> tempTailAttack(TEXT("/Script/Engine.AnimSequence'/Game/7_MISC/Animation/BlueTRex/BlueTRex_attack_tail_2.BlueTRex_attack_tail_2'"));
 	if (tempTailAttack.Succeeded())
 	{
 		TailAttackAnim = tempTailAttack.Object;
-	}
+	}*/
 
 	CharacterMovement = GetCharacterMovement();
 
