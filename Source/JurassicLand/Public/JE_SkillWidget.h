@@ -58,12 +58,15 @@ public:
 	//UPROPERTY(EditDefaultsOnly, meta = (BindWidget), Category = MySettings)
 	//class UImage* img_preset3;
 
+	// 이미지 위젯 배열
 	UPROPERTY(EditDefaultsOnly, Category = MySettings)
 	TArray<UImage*> presetArray;
 
+	// 이미지 배열
 	UPROPERTY(EditDefaultsOnly, Category = MySettings)
 	TArray<UTexture2D*> presetImgArray;
-
+	
+	// 이미지 위젯에 들어있는 이미지들의 이름 배열
 	UPROPERTY(EditDefaultsOnly, Category = MySettings)
 	TArray<FString> presetImgStr;
 
@@ -75,8 +78,13 @@ public:
 	class UTexture2D* presetImg1;
 	UPROPERTY(EditDefaultsOnly, Category = MySettings)
 	class UTexture2D* presetImg2;
-	//UPROPERTY(EditDefaultsOnly, Category = MySettings)
-	//class UTexture2D* presetImg3;
+
+	UPROPERTY(EditDefaultsOnly, Category = MySettings)
+	class UTexture2D* buffSkillImg;
+
+	UPROPERTY(EditDefaultsOnly, Category = MySettings)
+	class UTexture2D* specialSkillImg;
+
 
 public:
 	bool isFire = false;
@@ -116,6 +124,12 @@ public:
 
 	UFUNCTION()
 	void SetPreset();
+
+	UFUNCTION()
+	void SetBuffPreset();
+
+	UFUNCTION()
+	void SetSpecialPreset();
 
 	UFUNCTION()
 	void FindPreset();

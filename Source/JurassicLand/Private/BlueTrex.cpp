@@ -26,6 +26,9 @@
 #include "GameFramework/Actor.h" 
 #include "UObject/ConstructorHelpers.h"
 #include "JE_CustomPlayerController.h"
+#include "JE_InBattleController.h"
+#include "JE_BattleWidget.h"
+
 
 
 //DECLARE_DYNAMIC_MULTICAST_DELEGATE(TRexTailAttack);
@@ -141,6 +144,7 @@ void ABlueTrex::BeginPlay()
 	{
 		ServerSetInitInfo(gi->playerCustomInfo);
 		ServerSetCustomItemInfo(gi->playerCustomItemInfo);
+		ServerSetSkills(gi->playerSkillInfo);
 	}
 
 	// 캐릭터 초기화 지연 실행 // 1초는 너무 빠름
@@ -240,6 +244,13 @@ void ABlueTrex::GetLifetimeReplicatedProps(TArray< FLifetimeProperty >& OutLifet
 	DOREPLIFETIME(ABlueTrex, HatTag);
 	DOREPLIFETIME(ABlueTrex, GlassesTag);
 	DOREPLIFETIME(ABlueTrex, ShoesTag);
+	DOREPLIFETIME(ABlueTrex, IsSetPreset);
+	DOREPLIFETIME(ABlueTrex, currBuffskillNum);
+	DOREPLIFETIME(ABlueTrex, currSpecialskillNum);
+	DOREPLIFETIME(ABlueTrex, currplayerSpecialSkillImg);
+	DOREPLIFETIME(ABlueTrex, currplayerBuffSkillImg);
+	DOREPLIFETIME(ABlueTrex, buffCool);
+	DOREPLIFETIME(ABlueTrex, SpecialCool);
 
 
 }
@@ -256,6 +267,14 @@ void ABlueTrex::InitializePlayer()
 
 	CustomColor();
 
+	//ServerSetSkills(gi->playerSkillInfo);
+
+}
+
+void ABlueTrex::InitialCustomMulti_Implementation()
+{
+	ServerSetCustomItemInfo(gi->playerCustomItemInfo);
+	GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Red, TEXT("Initialize"));
 }
 
 void ABlueTrex::SetColor()
@@ -369,10 +388,27 @@ void ABlueTrex::CustomMesh()
 	
 }
 
-void ABlueTrex::InitialCustomMulti_Implementation()
+void ABlueTrex::SaveSkills()
 {
-	ServerSetCustomItemInfo(gi->playerCustomItemInfo);
-	GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Red, TEXT("Initialize"));
+	
+}
+
+void ABlueTrex::ServerSetSkills_Implementation(FPlayerSkillInfo skillInfo)
+{
+	currBuffskillNum = skillInfo.BuffskillNum;
+	currSpecialskillNum = skillInfo.SpecialskillNum;
+	currplayerBuffSkillImg = skillInfo.playerBuffSkillImg;
+	currplayerSpecialSkillImg = skillInfo.playerSpecialSkillImg;
+}
+
+void ABlueTrex::getSkillCool()
+{
+	AJE_InBattleController* battlepc = Cast<AJE_InBattleController>(GetController());
+
+ 	if (battlepc != nullptr && battlepc->IsLocalPlayerController())
+ 	{
+ 		if(battleUI) battleUI->SetSkillCool();
+ 	}
 }
 
 void ABlueTrex::ServerSetInitInfo_Implementation(FPlayerCustomInfo initInfo)

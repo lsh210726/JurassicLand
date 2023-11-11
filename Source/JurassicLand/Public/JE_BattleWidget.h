@@ -30,12 +30,6 @@ public:
 	class UWidgetSwitcher* ws_Battle;
 
 	UPROPERTY(VisibleAnywhere, meta=(BindWidget), Category=MySettings)
-	class UButton* btn_skill_roar;
-
-	UPROPERTY(VisibleAnywhere, meta=(BindWidget), Category=MySettings)
-	class UButton* btn_skill_tail;
-
-	UPROPERTY(VisibleAnywhere, meta=(BindWidget), Category=MySettings)
 	class UButton* btn_skill_foot;
 
 	UPROPERTY(VisibleAnywhere, meta=(BindWidget), Category=MySettings)
@@ -48,12 +42,6 @@ public:
 	class UTextBlock* txt_battleStart;
 
 	UPROPERTY(VisibleAnywhere, meta=(BindWidget), Category=MySettings)
-	class UTextBlock* txt_hp1;
-
-	UPROPERTY(VisibleAnywhere, meta=(BindWidget), Category=MySettings)
-	class UTextBlock* txt_hp2;
-
-	UPROPERTY(VisibleAnywhere, meta=(BindWidget), Category=MySettings)
 	class UTextBlock* txt_skill_roar;
 
 	UPROPERTY(VisibleAnywhere, meta=(BindWidget), Category=MySettings)
@@ -62,20 +50,32 @@ public:
 	UPROPERTY(VisibleAnywhere, meta=(BindWidget), Category=MySettings)
 	class UTextBlock* txt_skill_foot;
 
-	UPROPERTY(VisibleAnywhere, meta=(BindWidget), Category=MySettings)
-	class UTextBlock* txt_move;
-
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, meta=(BindWidget), Category=MySettings)
 	class UTextBlock* txt_battleresult;
 
 	UPROPERTY(VisibleAnywhere, meta=(BindWidget), Category=MySettings)
 	class UTextBlock* txt_toMain;
 
-	UPROPERTY(VisibleAnywhere, meta=(BindWidget), Category=MySettings)
-	class UProgressBar* pb_playerHP_1;
+	UPROPERTY(VisibleAnywhere, meta = (BindWidget), Category = MySettings)
+	class UImage* img_specialskill;
 
-	UPROPERTY(VisibleAnywhere, meta=(BindWidget), Category=MySettings)
-	class UProgressBar* pb_playerHP_2;
+	UPROPERTY(VisibleAnywhere, meta = (BindWidget), Category = MySettings)
+	class UImage* img_buffskill;
+
+	UPROPERTY(VisibleAnywhere, meta = (BindWidget), Category = MySettings)
+	class UProgressBar* pb_coolTime1;
+
+	UPROPERTY(VisibleAnywhere, meta = (BindWidget), Category = MySettings)
+	class UProgressBar* pb_coolTime2;
+
+	UPROPERTY(VisibleAnywhere, meta = (BindWidget), Category = MySettings)
+	class UProgressBar* pb_coolTime3;
+
+	UPROPERTY(VisibleAnywhere, meta = (BindWidget), Category = MySettings)
+	class UProgressBar* pb_coolTimeq;
+
+	UPROPERTY(VisibleAnywhere, meta = (BindWidget), Category = MySettings)
+	class UProgressBar* pb_coolTimee;
 
 	UPROPERTY(VisibleAnywhere, meta = (BindWidget), Category = MySettings)
 	class UImage* img_player_win;
@@ -95,6 +95,12 @@ public:
 	UPROPERTY(BlueprintReadOnly)
 	bool bisMouse = false;
 
+	UPROPERTY()
+	float bcoolTime = 0.f;
+
+	UPROPERTY()
+	float scoolTime = 0.f;
+
 public:	
 	UFUNCTION()
 	void LoadingUI();
@@ -107,6 +113,10 @@ public:
 
 	UFUNCTION() 
 	void OnClickedToMain();
+
+	// 스킬 쿨타임 함수
+	UFUNCTION(BlueprintCallable)
+	void SetSkillCool();
 
 	
 };
