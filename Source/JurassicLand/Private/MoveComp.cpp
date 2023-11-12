@@ -42,6 +42,22 @@ void UMoveComp::SetupPlayerEnhancedInputComponent(class UEnhancedInputComponent*
 	enhancedInputComponent->BindAction(inputActions[0], ETriggerEvent::Triggered, this, &UMoveComp::PlayerMove);
 
 	enhancedInputComponent->BindAction(inputActions[1], ETriggerEvent::Triggered, this, &UMoveComp::PlayerLook);
+	
+				
+	//Special Skill 'Q' key
+	//enhancedInputComponent->BindAction(inputActions[2], ETriggerEvent::Triggered, this, &UMoveComp::PlayerLook);*/
+	
+	//Buff Skill 'e' key
+	/*enhancedInputComponent->BindAction(inputActions[2], ETriggerEvent::Triggered, this, &UMoveComp::PlayerLook);*/
+	
+	//Basic Attack - TailAttack '1' key
+	//BP·Î ±¸Çö
+
+	//Basic Attack - BiteAttack '2' key
+	/*enhancedInputComponent->BindAction(inputActions[2], ETriggerEvent::Triggered, this, &UMoveComp::PlayerLook);*/
+
+	//Basic Attack - RoarAttack '3' key
+	/*enhancedInputComponent->BindAction(inputActions[2], ETriggerEvent::Triggered, this, &UMoveComp::PlayerLook);*/
 
 }
 
