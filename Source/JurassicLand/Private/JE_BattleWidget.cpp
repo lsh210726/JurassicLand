@@ -27,8 +27,13 @@ void UJE_BattleWidget::NativeConstruct()
 	//pc = GetOwningPlayer<AJE_BattleInController>();
 
 	//player->bIsHPShow = true;
-	bcoolTime = player->buffCool;
-	scoolTime = player->SpecialCool;
+	pbArr.Add(pb_coolTime1);
+	pbArr.Add(pb_coolTime2);
+	pbArr.Add(pb_coolTime3);
+	pbArr.Add(pb_coolTimeq);
+	pbArr.Add(pb_coolTimee);
+
+	coolTimeActors.Init(nullptr, 5);
 
 	img_specialskill->SetBrushResourceObject(gi->playerSkillInfo.playerSpecialSkillImg);
 	img_buffskill->SetBrushResourceObject(gi->playerSkillInfo.playerBuffSkillImg);
@@ -45,10 +50,30 @@ void UJE_BattleWidget::NativeTick(const FGeometry& MyGeometry, float InDeltaTime
 	//FString Message = gi->isEnd == true ? FString::Printf(TEXT("true")) : FString::Printf(TEXT("false"));
 	//GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Yellow, Message);
 
-	/*if (player->BCoolTime)
+	if (IsValid(coolTimeActors[0]))
 	{
-		SetSkillCool();
-	}*/
+		SetTailCool(0);
+	}
+
+	if (IsValid(coolTimeActors[1]))
+	{
+		SetBiteCool(1);
+	}
+
+	if (IsValid(coolTimeActors[2]))
+	{
+		SetRoarCool(2);
+	}
+
+	if (IsValid(coolTimeActors[3]))
+	{
+		SetBuffCool(3);
+	}
+
+	if (IsValid(coolTimeActors[4]))
+	{
+		SetSpecialCool(4);
+	}
 
 	if (gi->isEnd && !ischange)
 	{
@@ -124,29 +149,205 @@ void UJE_BattleWidget::OnClickedToMain()
 	
 }
 
-void UJE_BattleWidget::SetSkillCool()
+void UJE_BattleWidget::SetSkillCool(int32 usedskill)
 {
+	switch (usedskill)
+	{
+	case 0:
+		SetTailCool(usedskill);
+		break;
+	case 1:
+		SetBiteCool(usedskill);
+		break;
+	case 2:
+		SetRoarCool(usedskill);
+		break;
+	case 3:
+		SetBuffCool(usedskill);
+		break;
+	case 4:
+		SetSpecialCool(usedskill);
+		break;
+	default:
+		break;
+	}
+}
 
-		AActor* coolTimeActor = GetWorld()->SpawnActor<AActor>(AActor::StaticClass());
-		
-		coolTimeActor->SetLifeSpan(bcoolTime);
+void UJE_BattleWidget::SetTailCool(int32 skillNum)
+{
+	float skillcoolTime = 2.0f;
 
-		float value = coolTimeActor->GetLifeSpan();
-		float rangemin = 0.0f;
-		float rangemax = bcoolTime;
+	if (!IsValid(coolTimeActors[skillNum]))
+	{
+		coolTimeActors[skillNum] = GetWorld()->SpawnActor<AActor>(AActor::StaticClass());
+		GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Yellow, *coolTimeActors[skillNum]->GetName());
+		coolTimeActors[skillNum]->SetLifeSpan(skillcoolTime);
 
-		if (rangemax - rangemin == 0.f)
+	}
+
+	float value = coolTimeActors[skillNum]->GetLifeSpan();
+	float rangemin = 0.1f;
+	float rangemax = skillcoolTime;
+
+	if (value - rangemin <= 0.f)
+	{
+		pbArr[skillNum]->SetPercent(0.f);
+		player->coolTimeIndex = -1;
+
+		GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Magenta, TEXT("End"));
+		//coolTimeActor = nullptr;
+	}
+	else
+	{
+		pbArr[skillNum]->SetPercent((value - rangemin) / (rangemax - rangemin));
+	}
+
+
+	GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Yellow, FString::Printf(TEXT("Tail : %2.f"), value));
+}
+
+void UJE_BattleWidget::SetBiteCool(int32 skillNum)
+{
+	float skillcoolTime = 2.0f;
+
+	if (!IsValid(coolTimeActors[skillNum]))
+	{
+		coolTimeActors[skillNum] = GetWorld()->SpawnActor<AActor>(AActor::StaticClass());
+		GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Yellow, *coolTimeActors[skillNum]->GetName());
+		coolTimeActors[skillNum]->SetLifeSpan(skillcoolTime);
+
+	}
+
+	float value = coolTimeActors[skillNum]->GetLifeSpan();
+	float rangemin = 0.1f;
+	float rangemax = skillcoolTime;
+
+	if (value - rangemin <= 0.f)
+	{
+		pbArr[skillNum]->SetPercent(0.f);
+		player->coolTimeIndex = -1;
+
+		GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Magenta, TEXT("End"));
+		//coolTimeActor = nullptr;
+	}
+	else
+	{
+		pbArr[skillNum]->SetPercent((value - rangemin) / (rangemax - rangemin));
+	}
+
+
+	GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Yellow, FString::Printf(TEXT("Bite : %2.f"), value));
+}
+
+void UJE_BattleWidget::SetRoarCool(int32 skillNum)
+{
+	float skillcoolTime = 2.0f;
+
+	if (!IsValid(coolTimeActors[skillNum]))
+	{
+		coolTimeActors[skillNum] = GetWorld()->SpawnActor<AActor>(AActor::StaticClass());
+		GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Yellow, *coolTimeActors[skillNum]->GetName());
+		coolTimeActors[skillNum]->SetLifeSpan(skillcoolTime);
+
+	}
+
+	float value = coolTimeActors[skillNum]->GetLifeSpan();
+	float rangemin = 0.1f;
+	float rangemax = skillcoolTime;
+
+	if (value - rangemin <= 0.f)
+	{
+		pbArr[skillNum]->SetPercent(0.f);
+		player->coolTimeIndex = -1;
+		GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Magenta, TEXT("End"));
+		//coolTimeActor = nullptr;
+	}
+	else
+	{
+		pbArr[skillNum]->SetPercent((value - rangemin) / (rangemax - rangemin));
+	}
+
+
+	GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Yellow, FString::Printf(TEXT("Roar : %2.f"), value));
+}
+
+void UJE_BattleWidget::SetBuffCool(int32 skillNum)
+{
+	float skillcoolTime = 5.0f;
+	if (player->BCoolTime)
+	{
+		if (!IsValid(coolTimeActors[skillNum]))
 		{
-			pb_coolTimeq->SetPercent(0.f);
+			coolTimeActors[skillNum] = GetWorld()->SpawnActor<AActor>(AActor::StaticClass());
+			GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Yellow, *coolTimeActors[skillNum]->GetName());
+			coolTimeActors[skillNum]->SetLifeSpan(skillcoolTime);
+
+		}
+
+		float value = coolTimeActors[skillNum]->GetLifeSpan();
+		float rangemin = 0.1f;
+		float rangemax = skillcoolTime;
+
+		if (value - rangemin <= 0.f)
+		{
+			pbArr[skillNum]->SetPercent(0.f);
+			player->coolTimeIndex = -1;
+
+			GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Magenta, TEXT("End"));
+			//coolTimeActor = nullptr;
 		}
 		else
 		{
-			pb_coolTimeq->SetPercent(value - rangemin / rangemax / rangemin);
+			pbArr[skillNum]->SetPercent((value - rangemin) / (rangemax - rangemin));
 		}
 
 
-		GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Yellow, *coolTimeActor->GetName());
-	//}
+		GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Yellow, FString::Printf(TEXT("buffCool : %2.f"), value));
+	}
+	
+}
+
+void UJE_BattleWidget::SetSpecialCool(int32 skillNum)
+{
+	//if (usedskill <= 2)
+//{
+//	skillcoolTime = 2.0f;
+//}
+//else
+//{
+//	skillcoolTime = 5.0f;
+//}
+	if (player->SCoolTime)
+	{
+		float skillcoolTime = 5.0f;
+
+		if (!IsValid(coolTimeActors[skillNum]))
+		{
+			coolTimeActors[skillNum] = GetWorld()->SpawnActor<AActor>(AActor::StaticClass());
+			GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Yellow, *coolTimeActors[skillNum]->GetName());
+			coolTimeActors[skillNum]->SetLifeSpan(skillcoolTime);
+
+		}
+
+		float value = coolTimeActors[skillNum]->GetLifeSpan();
+		float rangemin = 0.1f;
+		float rangemax = skillcoolTime;
+
+		if (value - rangemin <= 0.f)
+		{
+			pbArr[skillNum]->SetPercent(0.f);
+			player->coolTimeIndex = -1;
+
+			GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Magenta, TEXT("End"));
+			//coolTimeActor = nullptr;
+		}
+		else
+		{
+			pbArr[skillNum]->SetPercent((value - rangemin) / (rangemax - rangemin));
+		}
 
 
+		GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Yellow, FString::Printf(TEXT("Special : %2.f"), value));
+	}
+	
 }

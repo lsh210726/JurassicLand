@@ -281,8 +281,17 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Skill")
 	bool SCoolTime = false;
 
- 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Skill")
+	// 스킬 사용하는 키에 따른 쿨타임 인덱스
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Skill")
+	int32 coolTimeIndex = -1;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Skill")
+	TSubclassOf<class UJE_BattleWidget> battlewidget;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Skill")
  	class UJE_BattleWidget* battleUI;
+
+	
 
 public:
 	UFUNCTION()
@@ -292,6 +301,7 @@ public:
 	UFUNCTION(Server, Reliable)
 	void ServerSetSkills(FPlayerSkillInfo skillInfo);
 
+	// 스킬 쿨타임 가져오는 함수
 	UFUNCTION(BlueprintCallable)
 	void getSkillCool();
 };

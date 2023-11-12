@@ -407,7 +407,8 @@ void ABlueTrex::getSkillCool()
 
  	if (battlepc != nullptr && battlepc->IsLocalPlayerController())
  	{
- 		if(battleUI) battleUI->SetSkillCool();
+		//battleUI = CreateWidget<UJE_BattleWidget>(GetWorld(), battlewidget);
+ 		if(battleUI != nullptr) battleUI->SetSkillCool(coolTimeIndex);
  	}
 }
 

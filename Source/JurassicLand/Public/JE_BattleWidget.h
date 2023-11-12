@@ -78,6 +78,9 @@ public:
 	class UProgressBar* pb_coolTimee;
 
 	UPROPERTY(VisibleAnywhere, meta = (BindWidget), Category = MySettings)
+	TArray<UProgressBar*> pbArr;
+
+	UPROPERTY(VisibleAnywhere, meta = (BindWidget), Category = MySettings)
 	class UImage* img_player_win;
 
 	UPROPERTY(VisibleAnywhere, meta = (BindWidget), Category = MySettings)
@@ -88,18 +91,23 @@ public:
 
 	FTimerHandle initHandler;
 	FTimerHandle CoinHandler;
-	
-	UPROPERTY(BlueprintReadOnly)
+
+	UPROPERTY(VisibleAnywhere, meta = (BindWidget), Category = MySettings)
+	TArray<AActor*> coolTimeActors;
+
+	AActor* coolTimeActor = nullptr;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
 	bool ischange = false;
 
-	UPROPERTY(BlueprintReadOnly)
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
 	bool bisMouse = false;
 
-	UPROPERTY()
-	float bcoolTime = 0.f;
+	//UPROPERTY()
+	//float skillcoolTime = 0.f;
 
-	UPROPERTY()
-	float scoolTime = 0.f;
+	//UPROPERTY()
+	//float scoolTime = 0.f;
 
 public:	
 	UFUNCTION()
@@ -114,9 +122,29 @@ public:
 	UFUNCTION() 
 	void OnClickedToMain();
 
-	// 스킬 쿨타임 함수
+	// 스킬 쿨타임 설정 함수
 	UFUNCTION(BlueprintCallable)
-	void SetSkillCool();
+	void SetSkillCool(int32 usedskill);
+
+	// 버프 스킬 쿨타임 함수
+	UFUNCTION()
+	void SetTailCool(int32 skillNum);
+
+	// 버프 스킬 쿨타임 함수
+	UFUNCTION()
+	void SetBiteCool(int32 skillNum);
+
+	// 버프 스킬 쿨타임 함수
+	UFUNCTION()
+	void SetRoarCool(int32 skillNum);
+
+	// 버프 스킬 쿨타임 함수
+	UFUNCTION()
+	void SetBuffCool(int32 skillNum);
+
+	// 스페셜 스킬 쿨타임 함수
+	UFUNCTION()
+	void SetSpecialCool(int32 skillNum);
 
 	
 };
