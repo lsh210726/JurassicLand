@@ -45,7 +45,7 @@ void UJE_BattleWidget::NativeTick(const FGeometry& MyGeometry, float InDeltaTime
 	//FString Message = gi->isEnd == true ? FString::Printf(TEXT("true")) : FString::Printf(TEXT("false"));
 	//GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Yellow, Message);
 
-	/*if (!player->BCoolTime)
+	/*if (player->BCoolTime)
 	{
 		SetSkillCool();
 	}*/
@@ -127,8 +127,6 @@ void UJE_BattleWidget::OnClickedToMain()
 void UJE_BattleWidget::SetSkillCool()
 {
 
-	//if (!player->BCoolTime)
-	//{
 		AActor* coolTimeActor = GetWorld()->SpawnActor<AActor>(AActor::StaticClass());
 		
 		coolTimeActor->SetLifeSpan(bcoolTime);
