@@ -37,14 +37,14 @@ ABasePlayer::ABasePlayer()
 	PrimaryActorTick.bCanEverTick = true;
 	//Skeletal Mesh Component
 	PlayerBody = GetMesh();
-	ConstructorHelpers::FObjectFinder<USkeletalMesh> tempBody(TEXT("/Script/Engine.SkeletalMesh'/Game/4_SK/Raptor/Model/Raptor_HumanIK.Raptor_HumanIK'"));
+/*	ConstructorHelpers::FObjectFinder<USkeletalMesh> tempBody(TEXT("/Script/Engine.SkeletalMesh'/Game/4_SK/Raptor/Model/Raptor_HumanIK.Raptor_HumanIK'"));*/
 
 	PlayerBody->SetupAttachment(RootComponent);
 
-	if (tempBody.Succeeded())
-	{
-		PlayerBody->SetSkeletalMesh(tempBody.Object);
-	}
+// 	if (tempBody.Succeeded())
+// 	{
+// 		PlayerBody->SetSkeletalMesh(tempBody.Object);
+// 	}
 
 	//Spring Arm
 	PlayerCamArm = CreateDefaultSubobject<USpringArmComponent>(TEXT("PlayerCamArm"));
@@ -69,15 +69,21 @@ ABasePlayer::ABasePlayer()
 
 	//collision_Head
 	PlayerHeadCollision = CreateDefaultSubobject<UCapsuleComponent>(TEXT("PlayerHeadCollision"));
+	PlayerHeadCollision->SetupAttachment(RootComponent);
+	/*AttachToComponent(PlayerBody,FAttachmentTransformRules::KeepRelativeTransform, TEXT("bn_Head_10"));*/
 
 	//collision_Upper Body
 	PlayerUpperBodyCollision = CreateDefaultSubobject<UCapsuleComponent>(TEXT("PlayerUpperCollision"));
+	PlayerUpperBodyCollision->SetupAttachment(RootComponent);
+	/*AttachToComponent(PlayerBody, FAttachmentTransformRules::KeepRelativeTransform, TEXT("bn_Neck_7"));*/
 
 	//collision_Tail
 	PlayerTailCollision = CreateDefaultSubobject<UCapsuleComponent>(TEXT("PlayerTailCollision"));
+	PlayerTailCollision->SetupAttachment(RootComponent);
+	/*AttachToComponent(PlayerBody, FAttachmentTransformRules::KeepRelativeTransform, TEXT("bn_Tail05_71"));*/
 
 	//Enhanced Input
-	ConstructorHelpers::FObjectFinder<UInputMappingContext>tempEnhancedInputComp(TEXT("/Script/EnhancedInput.InputMappingContext'/Game/7_MISC/Input/IMC_Player.IMC_Player'"));
+	ConstructorHelpers::FObjectFinder<UInputMappingContext>tempEnhancedInputComp(TEXT("/Game/7_MISC/Input/IMC_Player.IMC_Player"));
 	if (tempEnhancedInputComp.Succeeded())
 	{
 		IMC_Player = tempEnhancedInputComp.Object;
@@ -90,20 +96,44 @@ ABasePlayer::ABasePlayer()
 void ABasePlayer::BeginPlay()
 {
 	Super::BeginPlay();
+
+	//Enhanced Input
 	pc = Cast<APlayerController>(GetController());
 	if (pc != nullptr)
 	{
 		if (UEnhancedInputLocalPlayerSubsystem* SubSystem = ULocalPlayer::GetSubsystem<UEnhancedInputLocalPlayerSubsystem>(pc->GetLocalPlayer()))
 		{
-			SubSystem->AddMappingContext(IMC_Player, 0);
+			SubSystem->AddMappingContext(IMC_Player, 0);	
 		}
 	}
+
+	// 닉네임	
+	gi = GetGameInstance<ULSH_NetGameInstance>();
+
+	if (GetController() != nullptr && GetController()->IsLocalPlayerController())
+	{
+		ServerSetInitInfo(gi->playerCustomInfo);
+		ServerSetCustomItemInfo(gi->playerCustomItemInfo);
+	}
+
+	// 캐릭터 초기화 지연 실행
+	FTimerHandle initHandler;
+	GetWorldTimerManager().SetTimer(initHandler, this, &ABasePlayer::InitializePlayer, 1.0f, false);
 }
 
 // Called every frame
 void ABasePlayer::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
+	if (!btickStop)
+	{
+		if (State_HP <= 0.f)
+		{
+			bIsHpZero = true;
+			gi->isEnd = true;
+			btickStop = true;
+		}
+	}
 
 }
 
@@ -115,5 +145,289 @@ void ABasePlayer::SetupPlayerInputComponent(UInputComponent* PlayerInputComponen
 	{
 		MoveComp->SetupPlayerEnhancedInputComponent(EnhancedInputComponent, inputActions);
 	}
+}
+
+
+
+
+void ABasePlayer::GetLifetimeReplicatedProps(TArray< FLifetimeProperty >& OutLifetimeProps) const
+{
+	Super::GetLifetimeReplicatedProps(OutLifetimeProps);
+
+	DOREPLIFETIME(ABasePlayer, bRoar);
+	DOREPLIFETIME(ABasePlayer, bTailAttack);
+	DOREPLIFETIME(ABasePlayer, bLaserBeam);
+	DOREPLIFETIME(ABasePlayer, State_HP);
+ 	DOREPLIFETIME(ABasePlayer, bIsHpZero);
+ 	DOREPLIFETIME(ABasePlayer, initialCoin);
+ 	DOREPLIFETIME(ABasePlayer, currentCoin);
+ 	DOREPLIFETIME(ABasePlayer, playerName);
+ 	DOREPLIFETIME(ABasePlayer, playerColor);
+ 	DOREPLIFETIME(ABasePlayer, playerMeshNumber);
+ 	DOREPLIFETIME(ABasePlayer, playerHat);
+ 	DOREPLIFETIME(ABasePlayer, playerGlasses);
+ 	DOREPLIFETIME(ABasePlayer, playerShoes);
+ 	DOREPLIFETIME(ABasePlayer, HatTag);
+ 	DOREPLIFETIME(ABasePlayer, GlassesTag);
+ 	DOREPLIFETIME(ABasePlayer, ShoesTag);
+
+
+}
+
+void ABasePlayer::InitializePlayer()
+{
+	// 닉네임 설정
+	if (nicknameText)
+	{
+		nicknameText->SetText(FText::FromString(playerName));
+	}
+
+	InitialCustomMulti();
+
+	CustomColor();
+}
+
+void ABasePlayer::SetColor()
+{
+	ServerSetInitInfo(gi->playerCustomInfo);
+
+	CustomColor();
+
+	//// 컬러 설정
+	//if (IsColorCustom)
+	//{
+	//	if (!IsColor)
+	//	{	
+	//		dynamicMat1 = UMaterialInstanceDynamic::Create(CustomMat, this);
+	//		GetMesh()->SetMaterial(0, dynamicMat1);
+	//	}
+	//}
+	//else
+	//{
+	//	if (gi->IsColorChanged) currMat = CustomMat;
+	//	else currMat = InitialMat;
+
+	//	dynamicMat1 = UMaterialInstanceDynamic::Create(currMat, this);
+
+	//	GetMesh()->SetMaterial(0, dynamicMat1);
+
+	//}
+	//	
+
+	//dynamicMat1->SetVectorParameterValue(FName("MyColor"), playerColor);
+}
+
+void ABasePlayer::GetCustomItemData()
+{
+	TArray<AJE_CustomItemActor*> allItem;
+
+	for (TActorIterator<AJE_CustomItemActor> Itr(GetWorld()); Itr; ++Itr)
+	{
+		AJE_CustomItemActor* currActor = *Itr;
+
+		if (currActor->ActorHasTag("Hat"))
+		{
+			currentHat = currActor;
+
+			const TArray<FName>& myTags = currActor->Tags;
+			if (myTags.IsValidIndex(1))
+			{
+				HatTag = myTags[1];
+			}
+		}
+		else if (currActor->ActorHasTag("Glasses"))
+		{
+			currentGlasses = currActor;
+			const TArray<FName>& myTags = currActor->Tags;
+			if (myTags.IsValidIndex(1))
+			{
+				GlassesTag = myTags[1];
+			}
+		}
+		else if (currActor->ActorHasTag("Shoes"))
+		{
+			currentShoes = currActor;
+			const TArray<FName>& myTags = currActor->Tags;
+			if (myTags.IsValidIndex(1))
+			{
+				ShoesTag = myTags[1];
+			}
+		}
+		else
+		{
+			continue;
+		}
+	}
+
+	for (TActorIterator<AJE_CustomItemActor> Itr(GetWorld()); Itr; ++Itr)
+	{
+		AJE_CustomItemActor* currActor = *Itr;
+
+		if (currActor->ActorHasTag("Hat"))
+		{
+			currentHat = currActor;
+		}
+		else if (currActor->ActorHasTag("Glasses"))
+		{
+			currentGlasses = currActor;
+		}
+		else if (currActor->ActorHasTag("Shoes"))
+		{
+			currentShoes = currActor;
+		}
+		else
+		{
+			continue;
+		}
+	}
+
+	gi->playerCustomItemInfo.HatTagInstance = HatTag;
+	gi->playerCustomItemInfo.GlassesTagInstance = GlassesTag;
+	gi->playerCustomItemInfo.ShoesTagInstance = ShoesTag;
+}
+
+void ABasePlayer::SaveCustomItemData()
+{
+	GetCustomItemData();
+
+	MySaveGame = Cast<UJE_SaveGame>(UGameplayStatics::CreateSaveGameObject(UJE_SaveGame::StaticClass()));
+
+	// 장신구 블루프린트 액터 savegame에 저장
+	MySaveGame->myHat = currentHat;
+	MySaveGame->myGlasses = currentGlasses;
+	MySaveGame->myShoes = currentShoes;
+
+	// 장신구 블루프린트 액터 태그 savegame에 저장
+	MySaveGame->myHatTag = HatTag;
+	MySaveGame->myGlassesTag = GlassesTag;
+	MySaveGame->myShoesTag = ShoesTag;
+
+	UGameplayStatics::SaveGameToSlot(MySaveGame, "MyCustomSaveSlot", 0);
+
+	GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Green, TEXT("Save"));
+}
+
+void ABasePlayer::LoadCustomItemData()
+{
+	MySaveGame = Cast<UJE_SaveGame>(UGameplayStatics::LoadGameFromSlot("MyCustomSaveSlot", 0));
+
+
+	if (MySaveGame == nullptr)
+	{
+		GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Yellow, TEXT("Nothing"));
+		return;
+	}
+	else
+	{
+		if (MySaveGame->myHatTag.IsValid())
+		{
+			/*FString Message = FString::Printf(TEXT("%s"), *MySaveGame->myHat->GetName());
+			GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Yellow, Message);*/
+
+			FString Message1 = FString("Hat : ") + gi->playerCustomItemInfo.HatTagInstance.ToString();
+			GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Yellow, Message1);
+
+		}
+
+		if (MySaveGame->myGlassesTag.IsValid())
+		{
+			FString Message1 = FString("Glasses : ") + gi->playerCustomItemInfo.GlassesTagInstance.ToString();
+			GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Yellow, Message1);
+
+		}
+
+		if (MySaveGame->myShoesTag.IsValid())
+		{
+			FString Message1 = FString("Shoes : ") + gi->playerCustomItemInfo.ShoesTagInstance.ToString();
+			GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Yellow, Message1);
+
+		}
+
+		GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Yellow, TEXT("Load"));
+	}
+}
+
+void ABasePlayer::SetMesh()
+{
+	ServerSetInitInfo(gi->playerCustomInfo);
+
+	CustomMesh();
+}
+
+void ABasePlayer::CustomColor()
+{
+	// 컬러 설정
+	if (IsColorCustom)
+	{
+		if (!IsColor)
+		{
+			dynamicMat1 = UMaterialInstanceDynamic::Create(CustomMat, this);
+			GetMesh()->SetMaterial(0, dynamicMat1);
+		}
+	}
+	else
+	{
+		if (gi->IsColorChanged) currMat = CustomMat;
+		else currMat = InitialMat;
+
+		dynamicMat1 = UMaterialInstanceDynamic::Create(currMat, this);
+
+		GetMesh()->SetMaterial(0, dynamicMat1);
+
+	}
+
+
+	dynamicMat1->SetVectorParameterValue(FName("MyColor"), playerColor);
+}
+
+void ABasePlayer::CustomMesh()
+{
+	// Mesh
+	USkeletalMesh* selectedMesh = LoadObject<USkeletalMesh>(NULL, *meshPathList[playerMeshNumber], NULL, LOAD_None, NULL);
+	if (selectedMesh != nullptr)
+	{
+		GetMesh()->SetSkeletalMesh(selectedMesh);
+		if (playerMeshNumber == 1)
+		{
+			GetMesh()->SetRelativeScale3D(FVector(3.0f));
+		}
+		else
+		{
+			GetMesh()->SetRelativeScale3D(FVector(0.5f));
+		}
+	}
+
+	//Material
+	UMaterial* selectedMat = LoadObject<UMaterial>(NULL, *matPathList[playerMeshNumber], NULL, LOAD_None, NULL);
+	if (selectedMat != nullptr)
+	{
+		UMaterialInstanceDynamic* selectedDynamicMat = UMaterialInstanceDynamic::Create(selectedMat, this);
+
+		GetMesh()->SetMaterial(0, selectedDynamicMat);
+
+	}
+}
+
+void ABasePlayer::InitialCustomMulti_Implementation()
+{
+	ServerSetCustomItemInfo(gi->playerCustomItemInfo);
+	GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Red, TEXT("Initialize"));
+}
+
+void ABasePlayer::ServerSetInitInfo_Implementation(FPlayerCustomInfo initInfo)
+{
+
+	playerName = initInfo.dinoName;
+	playerMeshNumber = initInfo.dinoMeshNum;
+	playerColor = initInfo.dinoColor;
+
+
+}
+
+void ABasePlayer::ServerSetCustomItemInfo_Implementation(FPlayerCustomItemInfo customItemInfo)
+{
+	playerHat = customItemInfo.HatTagInstance;
+	playerGlasses = customItemInfo.GlassesTagInstance;
+	playerShoes = customItemInfo.ShoesTagInstance;
 }
 
