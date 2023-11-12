@@ -81,7 +81,7 @@ void UJE_BattleWidget::NativeTick(const FGeometry& MyGeometry, float InDeltaTime
 		{
 			ws_Battle->SetActiveWidgetIndex(3);
 			txt_battleresult->SetText(FText::FromString("Lose"));
-			GetWorld()->GetTimerManager().SetTimer(CoinHandler, this, &UJE_BattleWidget::CoinUI, 5.0f, false);
+			GetWorld()->GetTimerManager().SetTimer(CoinHandler, this, &UJE_BattleWidget::CoinUI, 3.0f, false);
 
 			ischange = true;
 
@@ -91,7 +91,7 @@ void UJE_BattleWidget::NativeTick(const FGeometry& MyGeometry, float InDeltaTime
 			ws_Battle->SetActiveWidgetIndex(3);
 			txt_battleresult->SetText(FText::FromString("Win"));
 			player->currentCoin += 5000.f;
-			GetWorld()->GetTimerManager().SetTimer(CoinHandler, this, &UJE_BattleWidget::CoinUI, 5.0f, false);
+			GetWorld()->GetTimerManager().SetTimer(CoinHandler, this, &UJE_BattleWidget::CoinUI, 3.0f, false);
 
 			ischange = true;
 
@@ -124,8 +124,9 @@ void UJE_BattleWidget::StartUIAnim()
 
 void UJE_BattleWidget::CoinUI()
 {
-	ws_Battle->SetActiveWidgetIndex(4);
+	//ws_Battle->SetActiveWidgetIndex(4);
 	bisMouse = true;
+	btn_toMain->SetVisibility(ESlateVisibility::Visible);
 	/*if (pc)
 	{
 		FInputModeGameAndUI InputMode;
