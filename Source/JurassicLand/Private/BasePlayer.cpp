@@ -98,6 +98,8 @@ void ABasePlayer::BeginPlay()
 {
 	Super::BeginPlay();
 
+	GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Green, FString::Printf(TEXT("%s"), *GetWorld()->GetFirstPlayerController()->GetName()));
+
 	//Enhanced Input
 	pc = Cast<APlayerController>(GetController());
 	if (pc != nullptr)
@@ -194,10 +196,13 @@ void ABasePlayer::InitializePlayer()
 	{
 		nicknameText->SetText(FText::FromString(playerName));
 	}*/
+	if (gi->playerCustomInfo.dinoMeshNum == 1)
+	{
+		InitialCustomMulti();
 
-	InitialCustomMulti();
+		CustomColor();
+	}
 
-	CustomColor();
 }
 
 void ABasePlayer::SetColor()
@@ -388,8 +393,6 @@ void ABasePlayer::CustomColor()
 		GetMesh()->SetMaterial(0, dynamicMat1);
 
 	}
-
-
 	dynamicMat1->SetVectorParameterValue(FName("MyColor"), playerColor);
 }
 
