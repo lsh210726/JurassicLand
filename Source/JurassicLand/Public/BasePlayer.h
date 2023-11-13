@@ -80,19 +80,19 @@ public:
 
 	//State_Speed
 	UPROPERTY(Replicated, EditAnywhere, BlueprintReadWrite, Category = CharacterStat, BlueprintReadWrite)
-	float State_Speed = 4.0f;
+	float SpeedStat = 4.0f;
 
 	//State_Power
 	UPROPERTY(Replicated, EditAnywhere, BlueprintReadWrite, Category = CharacterStat, BlueprintReadWrite)
-	float State_Power = 6.0f;
+	float PowerStat = 6.0f;
 
 	//State_Defence
 	UPROPERTY(Replicated, EditAnywhere, BlueprintReadWrite, Category = CharacterStat, BlueprintReadWrite)
-	float State_Defence = 5.0f;
+	float DefenceStat = 5.0f;
 
 	//State_Temp : Player State Before Buff
 	UPROPERTY(Replicated, EditAnywhere, BlueprintReadWrite, Category = CharacterStat, BlueprintReadWrite)
-	float State_Temp = 0.0f;
+	float TempStat = 0.0f;
 
 
 	/*--------------- Value about Skill ------------*/
