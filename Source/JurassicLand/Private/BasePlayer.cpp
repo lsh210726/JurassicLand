@@ -181,6 +181,11 @@ void ABasePlayer::GetLifetimeReplicatedProps(TArray< FLifetimeProperty >& OutLif
  	DOREPLIFETIME(ABasePlayer, HatTag);
  	DOREPLIFETIME(ABasePlayer, GlassesTag);
  	DOREPLIFETIME(ABasePlayer, ShoesTag);
+	DOREPLIFETIME(ABasePlayer, IsSetPreset);
+	DOREPLIFETIME(ABasePlayer, currBuffskillNum);
+	DOREPLIFETIME(ABasePlayer, currSpecialskillNum);
+	DOREPLIFETIME(ABasePlayer, currplayerSpecialSkillImg);
+	DOREPLIFETIME(ABasePlayer, currplayerBuffSkillImg);
 	DOREPLIFETIME(ABasePlayer, buffCool);
 	DOREPLIFETIME(ABasePlayer, SpecialCool);
 
