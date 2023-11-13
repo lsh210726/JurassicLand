@@ -101,13 +101,13 @@ ABlueTrex::ABlueTrex()
 	currentCoin = initialCoin;
 
 	//Color Material
-	ConstructorHelpers::FObjectFinder<UMaterial> bodyMat(TEXT("/Game/4_SK/BlueTRex/MAT_TREX_ColorChange.MAT_TREX_ColorChange"));
+	ConstructorHelpers::FObjectFinder<UMaterial> bodyMat(TEXT("/Script/Engine.Material'/Game/4_SK/BlueTRex/MAT_TREX_ColorChange.MAT_TREX_ColorChange'"));
 	if (bodyMat.Succeeded())
 	{
 		CustomMat = bodyMat.Object;
 	}
 
-	ConstructorHelpers::FObjectFinder<UMaterial> inibodyMat(TEXT("/Game/4_SK/BlueTRex/MAT_TRex.MAT_TRex"));
+	ConstructorHelpers::FObjectFinder<UMaterial> inibodyMat(TEXT("/Script/Engine.Material'/Game/4_SK/BlueTRex/MAT_TRex.MAT_TRex'"));
 	if (bodyMat.Succeeded())
 	{
 		InitialMat = inibodyMat.Object;
@@ -258,10 +258,10 @@ void ABlueTrex::GetLifetimeReplicatedProps(TArray< FLifetimeProperty >& OutLifet
 void ABlueTrex::InitializePlayer()
 {
 	// 닉네임 설정
-	if (nicknameText)
-	{
-		nicknameText->SetText(FText::FromString(playerName));
-	}
+	//if (nicknameText)
+	//{
+	//	nicknameText->SetText(FText::FromString(playerName));
+	//}
 
 	InitialCustomMulti();
 

@@ -16,4 +16,11 @@ class JURASSICLAND_API ARaptor : public ABasePlayer
 public:
 	// Sets default values for this character's properties
 	ARaptor();
+
+// material
+public:
+	class UMaterialInterface* RapCustomMat;
+	class UMaterialInterface* RapInitialMat;
+	class UMaterialInterface* RapInitialMat1;
+
 };

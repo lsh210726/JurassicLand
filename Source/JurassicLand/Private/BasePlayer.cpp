@@ -177,10 +177,10 @@ void ABasePlayer::GetLifetimeReplicatedProps(TArray< FLifetimeProperty >& OutLif
 void ABasePlayer::InitializePlayer()
 {
 	// 닉네임 설정
-	if (nicknameText)
+	/*if (nicknameText)
 	{
 		nicknameText->SetText(FText::FromString(playerName));
-	}
+	}*/
 
 	InitialCustomMulti();
 
@@ -402,8 +402,25 @@ void ABasePlayer::CustomMesh()
 	if (selectedMat != nullptr)
 	{
 		UMaterialInstanceDynamic* selectedDynamicMat = UMaterialInstanceDynamic::Create(selectedMat, this);
+		if (playerMeshNumber == 1)
+		{
+			GetMesh()->SetMaterial(0, selectedDynamicMat);
+			
+			FString rapmatPath1 = TEXT("/Script/Engine.Material'/Game/4_SK/Raptor/Model/DromaMESH_Material__26.DromaMESH_Material__26'");
 
-		GetMesh()->SetMaterial(0, selectedDynamicMat);
+			UMaterial* RapselectedMat = LoadObject<UMaterial>(NULL, *rapmatPath1, NULL, LOAD_None, NULL);
+
+			UMaterialInstanceDynamic* RapselectedDynamicMat = UMaterialInstanceDynamic::Create(RapselectedMat, this);
+
+			GetMesh()->SetMaterial(1, RapselectedDynamicMat);
+
+
+		}
+		else
+		{
+			GetMesh()->SetMaterial(0, selectedDynamicMat);
+
+		}
 
 	}
 }

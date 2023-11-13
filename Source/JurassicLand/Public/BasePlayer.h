@@ -344,13 +344,13 @@ public:
 
 	// 메쉬 경로 저장한 배열
 	TArray<FString> meshPathList = { TEXT("/Script/Engine.SkeletalMesh'/Game/4_SK/BlueTRex/SK_TRex.SK_TRex'"),
-									TEXT("/Script/Engine.SkeletalMesh'/Game/4_SK/RaptorDinosaur/Model/Raptor_Cutscenes.Raptor_Cutscenes'"),
+									TEXT("/Script/Engine.SkeletalMesh'/Game/4_SK/Raptor/Model/Raptor_HumanIK.Raptor_HumanIK'"),
 									TEXT("/Script/Engine.SkeletalMesh'/Game/4_SK/Dinosaurus_Stegosaurus/Models/SK_Stegosaurus.SK_Stegosaurus'"),
 									TEXT("/Script/Engine.SkeletalMesh'/Game/4_SK/Triceratops/Meshes/SK_Triceratops.SK_Triceratops'"), };
 	
 	// 메쉬에 맞는 material
 	TArray<FString> matPathList = { TEXT("/Script/Engine.Material'/Game/4_SK/BlueTRex/MAT_TRex.MAT_TRex'"),
-									TEXT("/Script/Engine.Material'/Game/4_SK/RaptorDinosaur/Model/DromaMESH_DromaBodyM.DromaMESH_DromaBodyM'"),
+									TEXT("/Script/Engine.Material'/Game/4_SK/Raptor/Model/DromaMESH_DromaBodyM.DromaMESH_DromaBodyM'"),
 									TEXT("/Script/Engine.Material'/Game/4_SK/Dinosaurus_Stegosaurus/Models/Materials/M_Stegosaurus_Green.M_Stegosaurus_Green'"),
 									TEXT("/Script/Engine.SkeletalMesh'/Game/4_SK/Triceratops/Meshes/SK_Triceratops.SK_Triceratops'"), };
 
