@@ -48,6 +48,25 @@ public:
 	FName ShoesTagInstance = FName(TEXT("nothing"));
 };
 
+USTRUCT(BlueprintType)
+struct FPlayerSkillInfo
+{
+	GENERATED_USTRUCT_BODY()
+
+public:
+	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Skill")
+	int32 BuffskillNum = 0;
+
+	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Skill")
+	int32 SpecialskillNum = 0;
+
+	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Skill")
+	class UTexture2D* playerSpecialSkillImg = nullptr;
+
+	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Skill")
+	class UTexture2D* playerBuffSkillImg = nullptr;
+};
+
 
 UCLASS()
 class JURASSICLAND_API ULSH_NetGameInstance : public UGameInstance
@@ -72,6 +91,8 @@ public:
 	FPlayerCustomInfo playerCustomInfo;
 	UPROPERTY(BlueprintReadOnly)
 	FPlayerCustomItemInfo playerCustomItemInfo;
+	UPROPERTY(BlueprintReadOnly)
+	FPlayerSkillInfo playerSkillInfo;
 	bool IsColorChanged = false;
 
 	/*UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="CustomData")

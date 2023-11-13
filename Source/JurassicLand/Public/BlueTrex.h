@@ -85,8 +85,8 @@ public:
 	UPROPERTY(Replicated, EditAnywhere, BlueprintReadWrite, Category = "Health")//HP동기화
 	bool bIsHpZero = false;	
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Health")
-	bool bIsHPShow = false;
+	//UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Health")
+	//bool bIsHPShow = false;
 
 	bool btickStop = false;
 
@@ -237,6 +237,13 @@ public:
 									TEXT("/Script/Engine.Material'/Game/4_SK/Dinosaurus_Stegosaurus/Models/Materials/M_Stegosaurus_Green.M_Stegosaurus_Green'"),
 									TEXT("/Script/Engine.SkeletalMesh'/Game/4_SK/Triceratops/Meshes/SK_Triceratops.SK_Triceratops'"), };
 
+	// 메쉬에 맞는 애니메이션
+	TArray<FString> animPathList = { TEXT("/Script/Engine.AnimBlueprint'/Game/4_SK/BlueTRex/BluePrints/ABP_BlueTRex.ABP_BlueTRex'"),
+									TEXT("/Script/Engine.AnimSequence'/Game/4_SK/RaptorDinosaur/Animations/RootMotion/Idle.Idle'"),
+									TEXT("/Script/Engine.AnimSequence'/Game/4_SK/Dinosaurus_Stegosaurus/Animations/RootMotion/Stegosaurus_RM_Idle.Stegosaurus_RM_Idle'"),
+									TEXT("/Script/Engine.AnimSequence'/Game/4_SK/Triceratops/Animations/Triceratops_Idle_Roar.Triceratops_Idle_Roar'")};
+	class UAnimBlueprint* trexAnimClass;
+
 	// 메쉬 변경 함수
 	UFUNCTION()
 	void SetMesh();
@@ -245,6 +252,47 @@ public:
 	UFUNCTION()
 	void CustomMesh();
 
+// 스킬 프리셋
+public:
+	UPROPERTY(Replicated, EditDefaultsOnly, BlueprintReadWrite, Category = "Skill")
+	bool IsSetPreset = false;
 	
+	UPROPERTY(Replicated, EditAnywhere, BlueprintReadWrite, Category = "Skill")
+	int32 currBuffskillNum;
+
+	UPROPERTY(Replicated, EditAnywhere, BlueprintReadWrite, Category = "Skill")
+	int32 currSpecialskillNum;
+
+	UPROPERTY(Replicated, EditAnywhere, BlueprintReadWrite, Category = "Skill")
+	class UTexture2D* currplayerSpecialSkillImg;
+
+	UPROPERTY(Replicated, EditAnywhere, BlueprintReadWrite, Category = "Skill")
+	class UTexture2D* currplayerBuffSkillImg;
+
+	UPROPERTY(Replicated, EditAnywhere, BlueprintReadWrite, Category = "Skill")
+	float buffCool = 5.0f;
+
+	UPROPERTY(Replicated, EditAnywhere, BlueprintReadWrite, Category = "Skill")
+	float SpecialCool = 5.0f;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Skill")
+	bool BCoolTime = false;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Skill")
+	bool SCoolTime = false;
+
+ 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Skill")
+ 	class UJE_BattleWidget* battleUI;
+
+public:
+	UFUNCTION()
+	void SaveSkills();
+	
+	// 스킬 프리셋 설정 함수
+	UFUNCTION(Server, Reliable)
+	void ServerSetSkills(FPlayerSkillInfo skillInfo);
+
+	UFUNCTION(BlueprintCallable)
+	void getSkillCool();
 };
  

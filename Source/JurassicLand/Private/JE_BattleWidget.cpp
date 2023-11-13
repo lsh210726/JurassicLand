@@ -4,7 +4,9 @@
 #include "JE_BattleWidget.h"
 #include "Components/Button.h"
 #include "Components/TextBlock.h"
+#include "Components/Image.h"
 #include "Components/WidgetSwitcher.h"
+#include "Components/Progressbar.h"
 #include "Animation/WidgetAnimation.h"
 #include "BlueTrex.h"
 #include "LSH_NetGameInstance.h"
@@ -24,9 +26,14 @@ void UJE_BattleWidget::NativeConstruct()
 	player = GetOwningPlayerPawn<ABlueTrex>();
 	//pc = GetOwningPlayer<AJE_BattleInController>();
 
-	player->bIsHPShow = true;
+	//player->bIsHPShow = true;
+	bcoolTime = player->buffCool;
+	scoolTime = player->SpecialCool;
 
-	GetWorld()->GetTimerManager().SetTimer(initHandler, this, &UJE_BattleWidget::StartUIAnim, 5.0f, false);
+	img_specialskill->SetBrushResourceObject(gi->playerSkillInfo.playerSpecialSkillImg);
+	img_buffskill->SetBrushResourceObject(gi->playerSkillInfo.playerBuffSkillImg);
+
+	GetWorld()->GetTimerManager().SetTimer(initHandler, this, &UJE_BattleWidget::StartUIAnim, 0.1f, false);
 
 	btn_toMain->OnClicked.AddDynamic(this, &UJE_BattleWidget::OnClickedToMain);
 }
@@ -37,6 +44,11 @@ void UJE_BattleWidget::NativeTick(const FGeometry& MyGeometry, float InDeltaTime
 
 	//FString Message = gi->isEnd == true ? FString::Printf(TEXT("true")) : FString::Printf(TEXT("false"));
 	//GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Yellow, Message);
+
+	/*if (player->BCoolTime)
+	{
+		SetSkillCool();
+	}*/
 
 	if (gi->isEnd && !ischange)
 	{
@@ -110,4 +122,31 @@ void UJE_BattleWidget::OnClickedToMain()
 
 
 	
+}
+
+void UJE_BattleWidget::SetSkillCool()
+{
+
+		AActor* coolTimeActor = GetWorld()->SpawnActor<AActor>(AActor::StaticClass());
+		
+		coolTimeActor->SetLifeSpan(bcoolTime);
+
+		float value = coolTimeActor->GetLifeSpan();
+		float rangemin = 0.0f;
+		float rangemax = bcoolTime;
+
+		if (rangemax - rangemin == 0.f)
+		{
+			pb_coolTimeq->SetPercent(0.f);
+		}
+		else
+		{
+			pb_coolTimeq->SetPercent(value - rangemin / rangemax / rangemin);
+		}
+
+
+		GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Yellow, *coolTimeActor->GetName());
+	//}
+
+
 }

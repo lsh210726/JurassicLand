@@ -36,9 +36,6 @@ public:
 	class UButton* btn_skip;
 
 	UPROPERTY(VisibleAnywhere, meta=(BindWidget), Category=MySettings)
-	class UTextBlock* txt_skip;
-
-	UPROPERTY(VisibleAnywhere, meta=(BindWidget), Category=MySettings)
 	float currentTime = 0;
 
 	UPROPERTY(VisibleAnywhere, meta=(BindWidget), Category=MySettings)
@@ -58,70 +55,6 @@ public:
 	class UButton* btn_nickCheck;
 
 	UPROPERTY(VisibleAnywhere, meta=(BindWidget), Category=MySettings)
-	class UButton* btn_play;
-
-	UPROPERTY(VisibleAnywhere, meta=(BindWidget), Category=MySettings)
-	class UButton* btn_dict;
-
-	UPROPERTY(VisibleAnywhere, meta=(BindWidget), Category=MySettings)
-	class UButton* btn_record;
-
-	UPROPERTY(VisibleAnywhere, meta=(BindWidget), Category=MySettings)
-	class UButton* btn_custom;
-
-	UPROPERTY(VisibleAnywhere, meta=(BindWidget), Category=MySettings)
-	class UButton* btn_store;
-
-	UPROPERTY(VisibleAnywhere, meta=(BindWidget), Category=MySettings)
-	class UButton* btn_tool;
-
-	UPROPERTY(VisibleAnywhere, meta=(BindWidget), Category=MySettings)
-	class UButton* btn_place;
-
-	UPROPERTY(VisibleAnywhere, meta=(BindWidget), Category=MySettings)
-	class UButton* btn_community;
-
-	UPROPERTY(VisibleAnywhere, meta=(BindWidget), Category=MySettings)
-	class UButton* btn_battle;
-
-	UPROPERTY(VisibleAnywhere, meta=(BindWidget), Category=MySettings)
-	class UTextBlock* txt_name;
-
-	UPROPERTY(VisibleAnywhere, meta=(BindWidget), Category=MySettings)
-	class UTextBlock* txt_nickCheck;
-
-
-	UPROPERTY(VisibleAnywhere, meta=(BindWidget), Category=MySettings)
-	class UTextBlock* txt_play;
-
-	UPROPERTY(VisibleAnywhere, meta=(BindWidget), Category=MySettings)
-	class UTextBlock* txt_dict;
-	
-	UPROPERTY(VisibleAnywhere, meta=(BindWidget), Category=MySettings)
-	class UTextBlock* txt_record;
-
-	UPROPERTY(VisibleAnywhere, meta=(BindWidget), Category=MySettings)
-	class UTextBlock* txt_custom;
-
-	UPROPERTY(VisibleAnywhere, meta=(BindWidget), Category=MySettings)
-	class UTextBlock* txt_store;
-
-	UPROPERTY(VisibleAnywhere, meta=(BindWidget), Category=MySettings)
-	class UTextBlock* txt_tool;
-
-	UPROPERTY(VisibleAnywhere, meta=(BindWidget), Category=MySettings)
-	class UTextBlock* txt_place;
-
-	UPROPERTY(VisibleAnywhere, meta=(BindWidget), Category=MySettings)
-	class UTextBlock* txt_community;
-
-	UPROPERTY(VisibleAnywhere, meta=(BindWidget), Category=MySettings)
-	class UTextBlock* txt_battle;
-	
-	UPROPERTY(VisibleAnywhere, meta=(BindWidget), Category=MySettings)
-	class UTextBlock* txt_coin;
-
-	UPROPERTY(VisibleAnywhere, meta=(BindWidget), Category=MySettings)
 	class UEditableText* edit_nickname;
 
 	
@@ -131,26 +64,8 @@ public:
 	void OnClickedSkip();
 
 	UFUNCTION()
-	void OnClickedNickCheck();
-
-	UFUNCTION()
-	void OnHoveredPlay();
-
-	UFUNCTION()
-	void OnHoveredBattle();
-
-	UFUNCTION()
-	void OnUnHoveredBattle();
-
-	UFUNCTION()
-	void OnClickedBattle();
-
-	UFUNCTION()
-	void OnClickedCustom();
-
-	
+	void OnClickedNickCheck();	
 
 private:	
-	
 	void SwitchCanvas(int32 index);
 };

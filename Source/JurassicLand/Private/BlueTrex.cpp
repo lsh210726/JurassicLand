@@ -26,6 +26,9 @@
 #include "GameFramework/Actor.h" 
 #include "UObject/ConstructorHelpers.h"
 #include "JE_CustomPlayerController.h"
+#include "JE_InBattleController.h"
+#include "JE_BattleWidget.h"
+
 
 
 //DECLARE_DYNAMIC_MULTICAST_DELEGATE(TRexTailAttack);
@@ -75,11 +78,11 @@ ABlueTrex::ABlueTrex()
 // }
 
 	/*---- Anim Import ----*/
-	ConstructorHelpers::FObjectFinder<UAnimationAsset> tempTailAttack(TEXT("/Script/Engine.AnimSequence'/Game/7_MISC/Animation/BlueTRex/BlueTRex_attack_tail_2.BlueTRex_attack_tail_2'"));
+	/*ConstructorHelpers::FObjectFinder<UAnimationAsset> tempTailAttack(TEXT("/Script/Engine.AnimSequence'/Game/7_MISC/Animation/BlueTRex/BlueTRex_attack_tail_2.BlueTRex_attack_tail_2'"));
 	if (tempTailAttack.Succeeded())
 	{
 		TailAttackAnim = tempTailAttack.Object;
-	}
+	}*/
 
 	CharacterMovement = GetCharacterMovement();
 
@@ -111,6 +114,14 @@ ABlueTrex::ABlueTrex()
 
 	}
 
+	//Trex AnimBlueprint
+	ConstructorHelpers::FObjectFinder<UAnimBlueprint> trexAnim(*animPathList[playerMeshNumber]);
+
+	if (trexAnim.Succeeded())
+	{
+		trexAnimClass = trexAnim.Object;
+	}
+
 }
 
 // Called when the game starts or when spawned
@@ -133,11 +144,12 @@ void ABlueTrex::BeginPlay()
 	{
 		ServerSetInitInfo(gi->playerCustomInfo);
 		ServerSetCustomItemInfo(gi->playerCustomItemInfo);
+		ServerSetSkills(gi->playerSkillInfo);
 	}
 
-	// 캐릭터 초기화 지연 실행
+	// 캐릭터 초기화 지연 실행 // 1초는 너무 빠름
 	FTimerHandle initHandler;
-	GetWorldTimerManager().SetTimer(initHandler, this, &ABlueTrex::InitializePlayer, 1.0f, false);
+	GetWorldTimerManager().SetTimer(initHandler, this, &ABlueTrex::InitializePlayer, 3.0f, false);
 
 }
 
@@ -232,6 +244,13 @@ void ABlueTrex::GetLifetimeReplicatedProps(TArray< FLifetimeProperty >& OutLifet
 	DOREPLIFETIME(ABlueTrex, HatTag);
 	DOREPLIFETIME(ABlueTrex, GlassesTag);
 	DOREPLIFETIME(ABlueTrex, ShoesTag);
+	DOREPLIFETIME(ABlueTrex, IsSetPreset);
+	DOREPLIFETIME(ABlueTrex, currBuffskillNum);
+	DOREPLIFETIME(ABlueTrex, currSpecialskillNum);
+	DOREPLIFETIME(ABlueTrex, currplayerSpecialSkillImg);
+	DOREPLIFETIME(ABlueTrex, currplayerBuffSkillImg);
+	DOREPLIFETIME(ABlueTrex, buffCool);
+	DOREPLIFETIME(ABlueTrex, SpecialCool);
 
 
 }
@@ -248,6 +267,14 @@ void ABlueTrex::InitializePlayer()
 
 	CustomColor();
 
+	//ServerSetSkills(gi->playerSkillInfo);
+
+}
+
+void ABlueTrex::InitialCustomMulti_Implementation()
+{
+	ServerSetCustomItemInfo(gi->playerCustomItemInfo);
+	GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Red, TEXT("Initialize"));
 }
 
 void ABlueTrex::SetColor()
@@ -322,7 +349,7 @@ void ABlueTrex::CustomMesh()
 		GetMesh()->SetSkeletalMesh(selectedMesh);
 		if (playerMeshNumber == 1)
 		{
-			GetMesh()->SetRelativeScale3D(FVector(3.0f));
+			GetMesh()->SetRelativeScale3D(FVector(2.0f));
 		}
 		else
 		{
@@ -339,12 +366,49 @@ void ABlueTrex::CustomMesh()
 		GetMesh()->SetMaterial(0, selectedDynamicMat);
 
 	}
+
+	UAnimationAsset* selectedAnim = LoadObject<UAnimationAsset>(NULL, *animPathList[playerMeshNumber], NULL, LOAD_None, NULL);
+	if (playerMeshNumber > 0)
+	{
+		if (selectedAnim != nullptr)
+		{
+			GetMesh()->SetAnimationMode(EAnimationMode::AnimationSingleNode);
+			GetMesh()->PlayAnimation(selectedAnim, true);
+		}
+	}
+	else
+	{
+		if (trexAnimClass != nullptr)
+		{
+			GetMesh()->SetAnimationMode(EAnimationMode::AnimationBlueprint);
+			GetMesh()->SetAnimInstanceClass(trexAnimClass->GeneratedClass);
+		}
+		
+	}
+	
 }
 
-void ABlueTrex::InitialCustomMulti_Implementation()
+void ABlueTrex::SaveSkills()
 {
-	ServerSetCustomItemInfo(gi->playerCustomItemInfo);
-	GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Red, TEXT("Initialize"));
+	
+}
+
+void ABlueTrex::ServerSetSkills_Implementation(FPlayerSkillInfo skillInfo)
+{
+	currBuffskillNum = skillInfo.BuffskillNum;
+	currSpecialskillNum = skillInfo.SpecialskillNum;
+	currplayerBuffSkillImg = skillInfo.playerBuffSkillImg;
+	currplayerSpecialSkillImg = skillInfo.playerSpecialSkillImg;
+}
+
+void ABlueTrex::getSkillCool()
+{
+	AJE_InBattleController* battlepc = Cast<AJE_InBattleController>(GetController());
+
+ 	if (battlepc != nullptr && battlepc->IsLocalPlayerController())
+ 	{
+ 		if(battleUI) battleUI->SetSkillCool();
+ 	}
 }
 
 void ABlueTrex::ServerSetInitInfo_Implementation(FPlayerCustomInfo initInfo)
