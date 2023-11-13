@@ -29,6 +29,7 @@
 #include "Components/WidgetComponent.h"
 #include "Blueprint/UserWidget.h"
 #include "MoveComp.h"
+#include "Raptor.h"
 
 // Sets default values
 ABasePlayer::ABasePlayer()
@@ -116,9 +117,19 @@ void ABasePlayer::BeginPlay()
 		ServerSetCustomItemInfo(gi->playerCustomItemInfo);
 	}
 
-	// 캐릭터 초기화 지연 실행
-	FTimerHandle initHandler;
-	GetWorldTimerManager().SetTimer(initHandler, this, &ABasePlayer::InitializePlayer, 1.0f, false);
+	ARaptor* playerRaptor = Cast<ARaptor>(UGameplayStatics::GetPlayerCharacter(GetWorld(), 0));
+
+	if (playerRaptor)
+	{
+		return;
+	}
+	else
+	{
+		// 캐릭터 초기화 지연 실행
+		FTimerHandle initHandler;
+		GetWorldTimerManager().SetTimer(initHandler, this, &ABasePlayer::InitializePlayer, 1.0f, false);
+	}
+	
 }
 
 // Called every frame

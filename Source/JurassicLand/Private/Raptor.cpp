@@ -34,7 +34,7 @@ ARaptor::ARaptor()
 
 	}*/
 
-	ConstructorHelpers::FObjectFinder<UMaterial> rapbodyMat1(TEXT("/Game/4_SK/Raptor/Model/DromaMESH_Material__26.DromaMESH_Material__26"));
+	ConstructorHelpers::FObjectFinder<UMaterial> rapbodyMat1(TEXT("/Script/Engine.Material'/Game/4_SK/Raptor/Model/DromaMESH_Material__26.DromaMESH_Material__26'"));
 	if (rapbodyMat1.Succeeded())
 	{
 		RapInitialMat1 = rapbodyMat1.Object;
