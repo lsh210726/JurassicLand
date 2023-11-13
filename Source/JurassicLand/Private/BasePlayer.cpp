@@ -181,6 +181,8 @@ void ABasePlayer::GetLifetimeReplicatedProps(TArray< FLifetimeProperty >& OutLif
  	DOREPLIFETIME(ABasePlayer, HatTag);
  	DOREPLIFETIME(ABasePlayer, GlassesTag);
  	DOREPLIFETIME(ABasePlayer, ShoesTag);
+	DOREPLIFETIME(ABasePlayer, buffCool);
+	DOREPLIFETIME(ABasePlayer, SpecialCool);
 
 
 }

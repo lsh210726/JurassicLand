@@ -114,16 +114,22 @@ public:
 	FVector IceAttackLocVector;
 
 	//Special Skill Cool Time
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = SkillControl, BlueprintReadWrite)
-	bool CoolTime_SpecialSkill = false;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Skill", BlueprintReadWrite)
+	bool SCoolTime = false;
 	
 	//Buff Skill Cool Time
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = SkillControl, BlueprintReadWrite)
-	bool CoolTime_BuffSkill = false;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Skill", BlueprintReadWrite)
+	bool BCoolTime = false;
 	
-	//Basic Skill Cool Time
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = SkillControl, BlueprintReadWrite)
-	bool CoolTime_BasicSkill = false;
+	UPROPERTY(Replicated, EditAnywhere, BlueprintReadWrite, Category = "Skill")
+	float buffCool = 5.0f;
+
+	UPROPERTY(Replicated, EditAnywhere, BlueprintReadWrite, Category = "Skill")
+	float SpecialCool = 5.0f;
+
+// 	Basic Skill Cool Time
+// 		UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = SkillControl, BlueprintReadWrite)
+// 		bool CoolTime_BasicSkill = false;
 
 
 /*--------- Animation Control value ----------*/
