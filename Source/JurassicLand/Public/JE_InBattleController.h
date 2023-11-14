@@ -13,5 +13,12 @@ UCLASS()
 class JURASSICLAND_API AJE_InBattleController : public APlayerController
 {
 	GENERATED_BODY()
+
+public:
+
+	AJE_InBattleController();
+
+protected:
+	virtual void BeginPlay() override;
 	
 };

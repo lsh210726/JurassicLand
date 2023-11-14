@@ -460,17 +460,24 @@ void ABasePlayer::CustomMesh()
 
 void ABasePlayer::Horizontal(float ValX)
 {
-	
-	FRotator CurrControlRotation = pc->GetControlRotation();
-	this->AddMovementInput(UKismetMathLibrary::GetForwardVector(FRotator(0.0f, CurrControlRotation.Yaw, 0.0f)), ValX);
+	pc = Cast<APlayerController>(GetController());
 
+	if (pc != nullptr)
+	{ 
+	FRotator CurrControlRotation = pc->GetControlRotation();
+	
+	this->AddMovementInput(UKismetMathLibrary::GetForwardVector(FRotator(0.0f, CurrControlRotation.Yaw, 0.0f)), ValX);
+	}
 }
 
 void ABasePlayer::Vertical(float ValY)
 {
-	
+	pc = Cast<APlayerController>(GetController());
+	if (pc != nullptr){
 	FRotator CurrControlRotation = pc->GetControlRotation();
+
 	this->AddMovementInput(UKismetMathLibrary::GetRightVector(FRotator(0.0f, CurrControlRotation.Yaw, CurrControlRotation.Roll)), ValY);
+	}
 }
 
 void ABasePlayer::Look_Horizontal(float Val)
