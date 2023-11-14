@@ -120,7 +120,7 @@ void UJE_BattleWidget::StartUIAnim()
 		//GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Yellow, Message);
 		LoadingUI();
 
-		}), 3.0f, false);
+		}), 5.0f, false);
 }
 
 void UJE_BattleWidget::CoinUI()

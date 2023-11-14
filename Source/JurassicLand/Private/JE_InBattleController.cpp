@@ -42,7 +42,7 @@ void AJE_InBattleController::BeginPlay()
 				Possess(playerRaptor);
 			}
 
-			trex->Destroy();
+			if (trex) trex->Destroy();
 
 		}
 	}
