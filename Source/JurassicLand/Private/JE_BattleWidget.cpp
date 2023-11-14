@@ -181,7 +181,7 @@ void UJE_BattleWidget::SetTailCool(int32 skillNum)
 	if (!IsValid(coolTimeActors[skillNum]))
 	{
 		coolTimeActors[skillNum] = GetWorld()->SpawnActor<AActor>(AActor::StaticClass());
-		GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Yellow, *coolTimeActors[skillNum]->GetName());
+		//GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Yellow, *coolTimeActors[skillNum]->GetName());
 		coolTimeActors[skillNum]->SetLifeSpan(skillcoolTime);
 
 	}
@@ -195,7 +195,7 @@ void UJE_BattleWidget::SetTailCool(int32 skillNum)
 		pbArr[skillNum]->SetPercent(0.f);
 		player->coolTimeIndex = -1;
 
-		GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Magenta, TEXT("End"));
+		//GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Magenta, TEXT("End"));
 		//coolTimeActor = nullptr;
 	}
 	else
@@ -204,7 +204,7 @@ void UJE_BattleWidget::SetTailCool(int32 skillNum)
 	}
 
 
-	GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Yellow, FString::Printf(TEXT("Tail : %2.f"), value));
+	//GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Yellow, FString::Printf(TEXT("Tail : %2.f"), value));
 }
 
 void UJE_BattleWidget::SetBiteCool(int32 skillNum)
@@ -214,7 +214,7 @@ void UJE_BattleWidget::SetBiteCool(int32 skillNum)
 	if (!IsValid(coolTimeActors[skillNum]))
 	{
 		coolTimeActors[skillNum] = GetWorld()->SpawnActor<AActor>(AActor::StaticClass());
-		GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Yellow, *coolTimeActors[skillNum]->GetName());
+		//GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Yellow, *coolTimeActors[skillNum]->GetName());
 		coolTimeActors[skillNum]->SetLifeSpan(skillcoolTime);
 
 	}
@@ -228,7 +228,7 @@ void UJE_BattleWidget::SetBiteCool(int32 skillNum)
 		pbArr[skillNum]->SetPercent(0.f);
 		player->coolTimeIndex = -1;
 
-		GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Magenta, TEXT("End"));
+		//GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Magenta, TEXT("End"));
 		//coolTimeActor = nullptr;
 	}
 	else
@@ -237,7 +237,7 @@ void UJE_BattleWidget::SetBiteCool(int32 skillNum)
 	}
 
 
-	GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Yellow, FString::Printf(TEXT("Bite : %2.f"), value));
+	//GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Yellow, FString::Printf(TEXT("Bite : %2.f"), value));
 }
 
 void UJE_BattleWidget::SetRoarCool(int32 skillNum)
@@ -247,7 +247,7 @@ void UJE_BattleWidget::SetRoarCool(int32 skillNum)
 	if (!IsValid(coolTimeActors[skillNum]))
 	{
 		coolTimeActors[skillNum] = GetWorld()->SpawnActor<AActor>(AActor::StaticClass());
-		GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Yellow, *coolTimeActors[skillNum]->GetName());
+		//GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Yellow, *coolTimeActors[skillNum]->GetName());
 		coolTimeActors[skillNum]->SetLifeSpan(skillcoolTime);
 
 	}
@@ -260,7 +260,7 @@ void UJE_BattleWidget::SetRoarCool(int32 skillNum)
 	{
 		pbArr[skillNum]->SetPercent(0.f);
 		player->coolTimeIndex = -1;
-		GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Magenta, TEXT("End"));
+		//GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Magenta, TEXT("End"));
 		//coolTimeActor = nullptr;
 	}
 	else
@@ -269,7 +269,7 @@ void UJE_BattleWidget::SetRoarCool(int32 skillNum)
 	}
 
 
-	GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Yellow, FString::Printf(TEXT("Roar : %2.f"), value));
+	//GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Yellow, FString::Printf(TEXT("Roar : %2.f"), value));
 }
 
 void UJE_BattleWidget::SetBuffCool(int32 skillNum)
@@ -280,7 +280,7 @@ void UJE_BattleWidget::SetBuffCool(int32 skillNum)
 		if (!IsValid(coolTimeActors[skillNum]))
 		{
 			coolTimeActors[skillNum] = GetWorld()->SpawnActor<AActor>(AActor::StaticClass());
-			GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Yellow, *coolTimeActors[skillNum]->GetName());
+			//GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Yellow, *coolTimeActors[skillNum]->GetName());
 			coolTimeActors[skillNum]->SetLifeSpan(skillcoolTime);
 
 		}
@@ -294,7 +294,7 @@ void UJE_BattleWidget::SetBuffCool(int32 skillNum)
 			pbArr[skillNum]->SetPercent(0.f);
 			player->coolTimeIndex = -1;
 
-			GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Magenta, TEXT("End"));
+			//GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Magenta, TEXT("End"));
 			//coolTimeActor = nullptr;
 		}
 		else
@@ -303,7 +303,7 @@ void UJE_BattleWidget::SetBuffCool(int32 skillNum)
 		}
 
 
-		GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Yellow, FString::Printf(TEXT("buffCool : %2.f"), value));
+		//GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Yellow, FString::Printf(TEXT("buffCool : %2.f"), value));
 	}
 	
 }
@@ -325,7 +325,7 @@ void UJE_BattleWidget::SetSpecialCool(int32 skillNum)
 		if (!IsValid(coolTimeActors[skillNum]))
 		{
 			coolTimeActors[skillNum] = GetWorld()->SpawnActor<AActor>(AActor::StaticClass());
-			GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Yellow, *coolTimeActors[skillNum]->GetName());
+			//GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Yellow, *coolTimeActors[skillNum]->GetName());
 			coolTimeActors[skillNum]->SetLifeSpan(skillcoolTime);
 
 		}
@@ -339,7 +339,7 @@ void UJE_BattleWidget::SetSpecialCool(int32 skillNum)
 			pbArr[skillNum]->SetPercent(0.f);
 			player->coolTimeIndex = -1;
 
-			GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Magenta, TEXT("End"));
+			//GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Magenta, TEXT("End"));
 			//coolTimeActor = nullptr;
 		}
 		else
@@ -348,7 +348,7 @@ void UJE_BattleWidget::SetSpecialCool(int32 skillNum)
 		}
 
 
-		GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Yellow, FString::Printf(TEXT("Special : %2.f"), value));
+		//GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Yellow, FString::Printf(TEXT("Special : %2.f"), value));
 	}
 	
 }
