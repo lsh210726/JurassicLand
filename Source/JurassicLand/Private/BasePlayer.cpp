@@ -126,16 +126,16 @@ void ABasePlayer::BeginPlay()
 
 	ARaptor* playerRaptor = Cast<ARaptor>(UGameplayStatics::GetPlayerCharacter(GetWorld(), 0));
 
-	if (playerRaptor)
-	{
-		return;
-	}
-	else
-	{
-		// 캐릭터 초기화 지연 실행
-		FTimerHandle initHandler;
-		GetWorldTimerManager().SetTimer(initHandler, this, &ABasePlayer::InitializePlayer, 1.0f, false);
-	}
+	//if (playerRaptor)
+	//{
+	//	return;
+	//}
+	//else
+	//{
+	//	// 캐릭터 초기화 지연 실행
+	//	FTimerHandle initHandler;
+	//	GetWorldTimerManager().SetTimer(initHandler, this, &ABasePlayer::InitializePlayer, 1.0f, false);
+	//}
 	
 }
 
