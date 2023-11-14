@@ -32,5 +32,6 @@ public:
 	bool bBattleIn = false;
 
 	class ABlueTrex* bluePlayer;
+	class AJE_BattleLobbyGameMode* gm;
 
 };

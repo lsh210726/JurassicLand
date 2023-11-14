@@ -6,6 +6,11 @@
 #include "JE_NicknameWidget.h"
 #include "BlueTrex.h"
 #include "Components/TextRenderComponent.h"
+#include "JE_BattleLobbyGameMode.h"
+#include "Raptor.h"
+#include "LSH_NetGameInstance.h"
+
+
 
 ALSH_NetPlayerController::ALSH_NetPlayerController()
 {
@@ -31,6 +36,36 @@ void ALSH_NetPlayerController::BeginPlay()
     Super::BeginPlay();
 
 	bluePlayer = Cast<ABlueTrex>(GetPawn());
+
+	ULSH_NetGameInstance* gi = GetGameInstance<ULSH_NetGameInstance>();
+
+	if (gi->playerCustomInfo.dinoMeshNum == 1)
+	{
+		if (HasAuthority())
+		{
+			gm = GetWorld()->GetAuthGameMode<AJE_BattleLobbyGameMode>();
+
+			ABlueTrex* trex = Cast<ABlueTrex>(GetPawn());
+			UnPossess();
+
+			FActorSpawnParameters param;
+			param.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AlwaysSpawn;
+	
+
+			ARaptor* playerRaptor = GetWorld()->SpawnActor<ARaptor>(gi->raptor, FVector((760.0f, -500.0f, 1000.0f)), FRotator(), param);
+
+			if (playerRaptor)
+			{
+				Possess(playerRaptor);
+			}
+
+			trex->Destroy();
+			
+		}
+	}
+	
+
+
 
 	/*if (bluePlayer != nullptr)
 	{

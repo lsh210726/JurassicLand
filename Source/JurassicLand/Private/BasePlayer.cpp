@@ -104,7 +104,7 @@ void ABasePlayer::BeginPlay()
 
 	GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Green, FString::Printf(TEXT("%s"), *MoveComp->GetOwner()->GetName()));	
 
-	pc = Cast<APlayerCoatroller>(GetController());
+	pc = Cast<APlayerController>(GetController());
 
 
 	if (pc != nullptr)

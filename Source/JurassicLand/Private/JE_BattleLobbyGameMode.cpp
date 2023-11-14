@@ -48,13 +48,15 @@ void AJE_BattleLobbyGameMode::BeginPlay()
 	gi = GetGameInstance<ULSH_NetGameInstance>();
 	if (gi->playerCustomInfo.dinoMeshNum == 1)
 	{
-		ABlueTrex* playertrex = Cast<ABlueTrex>(UGameplayStatics::GetActorOfClass(GetWorld(), ABlueTrex::StaticClass()));
+		//ABlueTrex* playertrex = Cast<ABlueTrex>(UGameplayStatics::GetActorOfClass(GetWorld(), ABlueTrex::StaticClass()));
 
-		if(playertrex) playertrex->Destroy();
+		//APlayerController* pc = Cast<APlayerController>(playertrex->GetController());
+
+		//pc->UnPossess();	
+
+		//if(playertrex) playertrex->Destroy();
 
 		ARaptor* playerRaptor = GetWorld()->SpawnActor<ARaptor>(gi->raptor, FVector((760.0f, -500.0f, 1000.0f)), FRotator());
-
-		GetWorld()->GetFirstPlayerController()->Possess(playerRaptor);
 
 		GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Green, FString::Printf(TEXT("%s"), *GetWorld()->GetFirstPlayerController()->GetName()));
 
