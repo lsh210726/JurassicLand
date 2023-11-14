@@ -31,6 +31,8 @@ void UJE_MultiBattleWidget::NativeTick(const FGeometry& MyGeometry, float InDelt
 
 void UJE_MultiBattleWidget::OnClickedReady()
 {
+	ws_MultiBattle->SetActiveWidgetIndex(1);
+
 	if (clickOnce)
 	{
 		readyCount++;

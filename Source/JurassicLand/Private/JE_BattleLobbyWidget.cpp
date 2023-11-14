@@ -42,6 +42,8 @@ void UJE_BattleLobbyWidget::OnClickedbattleIn()
 {
 	//FString Message = FString::Printf(TEXT("SkipButtonClicked"));
 	//GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Yellow, TEXT("Click"));
+	ws_BattleLobbyUI->SetActiveWidgetIndex(0);
+
 	gi = GetGameInstance<ULSH_NetGameInstance>();
 
 	FTimerHandle findHandler;

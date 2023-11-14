@@ -102,7 +102,7 @@ void ABasePlayer::BeginPlay()
 {
 	Super::BeginPlay();
 
-	GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Green, FString::Printf(TEXT("%s"), *MoveComp->GetOwner()->GetName()));	
+	//GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Green, FString::Printf(TEXT("%s"), *MoveComp->GetOwner()->GetName()));	
 
 	pc = Cast<APlayerController>(GetController());
 
@@ -339,7 +339,7 @@ void ABasePlayer::SaveCustomItemData()
 
 	UGameplayStatics::SaveGameToSlot(MySaveGame, "MyCustomSaveSlot", 0);
 
-	GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Green, TEXT("Save"));
+	//GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Green, TEXT("Save"));
 }
 
 void ABasePlayer::LoadCustomItemData()
@@ -349,7 +349,7 @@ void ABasePlayer::LoadCustomItemData()
 
 	if (MySaveGame == nullptr)
 	{
-		GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Yellow, TEXT("Nothing"));
+		//GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Yellow, TEXT("Nothing"));
 		return;
 	}
 	else
@@ -360,25 +360,25 @@ void ABasePlayer::LoadCustomItemData()
 			GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Yellow, Message);*/
 
 			FString Message1 = FString("Hat : ") + gi->playerCustomItemInfo.HatTagInstance.ToString();
-			GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Yellow, Message1);
+			//GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Yellow, Message1);
 
 		}
 
 		if (MySaveGame->myGlassesTag.IsValid())
 		{
-			FString Message1 = FString("Glasses : ") + gi->playerCustomItemInfo.GlassesTagInstance.ToString();
-			GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Yellow, Message1);
+			//FString Message1 = FString("Glasses : ") + gi->playerCustomItemInfo.GlassesTagInstance.ToString();
+			//GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Yellow, Message1);
 
 		}
 
 		if (MySaveGame->myShoesTag.IsValid())
 		{
-			FString Message1 = FString("Shoes : ") + gi->playerCustomItemInfo.ShoesTagInstance.ToString();
-			GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Yellow, Message1);
+// 			FString Message1 = FString("Shoes : ") + gi->playerCustomItemInfo.ShoesTagInstance.ToString();
+// 			GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Yellow, Message1);
 
 		}
 
-		GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Yellow, TEXT("Load"));
+		//GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Yellow, TEXT("Load"));
 	}
 }
 
@@ -497,7 +497,7 @@ void ABasePlayer::Look_Vertical(float Val)
 void ABasePlayer::InitialCustomMulti_Implementation()
 {
 	ServerSetCustomItemInfo(gi->playerCustomItemInfo);
-	GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Red, TEXT("Initialize"));
+	//GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Red, TEXT("Initialize"));
 }
 
 void ABasePlayer::ServerSetInitInfo_Implementation(FPlayerCustomInfo initInfo)
