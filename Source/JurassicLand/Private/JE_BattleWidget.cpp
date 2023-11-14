@@ -13,6 +13,7 @@
 #include "Kismet/GameplayStatics.h"
 #include "JE_BattleInController.h"
 #include "JE_InBattleController.h"
+#include "Blueprint/WidgetBlueprintLibrary.h"
 
 
 void UJE_BattleWidget::NativeConstruct()
@@ -126,6 +127,12 @@ void UJE_BattleWidget::CoinUI()
 {
 	//ws_Battle->SetActiveWidgetIndex(4);
 	bisMouse = true;
+
+	APlayerController* pc = GetWorld()->GetFirstPlayerController();
+	FInputModeGameAndUI InputModeData;
+
+	pc->SetInputMode(InputModeData);
+
 	btn_toMain->SetVisibility(ESlateVisibility::Visible);
 	/*if (pc)
 	{

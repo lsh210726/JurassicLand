@@ -24,7 +24,7 @@ protected:
 public:
 
 	class ABlueTrex* player;
-	class AJE_BattleInController* pc;
+	//class AJE_BattleInController* pc;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, meta = (BindWidget), Category = MySettings)
 	class UWidgetSwitcher* ws_Battle;
