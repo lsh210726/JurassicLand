@@ -30,6 +30,7 @@
 #include "Blueprint/UserWidget.h"
 #include "MoveComp.h"
 #include "Raptor.h"
+#include "LSH_NetPlayerController.h"
 
 // Sets default values
 ABasePlayer::ABasePlayer()
@@ -91,6 +92,9 @@ ABasePlayer::ABasePlayer()
 	}
 
 	MoveComp = CreateDefaultSubobject<UMoveComp>(TEXT("MoveComp"));
+	
+
+	//pc = Cast<APlayerController>(GetController());
 }
 
 // Called when the game starts or when spawned
@@ -98,10 +102,11 @@ void ABasePlayer::BeginPlay()
 {
 	Super::BeginPlay();
 
-	GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Green, FString::Printf(TEXT("%s"), *GetWorld()->GetFirstPlayerController()->GetName()));
+	GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Green, FString::Printf(TEXT("%s"), *MoveComp->GetOwner()->GetName()));	
 
-	//Enhanced Input
-	pc = Cast<APlayerController>(GetController());
+	pc = Cast<APlayerCoatroller>(GetController());
+
+
 	if (pc != nullptr)
 	{
 		if (UEnhancedInputLocalPlayerSubsystem* SubSystem = ULocalPlayer::GetSubsystem<UEnhancedInputLocalPlayerSubsystem>(pc->GetLocalPlayer()))
@@ -154,6 +159,7 @@ void ABasePlayer::Tick(float DeltaTime)
 void ABasePlayer::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 {
 	Super::SetupPlayerInputComponent(PlayerInputComponent);
+
 	if (UEnhancedInputComponent* EnhancedInputComponent = Cast<UEnhancedInputComponent>(PlayerInputComponent))
 	{
 		MoveComp->SetupPlayerEnhancedInputComponent(EnhancedInputComponent, inputActions);

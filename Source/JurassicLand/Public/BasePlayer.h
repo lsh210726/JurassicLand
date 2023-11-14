@@ -192,6 +192,7 @@ public:
 	  /*----- General Value ----------*/
 public:
 	class APlayerController* pc;
+	class ALSH_NetPlayerController* lsh_pc;
 	class UCharacterMovementComponent* CharacterMovement;
 
 	  /*---------- Enhanced Input ---------------*/
@@ -391,11 +392,6 @@ public:
 
 	UPROPERTY(Replicated, EditAnywhere, BlueprintReadWrite, Category = "Skill")
 	class UTexture2D* currplayerBuffSkillImg;
-
-
-	// ��ų ����ϴ� Ű�� ���� ��Ÿ�� �ε���
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Skill")
-	int32 coolTimeIndex = -1;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Skill")
 	TSubclassOf<class UJE_BattleWidget> battlewidget;

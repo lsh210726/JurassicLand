@@ -52,8 +52,12 @@ void AJE_BattleLobbyGameMode::BeginPlay()
 
 		if(playertrex) playertrex->Destroy();
 
-		ARaptor* playerRaptor = GetWorld()->SpawnActor<ARaptor>(gi->raptor, FVector((760.0f, -500.0f, 252.0f)), FRotator());
+		ARaptor* playerRaptor = GetWorld()->SpawnActor<ARaptor>(gi->raptor, FVector((760.0f, -500.0f, 1000.0f)), FRotator());
 
 		GetWorld()->GetFirstPlayerController()->Possess(playerRaptor);
+
+		GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Green, FString::Printf(TEXT("%s"), *GetWorld()->GetFirstPlayerController()->GetName()));
+
+		//playerRaptor->pc = Cast<APlayerController>(GetOwner());
 	}
 }

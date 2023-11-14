@@ -27,13 +27,6 @@ ARaptor::ARaptor()
 		PlayerBody->SetMaterial(1, RapInitialMat);
 	}
 
-	/*ConstructorHelpers::FObjectFinder<UMaterial> rapinibodyMat(TEXT("/Game/4_SK/BlueTRex/MAT_TRex.MAT_TRex"));
-	if (rapbodyMat.Succeeded())
-	{
-		RapCustomMat = rapinibodyMat.Object;
-
-	}*/
-
 	ConstructorHelpers::FObjectFinder<UMaterial> rapbodyMat1(TEXT("/Script/Engine.Material'/Game/4_SK/Raptor/Model/DromaMESH_Material__26.DromaMESH_Material__26'"));
 	if (rapbodyMat1.Succeeded())
 	{
