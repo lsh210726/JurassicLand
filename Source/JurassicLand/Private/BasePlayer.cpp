@@ -164,6 +164,12 @@ void ABasePlayer::SetupPlayerInputComponent(UInputComponent* PlayerInputComponen
 	{
 		MoveComp->SetupPlayerEnhancedInputComponent(EnhancedInputComponent, inputActions);
 	}
+	PlayerInputComponent->BindAxis(TEXT("Horizontal"),this,&ABasePlayer::Horizontal);
+	PlayerInputComponent->BindAxis(TEXT("Vertical"),this,&ABasePlayer::Vertical);
+	PlayerInputComponent->BindAxis(TEXT("Look_Horizontal"),this,&ABasePlayer::Look_Horizontal);
+	PlayerInputComponent->BindAxis(TEXT("Look_Vertical"),this,&ABasePlayer::Look_Vertical);
+
+
 }
 
 
@@ -450,6 +456,35 @@ void ABasePlayer::CustomMesh()
 		}
 
 	}
+}
+
+void ABasePlayer::Horizontal(float ValX)
+{
+	
+	FRotator CurrControlRotation = pc->GetControlRotation();
+	this->AddMovementInput(UKismetMathLibrary::GetForwardVector(FRotator(0.0f, CurrControlRotation.Yaw, 0.0f)), ValX);
+
+}
+
+void ABasePlayer::Vertical(float ValY)
+{
+	
+	FRotator CurrControlRotation = pc->GetControlRotation();
+	this->AddMovementInput(UKismetMathLibrary::GetRightVector(FRotator(0.0f, CurrControlRotation.Yaw, CurrControlRotation.Roll)), ValY);
+}
+
+void ABasePlayer::Look_Horizontal(float Val)
+{
+
+
+ 	this->AddControllerYawInput(Val*0.5);
+
+	
+}
+
+void ABasePlayer::Look_Vertical(float Val)
+{
+	this->AddControllerPitchInput(Val);
 }
 
 void ABasePlayer::InitialCustomMulti_Implementation()

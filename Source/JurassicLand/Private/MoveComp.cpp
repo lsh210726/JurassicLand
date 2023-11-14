@@ -72,7 +72,7 @@ void UMoveComp::PlayerMove(const FInputActionValue& Val)
 	player->AddMovementInput(UKismetMathLibrary::GetRightVector(FRotator(0.0f, CurrControlRotation.Yaw, CurrControlRotation.Roll)), valX);
 	player->AddMovementInput(UKismetMathLibrary::GetForwardVector(FRotator(0.0f, CurrControlRotation.Yaw, 0.0f)), valY);
 
-	GEngine->AddOnScreenDebugMessage(-1,3.0f,FColor::Emerald,TEXT("MoveMove"));
+	
 }
 
 void UMoveComp::PlayerLook(const FInputActionValue& Val)
