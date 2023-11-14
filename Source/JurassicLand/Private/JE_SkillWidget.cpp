@@ -153,7 +153,7 @@ void UJE_SkillWidget::SetSpecialPreset()
 
 	if (presetImgArray[i] == nullptr)
 	{
-		GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Blue, FString::Printf(TEXT("%d"), i));
+		//GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Blue, FString::Printf(TEXT("%d"), i));
 
 		presetArray[i]->SetVisibility(ESlateVisibility::Visible);
 		presetArray[i]->SetBrushResourceObject(skillImg);
@@ -185,7 +185,7 @@ void UJE_SkillWidget::SetPreset()
 
 		if (presetImgArray[i] == nullptr)
 		{
-			GEngine->AddOnScreenDebugMessage( - 1, 5.0f, FColor::Blue, FString::Printf(TEXT("%d"), i));
+			//GEngine->AddOnScreenDebugMessage( - 1, 5.0f, FColor::Blue, FString::Printf(TEXT("%d"), i));
 
 			presetArray[i]->SetVisibility(ESlateVisibility::Visible);
 			presetArray[i]->SetBrushResourceObject(skillImg);
@@ -221,10 +221,10 @@ void UJE_SkillWidget::SetPreset()
 		return;
 	}*/
 
-	for (FString inSkill : presetImgStr)
-	{
-		GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Blue, inSkill);
-	}
+	//for (FString inSkill : presetImgStr)
+	//{
+	//	//GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Blue, inSkill);
+	//}
 
 	/*FString Message = presetImg1 == nullptr ? FString("None") : FString("Yes");
 	GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Blue, Message);
