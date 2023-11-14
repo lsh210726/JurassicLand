@@ -26,6 +26,10 @@ void UJE_BattleLobbyWidget::NativeConstruct()
 
 	btn_battle_custom->OnClicked.AddDynamic(this, &UJE_BattleLobbyWidget::OnClickedBattleCustom);
 
+	FTimerHandle loadinghandler;
+	GetWorld()->GetTimerManager().SetTimer(loadinghandler, FTimerDelegate::CreateLambda([&]() {
+		ws_BattleLobbyUI->SetActiveWidgetIndex(1);
+		}), 3.0f, false);
 
 }
 

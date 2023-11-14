@@ -38,7 +38,7 @@ void UJE_BattleWidget::NativeConstruct()
 	img_specialskill->SetBrushResourceObject(gi->playerSkillInfo.playerSpecialSkillImg);
 	img_buffskill->SetBrushResourceObject(gi->playerSkillInfo.playerBuffSkillImg);
 
-	GetWorld()->GetTimerManager().SetTimer(initHandler, this, &UJE_BattleWidget::StartUIAnim, 0.1f, false);
+	GetWorld()->GetTimerManager().SetTimer(initHandler, this, &UJE_BattleWidget::StartUIAnim, 3.0f, false);
 
 	btn_toMain->OnClicked.AddDynamic(this, &UJE_BattleWidget::OnClickedToMain);
 }
