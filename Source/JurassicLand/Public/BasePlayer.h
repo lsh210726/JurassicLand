@@ -398,4 +398,10 @@ public:
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Skill")
  	class UJE_BattleWidget* battleUI;
+
+	//tempInput
+	void Horizontal(float ValX);
+	void Vertical(float ValY);
+	void Look_Horizontal(float Val);
+	void Look_Vertical(float Val);
 };
