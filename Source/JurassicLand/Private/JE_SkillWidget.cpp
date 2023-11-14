@@ -130,7 +130,7 @@ void UJE_SkillWidget::SetBuffPreset()
 	}
 	else
 	{
-		GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Emerald, FString::Printf(TEXT("%s"), *skillImg->GetName()));
+		//GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Emerald, FString::Printf(TEXT("%s"), *skillImg->GetName()));
 
 		if (*skillImg->GetName() == presetImgStr[i])
 		{
@@ -242,10 +242,10 @@ void UJE_SkillWidget::FindPreset()
 {
 	for (int i = 0; i < 2; i++)
 	{		
-		GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Yellow, FString::Printf(TEXT("%d"),i));
+		//GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Yellow, FString::Printf(TEXT("%d"),i));
 
 
-		GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Yellow, presetImgStr[i]);
+		//GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Yellow, presetImgStr[i]);
 
 		if (*skillImg->GetName() == presetImgStr[i])
 		{
@@ -304,14 +304,14 @@ void UJE_SkillWidget::OnClickedSavePreset()
 	if (TrexPlayer)
 	{
 		TrexPlayer->ServerSetSkills(gi->playerSkillInfo);
-		GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Yellow, FString::Printf(TEXT("%d"), TrexPlayer->currBuffskillNum));
-		GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Magenta, FString::Printf(TEXT("%d"), TrexPlayer->currSpecialskillNum));
+		//GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Yellow, FString::Printf(TEXT("%d"), TrexPlayer->currBuffskillNum));
+		//GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Magenta, FString::Printf(TEXT("%d"), TrexPlayer->currSpecialskillNum));
 	}
 	else
 	{
 		TrexPlayer->ServerSetSkills(gi->playerSkillInfo);
-		GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Yellow, FString::Printf(TEXT("%d"), TrexPlayer->currBuffskillNum));
-		GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Magenta, FString::Printf(TEXT("%d"), TrexPlayer->currSpecialskillNum));
+		//GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Yellow, FString::Printf(TEXT("%d"), TrexPlayer->currBuffskillNum));
+		//GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Magenta, FString::Printf(TEXT("%d"), TrexPlayer->currSpecialskillNum));
 	}
 	
 	//player->IsSetPreset = false;

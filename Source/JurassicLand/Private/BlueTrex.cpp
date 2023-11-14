@@ -277,7 +277,7 @@ void ABlueTrex::InitializePlayer()
 void ABlueTrex::InitialCustomMulti_Implementation()
 {
 	ServerSetCustomItemInfo(gi->playerCustomItemInfo);
-	GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Red, TEXT("Initialize"));
+	//GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Red, TEXT("Initialize"));
 }
 
 void ABlueTrex::SetColor()
@@ -521,7 +521,7 @@ void ABlueTrex::SaveCustomItemData()
 
 	UGameplayStatics::SaveGameToSlot(MySaveGame, "MyCustomSaveSlot", 0);
 
-	GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Green, TEXT("Save"));
+	//GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Green, TEXT("Save"));
 }
 
 void ABlueTrex::LoadCustomItemData()
@@ -531,7 +531,7 @@ void ABlueTrex::LoadCustomItemData()
 
 	if (MySaveGame == nullptr)
 	{
-		GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Yellow, TEXT("Nothing"));
+		//GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Yellow, TEXT("Nothing"));
 		return;
 	}
 	else
@@ -541,25 +541,25 @@ void ABlueTrex::LoadCustomItemData()
 			/*FString Message = FString::Printf(TEXT("%s"), *MySaveGame->myHat->GetName());
 			GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Yellow, Message);*/
 
-			FString Message1 = FString("Hat : ") + gi->playerCustomItemInfo.HatTagInstance.ToString();
-			GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Yellow, Message1);
+			//FString Message1 = FString("Hat : ") + gi->playerCustomItemInfo.HatTagInstance.ToString();
+			//GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Yellow, Message1);
 
 		}
 
 		if (MySaveGame->myGlassesTag.IsValid())
 		{
-			FString Message1 = FString("Glasses : ") + gi->playerCustomItemInfo.GlassesTagInstance.ToString();
-			GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Yellow, Message1);
+			//FString Message1 = FString("Glasses : ") + gi->playerCustomItemInfo.GlassesTagInstance.ToString();
+			//GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Yellow, Message1);
 
 		}
 
 		if (MySaveGame->myShoesTag.IsValid())
 		{
-			FString Message1 = FString("Shoes : ") + gi->playerCustomItemInfo.ShoesTagInstance.ToString();
-			GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Yellow, Message1);
+			//FString Message1 = FString("Shoes : ") + gi->playerCustomItemInfo.ShoesTagInstance.ToString();
+			//GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Yellow, Message1);
 
 		}
 
-		GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Yellow, TEXT("Load"));
+		//GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Yellow, TEXT("Load"));
 	}
 }
