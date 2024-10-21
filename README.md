@@ -8,7 +8,7 @@
 
 
 
-https://youtu.be/8RsrgYo98IE?si=YPuazwJks8IeqZYP&t=174
+https://vimeo.com/981073978
 
 개발인원 : AI 1, 클라이언트 3, 레벨디자인 1  
 개발기간 : 23/10/12 ~ 23/12/17 (9주)  
